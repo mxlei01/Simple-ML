@@ -1,0 +1,9 @@
+[run]
+omit = 
+	/usr/local/lib/*
+
+source =
+	.
+
+[report]
+ignore_errors = True
