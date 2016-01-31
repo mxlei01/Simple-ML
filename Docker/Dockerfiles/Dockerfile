@@ -24,5 +24,7 @@ COPY .git /application
 
 #===========================Installing Python Requirements=====================
 COPY Python_Requirements /application/Python_Requirements
+RUN pip3 install numpy
+RUN pip3 install scipy
 RUN pip3 install -r /application/Python_Requirements/requirements.txt
 #===========================Installing Python Requirements=====================
