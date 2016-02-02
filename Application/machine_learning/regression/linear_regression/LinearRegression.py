@@ -80,13 +80,15 @@ class LinearRegression():
             # Compute w^(t+1) <= w^(t) + n(-2H^t(y-Hw))
             weights += step_size*gradient
 
-            # If the magnitude of the gradient is less than tolerance, then we have converged
+            # If the magnitude of the gradient is greater than tolerance, then we have converged
             # The formula for magnitude is sum of squared array, and then square root, but numpy
             # already have a norm function
-            if np.linalg.norm(gradient) < tolerance:
+            if np.linalg.norm(gradient) > tolerance:
 
                 # Set converged to true so that we stop our while loop
                 converged = True
+
+            print(gradient)
 
         # Return the weights
         return weights

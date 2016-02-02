@@ -54,9 +54,6 @@ class TestLinearRegression(unittest.TestCase):
         # Convert our pandas frame to numpy
         feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train_frame, features, output, 1)
 
-        print(feature_matrix)
-        print(output)
-
         # Create our initial weights
         initial_weights = np.array([-47000., 1.])
 
@@ -74,3 +71,36 @@ class TestLinearRegression(unittest.TestCase):
         # Assert that the weights is correct
         self.assertEquals(-46999.887165546708, final_weights[0])
         self.assertEquals(281.91211917520917, final_weights[1])
+
+    def test_02_hill_climbing(self):
+        # Usage:
+        #       Tests the result on hill climbing
+        # Arguments:
+        #       None
+
+        # We will use sqft_living for our features
+        features = ['sqft_living']
+
+        # Output will use price
+        output = ['price']
+
+        # Convert our pandas frame to numpy
+        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train_frame, features, output, 1)
+
+        # Create our initial weights
+        initial_weights = np.array([-47000., 1.])
+
+        # Step size
+        step_size = 7e-12
+
+        # Tolerance
+        tolerance = 2.5e7
+
+        # Compute our gradient descent value
+        final_weights = self.linear_regression.hill_climbing(feature_matrix, output,
+                                                             initial_weights, step_size,
+                                                             tolerance)
+
+        # Assert that the weights is correct
+        self.assertEquals(-47000.142201335177, final_weights[0])
+        self.assertEquals(-352.86068692252599, final_weights[1])
