@@ -13,6 +13,9 @@ RUN apt-get -y install libpq-dev
 RUN apt-get -y install libblas-dev liblapack-dev
 RUN apt-get -y install gfortran
 RUN apt-get -y install git
+RUN apt-get -y install python-software-properties
+RUN apt-get -y install software-properties-common
+RUN apt-get -y install wget
 #===========================End Update Ubuntu==================================
 
 #=====Create a folder, and copy our application into the application folder====
@@ -23,7 +26,15 @@ COPY .coveragerc /application/
 COPY .git /application
 #=====Create a folder, and copy our application into the application folder====
 
+#=====Installing Python 3.5====================================================
+RUN add-apt-repository ppa:fkrull/deadsnakes
+RUN apt-get -y update
+RUN apt-get -y install python3.5
+RUN wget https://bootstrap.pypa.io/get-pip.py && python3.5 get-pip.py
+RUN apt-get -y install python3.5-dev
+#=====Installing Python 3.5====================================================
+
 #===========================Installing Python Requirements=====================
 COPY Python_Requirements /application/Python_Requirements
-RUN pip3 install -r /application/Python_Requirements/requirements.txt
+RUN pip3.5 install -r /application/Python_Requirements/requirements.txt
 #===========================Installing Python Requirements=====================

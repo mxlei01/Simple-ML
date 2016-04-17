@@ -104,7 +104,7 @@ class TestRidgeRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
-        self.assertEquals(-0.16311351478746433, final_weights[0])
+        self.assertEquals(round(-0.16311351478746433, 5), round(final_weights[0], 5))
         self.assertEquals(263.02436896538489, final_weights[1])
 
         # Assert that rss is correct
@@ -219,7 +219,7 @@ class TestRidgeRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
-        self.assertEquals(0.033601165521060711, final_weights[0])
+        self.assertEquals(round(0.033601165521060711, 5), round(final_weights[0], 5))
         self.assertEquals(91.490167574878328, final_weights[1])
         self.assertEquals(78.437490333967176, final_weights[2])
 
@@ -326,5 +326,5 @@ class TestRidgeRegression(unittest.TestCase):
                                                             tolerance, l2_penalty, max_iterations)
 
         # Assert that the weights is correct
-        self.assertEquals(-7.7535764461428101e+70, final_weights[0])
+        self.assertEquals(round(-7.7535764461428101e+70, -68), round(final_weights[0], -68))
         self.assertEquals(-1.9293745396177612e+74, final_weights[1])

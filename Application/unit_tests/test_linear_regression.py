@@ -123,7 +123,7 @@ class TestLinearRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
 
         # Assert that rss is correct
-        self.assertEquals(270263443629803.41, rss)
+        self.assertEquals(round(270263443629803.41, 0), round(rss, 0))
 
 
     def test_03_hill_climbing(self):
