@@ -1,6 +1,6 @@
 import numpy as np
 
-class RidgeRegression():
+class RidgeRegression:
     # Usage:
     #   Ridge Regression is based on: w^(t+1) <= w^(t) - 2nH^t(y-Hw) + l2_penalty*2*w(t) for gradient descent,
     #   and w^(t+1) <= w^(t) + 2nH^t(y-Hw) + l2_penalty*2*w(t) for hill climbing

@@ -1,6 +1,6 @@
 import numpy as np
 
-class LinearRegression():
+class LinearRegression:
     # Usage:
     #   Linear Regression is based on: w^(t+1) <= w^(t) + 2nH^t(y-Hw) for gradient descent,
     #   and w^(t+1) <= w^(t) - 2nH^t(y-Hw) for hill climbing

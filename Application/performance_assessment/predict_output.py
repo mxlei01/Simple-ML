@@ -1,6 +1,6 @@
 import numpy as np
 
-class PredictOutput():
+class PredictOutput:
     # Usage:
     #   Used for predicting outputs based on features and weights
 

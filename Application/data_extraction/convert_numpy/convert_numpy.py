@@ -1,6 +1,6 @@
 import copy
 
-class ConvertNumpy():
+class ConvertNumpy:
     # Usage:
     #   A class for converting Pandas data to Numpy array or matrix
 
