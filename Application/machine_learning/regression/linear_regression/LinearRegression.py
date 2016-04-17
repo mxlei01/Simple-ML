@@ -3,7 +3,7 @@ import numpy as np
 class LinearRegression():
     # Usage:
     #   Linear Regression is based on: w^(t+1) <= w^(t) + 2nH^t(y-Hw) for gradient descent,
-    #   and w^(t+1) <= w^(t) - 2nH^t(y-Hw) for hill climing
+    #   and w^(t+1) <= w^(t) - 2nH^t(y-Hw) for hill climbing
     #       w(t)   : weight at iteration t
     #       w(t+1) : weight at iteration t+1
     #       n      : step size
@@ -43,6 +43,8 @@ class LinearRegression():
             # If the magnitude of the gradient is less than tolerance, then we have converged
             # The formula for magnitude is sum of squared array, and then square root, but numpy
             # already have a norm function
+            # Although we use this nice norm function, but
+            # recall that the magnitude/length of a vector [g[0], g[1], g[2]] is sqrt(g[0]^2 + g[1]^2 + g[2]^2)
             if np.linalg.norm(gradient) < tolerance:
 
                 # Set converged to true so that we stop our while loop
@@ -87,8 +89,6 @@ class LinearRegression():
 
                 # Set converged to true so that we stop our while loop
                 converged = True
-
-            print(gradient)
 
         # Return the weights
         return weights

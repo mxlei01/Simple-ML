@@ -1,4 +1,4 @@
-import pandas
+import copy
 
 class ConvertNumpy():
     # Usage:
@@ -20,6 +20,11 @@ class ConvertNumpy():
         # Return:
         #       features_numpy (numpy matrix) : a numpy matrix of features extracted from pandas_frame
         #       output_numpy   (numpy array)  : a numpy array of output extracted from pandas_frame
+
+        # Make a copy of features, output, and pandas frame
+        features = copy.deepcopy(features)
+        output = copy.deepcopy(output)
+        pandas_frame = pandas_frame.copy(deep=True)
 
         # If constant is not none
         if constant:

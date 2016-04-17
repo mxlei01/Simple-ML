@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 from machine_learning.regression.linear_regression.LinearRegression import LinearRegression
 from data_extraction.convert_numpy.convert_numpy import ConvertNumpy
-
-# tests_http_client.py contains tests for testing our tornado_http_client
+from performance_assessment.predict_output import PredictOutput
+from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 class TestLinearRegression(unittest.TestCase):
     #   Usage:
@@ -12,15 +12,21 @@ class TestLinearRegression(unittest.TestCase):
 
     def setUp(self):
         # Usage:
-        #       Constructor for TestHttpClient. Used for setting the http_client.
+        #       Constructor for TestLinearRegression
         # Arguments:
-        #       http_client (object) : an object of our HTTPClient class
+        #       None
 
         # Create an instance of the Convert Numpy class
         self.convert_numpy = ConvertNumpy()
 
         # Create an instance of the Linear Regression class
         self.linear_regression = LinearRegression()
+
+        # Create an instance of the Predict Output Class
+        self.predict_output = PredictOutput()
+
+        # Create an instance of the Residual Sum Squares Class
+        self.residual_sum_squares = ResidualSumSquares()
 
         # Create a dictionary type to store relevant data types so that our pandas
         # will read the correct information
@@ -72,7 +78,55 @@ class TestLinearRegression(unittest.TestCase):
         self.assertEquals(-46999.887165546708, final_weights[0])
         self.assertEquals(281.91211917520917, final_weights[1])
 
-    def test_02_hill_climbing(self):
+    def test_02_gradient_descent_multiple(self):
+        # Usage:
+        #   Computes gradient descent on multiple input, and computes predicted model and RSS
+        # Arguments:
+        #   None
+
+        # We will use sqft_iving, and sqft_living15
+        features = ['sqft_living', 'sqft_living15']
+
+        # Output will be price
+        output = ['price']
+
+        # Convert our pandas frame to numpy
+        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train_frame, features, output, 1)
+
+        # Create our initial weights
+        initial_weights = np.array([-100000., 1., 1.])
+
+        # Step size
+        step_size = 4e-12
+
+        # Tolerance
+        tolerance = 1e9
+
+        # Compute our gradient descent value
+        final_weights = self.linear_regression.gradient_descent(feature_matrix, output,
+                                                                initial_weights, step_size,
+                                                                tolerance)
+
+        # We will use sqft_iving, and sqft_living15
+        test_features = ['sqft_living', 'sqft_living15']
+
+        # Output will be price
+        test_output = ['price']
+
+        # Convert our test pandas frame to numpy
+        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_test_frames, test_features, test_output, 1)
+
+        # Predict the output of test features
+        predicted_output = self.predict_output.predict_output_linear_regression(test_feature_matrix, final_weights)
+
+        # Compute RSS
+        rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
+
+        # Assert that rss is correct
+        self.assertEquals(270263443629803.41, rss)
+
+
+    def test_03_hill_climbing(self):
         # Usage:
         #       Tests the result on hill climbing
         # Arguments:
@@ -81,7 +135,7 @@ class TestLinearRegression(unittest.TestCase):
         # We will use sqft_living for our features
         features = ['sqft_living']
 
-        # Output will use price
+        # Output will be price
         output = ['price']
 
         # Convert our pandas frame to numpy
@@ -96,7 +150,7 @@ class TestLinearRegression(unittest.TestCase):
         # Tolerance
         tolerance = 2.5e7
 
-        # Compute our gradient descent value
+        # Compute our hill climbing value
         final_weights = self.linear_regression.hill_climbing(feature_matrix, output,
                                                              initial_weights, step_size,
                                                              tolerance)
