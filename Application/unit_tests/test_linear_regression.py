@@ -75,8 +75,8 @@ class TestLinearRegression(unittest.TestCase):
                                                                 tolerance)
 
         # Assert that the weights is correct
-        self.assertEquals(-46999.887165546708, final_weights[0])
-        self.assertEquals(281.91211917520917, final_weights[1])
+        self.assertEquals(round(-46999.887165546708, 3), round(final_weights[0], 3))
+        self.assertEquals(round(281.91211917520917, 3), round(final_weights[1], 3))
 
     def test_02_gradient_descent_multiple(self):
         # Usage:
@@ -123,7 +123,7 @@ class TestLinearRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
 
         # Assert that rss is correct
-        self.assertEquals(round(270263443629803.41, 0), round(rss, 0))
+        self.assertEquals(round(270263443629803.41, -3), round(rss, -3))
 
 
     def test_03_hill_climbing(self):
@@ -156,5 +156,5 @@ class TestLinearRegression(unittest.TestCase):
                                                              tolerance)
 
         # Assert that the weights is correct
-        self.assertEquals(-47000.142201335177, final_weights[0])
-        self.assertEquals(-352.86068692252599, final_weights[1])
+        self.assertEquals(round(-47000.142201335177, 3), round(final_weights[0], 3))
+        self.assertEquals(round(-352.86068692252599, 3), round(final_weights[1], 3))

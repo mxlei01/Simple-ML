@@ -105,10 +105,10 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Assert that the weights is correct
         self.assertEquals(round(-0.16311351478746433, 5), round(final_weights[0], 5))
-        self.assertEquals(263.02436896538489, final_weights[1])
+        self.assertEquals(round(263.02436896538489, 3), round(final_weights[1], 3))
 
         # Assert that rss is correct
-        self.assertEquals(275723632153607.72, rss)
+        self.assertEquals(round(275723632153607.72, 0), round(rss, 0))
 
     def test_02_gradient_descent_high_penalty(self):
         # Usage:
@@ -162,11 +162,11 @@ class TestRidgeRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
-        self.assertEquals(0.048718475774044, final_weights[0])
-        self.assertEquals(124.57402057376679, final_weights[1])
+        self.assertEquals(round(0.048718475774044, 5), round(final_weights[0], 5))
+        self.assertEquals(round(124.57402057376679, 3), round(final_weights[1], 3))
 
         # Assert that rss is correct
-        self.assertEquals(694654309578537.25, rss)
+        self.assertEquals(round(694654309578537.25, 0), round(rss, 0))
 
     def test_03_gradient_descent_multiple_high_penalty(self):
         # Usage:
@@ -220,14 +220,14 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Assert that the weights is correct
         self.assertEquals(round(0.033601165521060711, 5), round(final_weights[0], 5))
-        self.assertEquals(91.490167574878328, final_weights[1])
-        self.assertEquals(78.437490333967176, final_weights[2])
+        self.assertEquals(round(91.490167574878328, 3), round(final_weights[1], 3))
+        self.assertEquals(round(78.437490333967176, 3), round(final_weights[2], 3))
 
         # Assert that rss is correct
-        self.assertEquals(500408530236718.31, rss)
+        self.assertEquals(round(500408530236718.31, 0), round(rss, 0))
 
         # Look at the first predicted output
-        self.assertEquals(270449.70602770313, predicted_output[0])
+        self.assertEquals(round(270449.70602770313, 3), round(predicted_output[0], 3))
 
         # The first output should be 310000 in the test set
         self.assertEquals(310000.0, test_output[0])
@@ -288,7 +288,7 @@ class TestRidgeRegression(unittest.TestCase):
         self.assertEquals(10000000.0, lowest[0])
 
         # Assert True that is the lowest l2_penalty
-        self.assertEquals(120916225812152.84, lowest[1])
+        self.assertEquals(round(120916225812152.84, 0), round(lowest[1], 0))
 
     def test_05_hill_climbing(self):
         # Usage:
@@ -327,4 +327,4 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Assert that the weights is correct
         self.assertEquals(round(-7.7535764461428101e+70, -68), round(final_weights[0], -68))
-        self.assertEquals(-1.9293745396177612e+74, final_weights[1])
+        self.assertEquals(round(-1.9293745396177612e+74, -70), round(final_weights[1], -70))
