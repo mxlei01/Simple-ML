@@ -108,7 +108,7 @@ class TestRidgeRegression(unittest.TestCase):
         self.assertEquals(round(263.02436896538489, 3), round(final_weights[1], 3))
 
         # Assert that rss is correct
-        self.assertEquals(round(275723632153607.72, 0), round(rss, 0))
+        self.assertEquals(round(275723632153607.72, -5), round(rss, -5))
 
     def test_02_gradient_descent_high_penalty(self):
         # Usage:
@@ -166,7 +166,7 @@ class TestRidgeRegression(unittest.TestCase):
         self.assertEquals(round(124.57402057376679, 3), round(final_weights[1], 3))
 
         # Assert that rss is correct
-        self.assertEquals(round(694654309578537.25, 0), round(rss, 0))
+        self.assertEquals(round(694654309578537.25, -5), round(rss, -5))
 
     def test_03_gradient_descent_multiple_high_penalty(self):
         # Usage:
