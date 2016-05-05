@@ -1,4 +1,4 @@
-from data_extraction.convert_numpy.convert_numpy import ConvertNumpy
+from data_extraction.convert_numpy import ConvertNumpy
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.residual_sum_squares import ResidualSumSquares
 
@@ -76,12 +76,12 @@ class KFoldCrossValidation:
             final_weights = model(**model_parameters, feature_matrix=training_feature_matrix, output=training_output)
 
             # Predict the output of test features
-            predicted_output = self.predict_output.predict_output_linear_regression(validation_feature_matrix,
-                                                                                    final_weights)
+            predicted_output = self.predict_output.predict_output_regression(validation_feature_matrix,
+                                                                             final_weights)
 
             # compute squared error (in other words, rss)
-            validation_error_sum += self.residual_sum_squares.residual_sum_squares_linear_regression(validation_output,
-                                                                                                     predicted_output)
+            validation_error_sum += self.residual_sum_squares.residual_sum_squares_regression(validation_output,
+                                                                                              predicted_output)
 
         # Return the validation_error_sum divided by fold
         return validation_error_sum/k

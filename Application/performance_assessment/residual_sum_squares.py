@@ -4,9 +4,9 @@ class ResidualSumSquares():
     # Usage:
     #   Computes residual sum of squares
 
-    def residual_sum_squares_linear_regression(self, output, predicted_output):
+    def residual_sum_squares_regression(self, output, predicted_output):
         # Usage:
-        #   Computes for residual sum of squares for linear regression, which computes
+        #   Computes for residual sum of squares for regression, which computes
         #   RSS = (y-Hw)^t * (y-Hw)
         # Arguments
         #   output           (numpy array) : real output

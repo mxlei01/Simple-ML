@@ -1,15 +1,15 @@
 import unittest
-import pandas as pd
 import numpy as np
+import pandas as pd
+from data_extraction.convert_numpy import ConvertNumpy
 from machine_learning.regression.ridge_regression.RidgeRegression import RidgeRegression
-from data_extraction.convert_numpy.convert_numpy import ConvertNumpy
+from performance_assessment.k_fold_cross_validation import KFoldCrossValidation
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.residual_sum_squares import ResidualSumSquares
-from performance_assessment.k_fold_cross_validation import KFoldCrossValidation
 
 class TestRidgeRegression(unittest.TestCase):
     #   Usage:
-    #       Tests for the Linear Regression Class.
+    #       Tests for the Ridge Regression Class.
 
     def setUp(self):
         # Usage:
@@ -98,10 +98,10 @@ class TestRidgeRegression(unittest.TestCase):
         test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_test_frames, test_features, test_output, 1)
 
         # Predict the output of test features
-        predicted_output = self.predict_output.predict_output_linear_regression(test_feature_matrix, final_weights)
+        predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, final_weights)
 
         # Compute RSS
-        rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
+        rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
         self.assertEquals(round(-0.16311351478746433, 5), round(final_weights[0], 5))
@@ -156,10 +156,10 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Predict the output of test features
 
-        predicted_output = self.predict_output.predict_output_linear_regression(test_feature_matrix, final_weights)
+        predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, final_weights)
 
         # Compute RSS
-        rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
+        rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
         self.assertEquals(round(0.048718475774044, 5), round(final_weights[0], 5))
@@ -213,10 +213,10 @@ class TestRidgeRegression(unittest.TestCase):
         test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_test_frames, test_features, test_output, 1)
 
         # Predict the output of test features
-        predicted_output = self.predict_output.predict_output_linear_regression(test_feature_matrix, final_weights)
+        predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, final_weights)
 
         # Compute RSS
-        rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
+        rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
         self.assertEquals(round(0.033601165521060711, 5), round(final_weights[0], 5))

@@ -1,10 +1,11 @@
 import unittest
-import pandas as pd
 import numpy as np
+import pandas as pd
+from data_extraction.convert_numpy import ConvertNumpy
 from machine_learning.regression.linear_regression.LinearRegression import LinearRegression
-from data_extraction.convert_numpy.convert_numpy import ConvertNumpy
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.residual_sum_squares import ResidualSumSquares
+
 
 class TestLinearRegression(unittest.TestCase):
     #   Usage:
@@ -117,10 +118,10 @@ class TestLinearRegression(unittest.TestCase):
         test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_test_frames, test_features, test_output, 1)
 
         # Predict the output of test features
-        predicted_output = self.predict_output.predict_output_linear_regression(test_feature_matrix, final_weights)
+        predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, final_weights)
 
         # Compute RSS
-        rss = self.residual_sum_squares.residual_sum_squares_linear_regression(test_output, predicted_output)
+        rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that rss is correct
         self.assertEquals(round(270263443629803.41, -3), round(rss, -3))
