@@ -25,7 +25,7 @@ class TestLassoRegression(unittest.TestCase):
         # Create an instance of the Normalize Features class
         self.normalize_features = NormalizeFeatures()
 
-        # Create an instance of the Linear Regression class
+        # Create an instance of the Lasso Regression class
         self.lasso_regression = LassoRegression()
 
         # Create an instance of the Predict Output Class

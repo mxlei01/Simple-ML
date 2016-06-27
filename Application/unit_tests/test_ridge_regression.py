@@ -20,7 +20,7 @@ class TestRidgeRegression(unittest.TestCase):
         # Create an instance of the Convert Numpy class
         self.convert_numpy = ConvertNumpy()
 
-        # Create an instance of the Linear Regression class
+        # Create an instance of the Ridge Regression class
         self.ridge_regression = RidgeRegression()
 
         # Create an instance of the Predict Output Class
