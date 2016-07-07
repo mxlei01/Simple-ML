@@ -1,6 +1,7 @@
 import numpy as np
 from performance_assessment.predict_output import PredictOutput
 
+
 class LassoRegression:
     # Usage:
     #       Lasso Regression is based on: w_j = ro_j + delta/2  if ro_j < -delta/2

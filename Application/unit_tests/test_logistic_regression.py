@@ -4,8 +4,9 @@ import string
 import numpy as np
 import pandas as pd
 from data_extraction.convert_numpy import ConvertNumpy
-from machine_learning.classification.logistic_regression import LogisticRegression
+from machine_learning.classification.logistic_regression.LogisticRegression import LogisticRegression
 from ml_math.log_likelihood import LogLikelihood
+from performance_assessment.predict_output import PredictOutput
 
 
 class TestLogisticRegression(unittest.TestCase):
@@ -23,6 +24,9 @@ class TestLogisticRegression(unittest.TestCase):
 
         # Create an instance of log likelihood
         self.log_likelhood = LogLikelihood()
+
+        # Create an instance of the Predict Output Class
+        self.predict_output = PredictOutput()
 
         # Create an instance of the Logistic Regression class
         self.logistic_regression = LogisticRegression()
@@ -52,7 +56,7 @@ class TestLogisticRegression(unittest.TestCase):
 
     def test_01_gradient_ascent(self):
         # Usage:
-        #       Test out the gradient ascent algorithm for classification
+        #       Test out the gradient ascent algorithm for logistic regression
         # Arguments:
         #       None
 

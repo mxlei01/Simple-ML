@@ -43,12 +43,18 @@ class RidgeRegression:
             # Compute -2H^t(y-Hw)
             gradient = -2*np.dot(np.transpose(feature_matrix), error)
 
+            # Remember the intercept's gradient
+            intercept = gradient[0]
+
             # Compute gradient(-2H^t(y-Hw))+l2_penalty*2*weights
             gradient += l2_penalty*2*weights
 
+            # We will remove the first gradient's l2_penalty, and only set weights, since the first weight is an
+            # intercept
+            gradient[0] = intercept
+
             # Compute w^(t+1) <= w^(t) - n((-2H^t(y-Hw))+l2_penalty*2*weights)
             weights -= step_size*gradient
-            #print(weights)
 
             # Determine if we have a tolerance value
             if tolerance is not None:
@@ -99,8 +105,15 @@ class RidgeRegression:
             # Compute -2H^t(y-Hw)
             gradient = -2*np.dot(np.transpose(feature_matrix), error)
 
+            # Remember the intercept's gradient
+            intercept = gradient[0]
+
             # Compute gradient(-2H^t(y-Hw))+l2_penalty*2*weights
             gradient += l2_penalty*2*weights
+
+            # We will remove the first gradient's l2_penalty, and only set weights, since the first weight is an
+            # intercept
+            gradient[0] = intercept
 
             # Compute w^(t+1) <= w^(t) + n((-2H^t(y-Hw))+l2_penalty*2*weights)
             weights += step_size*gradient
