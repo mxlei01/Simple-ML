@@ -224,7 +224,7 @@ class TestRidgeRegression(unittest.TestCase):
         self.assertEquals(round(78.437490333967176, 3), round(final_weights[2], 3))
 
         # Assert that rss is correct
-        self.assertEquals(round(500404800500841.0, 0), round(rss, 0))
+        self.assertEquals(round(500404800500842.0, -5), round(rss, -5))
 
         # Look at the first predicted output
         self.assertEquals(round(270453.53000000003, 3), round(predicted_output[0], 3))
