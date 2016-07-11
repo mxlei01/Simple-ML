@@ -99,7 +99,7 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid_small_frame, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
-        features_train, norms = self.normalize_features.normalize_features(features_train)
+        features_train, norms = self.normalize_features.l2_norm(features_train)
         features_test = features_test / norms
         features_valid = features_valid / norms
 
@@ -143,7 +143,7 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid_small_frame, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
-        features_train, norms = self.normalize_features.normalize_features(features_train)
+        features_train, norms = self.normalize_features.l2_norm(features_train)
         features_test = features_test / norms
         features_valid = features_valid / norms
 
@@ -194,7 +194,7 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid_small_frame, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
-        features_train, norms = self.normalize_features.normalize_features(features_train)
+        features_train, norms = self.normalize_features.l2_norm(features_train)
         features_test = features_test / norms
         features_valid = features_valid / norms
 
@@ -252,7 +252,7 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid_small_frame, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
-        features_train, norms = self.normalize_features.normalize_features(features_train)
+        features_train, norms = self.normalize_features.l2_norm(features_train)
         features_test = features_test / norms
         features_valid = features_valid / norms
 

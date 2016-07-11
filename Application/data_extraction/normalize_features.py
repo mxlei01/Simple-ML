@@ -1,12 +1,14 @@
 import numpy as np
 
+
 class NormalizeFeatures:
     # Usage:
     #       A class that contains functions to normalize features
 
-    def normalize_features(self, features_matrix):
+    def l2_norm(self, features_matrix):
         # Usage:
-        #       Normalize a numpy array
+        #       Normalize a numpy array using l2 norm: http://mathworld.wolfram.com/L2-Norm.html
+        #       also called Euclidean Norm: sqrt(x^2+y^2+z^2)
         # Arguments:
         #       features_matrix (numpy matrix) : a numpy matrix to normalize
 

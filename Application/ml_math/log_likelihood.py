@@ -61,9 +61,9 @@ class LogLikelihood:
         # Get the score, which is w^t*h(xi)
         scores = np.dot(feature_matrix, coefficients)
 
-        # Sum over all of the values of indiactor*score - logexp and minus the l2 penalty and summing all the
+        # Sum over all of the values of indicator*score - logexp and minus the l2 penalty and summing all the
         # coefficient while squared
-        lp = np.sum((indicator-1)*scores - np.log(1. + np.exp(-scores))) - l2_penalty*np.sum(coefficients[1:]**2)
+        lp = np.sum((indicator-1)*scores - np.log(1.+np.exp(-scores))) - l2_penalty*np.sum(coefficients[1:]**2)
 
         return lp
 
@@ -90,8 +90,8 @@ class LogLikelihood:
         # Get the score, which is w^t*h(xi)
         scores = np.dot(feature_matrix, coefficients)
 
-        # Sum over all of the values of indiactor*score - logexp and minus the l1 penalty and summing all the
+        # Sum over all of the values of indicator*score - logexp and minus the l1 penalty and summing all the
         # absolute coefficients
-        lp = np.sum((indicator-1)*scores - np.log(1. + np.exp(-scores))) - l1_penalty*np.sum(abs(coefficients[1:]))
+        lp = np.sum((indicator-1)*scores - np.log(1.+np.exp(-scores))) - l1_penalty*np.sum(abs(coefficients[1:]))
 
         return lp

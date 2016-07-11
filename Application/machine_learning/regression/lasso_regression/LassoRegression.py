@@ -7,7 +7,7 @@ class LassoRegression:
     #       Lasso Regression is based on: w_j = ro_j + delta/2  if ro_j < -delta/2
     #                                           0               if ro_j between [-delta/2,delta/2]
     #                                           ro_j - delta/2  if ro_j >  delta/2
-    #       Where ro_j = Zigma(N, i=1, h_j(x_i)(y_i-y^_i(w_-j)
+    #       Where ro_j = Sigma(N, i=1, h_j(x_i)(y_i-y^_i(w_-j)
     #           h_j(x_i)   : normalized features of x_i (input features, but without j feature)
     #           y_i        : real output
     #           y^_i(w_-j) : predicted output without feature j
@@ -47,7 +47,7 @@ class LassoRegression:
             # residual = output - prediction
             residual = real_output-prediction
 
-            # ro[j] = zigma(N, i=1, feature_i) * residual
+            # ro[j] = Sigma(N, i=1, feature_i) * residual
             ro[j] = np.sum([feature_matrix[:, j]*residual])
 
         return ro
@@ -96,7 +96,7 @@ class LassoRegression:
         #       l1_penalty      (double)       : l1 penalty value
         #       tolerance       (double)       : tolerance to test against all changed weights
         # Return:
-        #       weights         (numpy array)  : final weights after coordinate design has been completed
+        #       weights         (numpy array)  : final weights after coordinate descent has been completed
 
         # Flag to indicate that the change is too low
         low_change = False

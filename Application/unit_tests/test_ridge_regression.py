@@ -7,6 +7,7 @@ from performance_assessment.k_fold_cross_validation import KFoldCrossValidation
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.residual_sum_squares import ResidualSumSquares
 
+
 class TestRidgeRegression(unittest.TestCase):
     #   Usage:
     #       Tests for the Ridge Regression Class.

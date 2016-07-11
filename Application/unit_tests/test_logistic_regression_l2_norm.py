@@ -31,7 +31,7 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
         # Load the important words
         self.important_words = json.load(open('./unit_tests/test_data/important_words.json', 'r'))
 
-        # Create an instance of the Logistic Regression class
+        # Create an instance of the Logistic Regression with L2 Norm class
         self.logistic_regression_l2_norm = LogisticRegressionL2Norm()
 
         # Load the amazon baby train subset
@@ -102,7 +102,7 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
         train_accuracy = self.accuracy.accuracy_classification(feature_matrix_train, label_train, coefficients)
         validation_accuracy = self.accuracy.accuracy_classification(feature_matrix_valid, label_valid, coefficients)
 
-        # Make sure the accuraries are correct
+        # Make sure the accuracies are correct
         self.assertEqual(round(0.784990911452, 5), round(train_accuracy, 5))
         self.assertEqual(round(0.781719727383, 5), round(validation_accuracy, 5))
 

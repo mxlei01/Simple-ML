@@ -71,7 +71,7 @@ class TestLassoRegression(unittest.TestCase):
         #       None
 
         # Normalize the features, and also return the norms
-        features, norms = self.normalize_features.normalize_features(np.array([[3., 6., 9.], [4., 8., 12.]]))
+        features, norms = self.normalize_features.l2_norm(np.array([[3., 6., 9.], [4., 8., 12.]]))
 
         # Assert that the np array is equal to features
         self.assertTrue(np.array_equal(np.array([[0.6, 0.6, 0.6], [0.8, 0.8, 0.8]]), features), True)
@@ -95,7 +95,7 @@ class TestLassoRegression(unittest.TestCase):
         feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_frame, features, output, 1)
 
         # Create our initial weights
-        normalized_feature_matrix, norms = self.normalize_features.normalize_features(feature_matrix)
+        normalized_feature_matrix, norms = self.normalize_features.l2_norm(feature_matrix)
 
         # Set initial weights
         weights = np.array([1., 4., 1.])
@@ -139,7 +139,7 @@ class TestLassoRegression(unittest.TestCase):
         feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_frame, features, output, 1)
 
         # Create our initial weights
-        normalized_feature_matrix, norms = self.normalize_features.normalize_features(feature_matrix)
+        normalized_feature_matrix, norms = self.normalize_features.l2_norm(feature_matrix)
 
         # Set initial weights
         initial_weights = np.zeros(3)
@@ -193,7 +193,7 @@ class TestLassoRegression(unittest.TestCase):
         feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train_frame, features, output, 1)
 
         # Create our initial weights
-        normalized_feature_matrix, norms = self.normalize_features.normalize_features(feature_matrix)
+        normalized_feature_matrix, norms = self.normalize_features.l2_norm(feature_matrix)
 
         # Compute Multiple Weights
         weights1e7 = self.lasso_regression.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
