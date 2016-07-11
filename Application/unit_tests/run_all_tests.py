@@ -18,8 +18,8 @@ if __name__ == "__main__":
             loader.loadTestsFromTestCase(TestLassoRegression),
             loader.loadTestsFromTestCase(TestLogisticRegression),
             loader.loadTestsFromTestCase(TestKNearestNeighborRegression),
-            loader.loadTestsFromTestCase(TestLogisticRegressionL2Norm),
-            loader.loadTestsFromTestCase(TestLogisticRegressionL1Norm)
+            loader.loadTestsFromTestCase(TestLogisticRegressionL2Norm)
+            #loader.loadTestsFromTestCase(TestLogisticRegressionL1Norm)
         ))
 
     runner = TextTestRunner()
