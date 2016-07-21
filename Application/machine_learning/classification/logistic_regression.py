@@ -1,10 +1,11 @@
 import numpy as np
 import math
 
+
 class LogisticRegression:
     # Usage:
     #   Logistic Regression is based on: w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w)),
-    #   for gradient ascend,
+    #   for gradient ascent,
     #       w(t)         : weight at iteration t
     #       w(t+1)       : weight at iteration t+1
     #       n            : step size
@@ -12,7 +13,7 @@ class LogisticRegression:
     #       1[y=+1]      : indicator function for y=+1
     #       P(y=1|x_i,w) : probability of y=1 for x_i using the current weights
 
-    def gradient_ascent(self, feature_matrix, sentiment, initial_coefficients, step_size, max_iter):
+    def gradient_ascent(self, feature_matrix, label, initial_coefficients, step_size, max_iter):
         # Usage:
         #       Gradient ascent algorithm: w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
         # Arguments:
@@ -40,7 +41,7 @@ class LogisticRegression:
             predictions = [1/(1+math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
 
             # Compute indicator value for (y_i = +1)
-            indicator = (sentiment == +1)
+            indicator = (label == +1)
 
             # Compute the errors as indicator - predictions, (1[y=+1]-P(y=1|x_i,w)
             errors = indicator - predictions

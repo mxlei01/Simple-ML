@@ -1,12 +1,13 @@
-import unittest
 import sys
+import unittest
 import numpy as np
 import pandas as pd
 from data_extraction.convert_numpy import ConvertNumpy
 from data_extraction.normalize_features import NormalizeFeatures
-from machine_learning.regression.k_nearest_neighbor_regression.KNearestNeighborRegression import KNearestNeighborRegression
+from machine_learning.regression.k_nearest_neighbor_regression import KNearestNeighborRegression
 from ml_math.euclidean_distance import EuclideanDistance
 from performance_assessment.determine_k_knn import DetermineKKnn
+
 
 class TestKNearestNeighborRegression(unittest.TestCase):
     #   Usage:
@@ -35,35 +36,39 @@ class TestKNearestNeighborRegression(unittest.TestCase):
 
         # Create a dictionary type to store relevant data types so that our pandas
         # will read the correct information
-        dtype_dict = {'bathrooms':float, 'waterfront':int, 'sqft_above':int, 'sqft_living15':float,
-                      'grade':int, 'yr_renovated':int, 'price':float, 'bedrooms':float, 'zipcode':str,
-                      'long':float, 'sqft_lot15':float, 'sqft_living':float, 'floors':str, 'condition':int,
-                      'lat':float, 'date':str, 'sqft_basement':int, 'yr_built':int, 'id':str, 'sqft_lot':int,
-                      'view':int}
+        dtype_dict = {'bathrooms': float, 'waterfront': int, 'sqft_above': int, 'sqft_living15': float,
+                      'grade': int, 'yr_renovated': int, 'price': float, 'bedrooms': float, 'zipcode': str,
+                      'long': float, 'sqft_lot15': float, 'sqft_living': float, 'floors': str, 'condition': int,
+                      'lat': float, 'date': str, 'sqft_basement': int, 'yr_built': int, 'id': str, 'sqft_lot': int,
+                      'view': int}
 
-        # Create a kc_house_frame that encompasses all test and train data
-        self.kc_house_small_frame = pd.read_csv('./unit_tests/test_data/kc_house_knn/kc_house_data_small.csv', dtype=dtype_dict)
+        # Create a kc_house that encompasses all test and train data
+        self.kc_house = pd.read_csv('./unit_tests/test_data/regression/kc_house_knn/kc_house_data_small.csv',
+                                    dtype=dtype_dict)
 
         # Create a kc_house_test_frame that encompasses only train data
-        self.kc_house_train_small_frame = pd.read_csv('./unit_tests/test_data/kc_house_knn/kc_house_data_small_train.csv', dtype=dtype_dict)
+        self.kc_house_train = pd.read_csv('./unit_tests/test_data/regression/kc_house_knn/kc_house_data_small_train.csv',
+                                          dtype=dtype_dict)
 
         # Create a kc_house_frames that encompasses only test data
-        self.kc_house_test_small_frame = pd.read_csv('./unit_tests/test_data/kc_house_knn/kc_house_data_small_test.csv', dtype=dtype_dict)
+        self.kc_house_test = pd.read_csv('./unit_tests/test_data/regression/kc_house_knn/kc_house_data_small_test.csv',
+                                         dtype=dtype_dict)
 
         # Create a kc_house_frames that encompasses only validation data
-        self.kc_house_valid_small_frame = pd.read_csv('./unit_tests/test_data/kc_house_knn/kc_house_data_validation.csv', dtype=dtype_dict)
+        self.kc_house_valid = pd.read_csv('./unit_tests/test_data/regression/kc_house_knn/kc_house_data_validation.csv',
+                                          dtype=dtype_dict)
 
         # Convert all the frames with the floors to float type
-        self.kc_house_small_frame['floors'] = self.kc_house_small_frame['floors'].astype(float)
-        self.kc_house_train_small_frame['floors'] = self.kc_house_train_small_frame['floors'].astype(float)
-        self.kc_house_test_small_frame['floors'] = self.kc_house_test_small_frame['floors'].astype(float)
-        self.kc_house_valid_small_frame['floors'] = self.kc_house_valid_small_frame['floors'].astype(float)
+        self.kc_house['floors'] = self.kc_house['floors'].astype(float)
+        self.kc_house_train['floors'] = self.kc_house_train['floors'].astype(float)
+        self.kc_house_test['floors'] = self.kc_house_test['floors'].astype(float)
+        self.kc_house_valid['floors'] = self.kc_house_valid['floors'].astype(float)
 
         # Then back to int type
-        self.kc_house_small_frame['floors'] = self.kc_house_small_frame['floors'].astype(int)
-        self.kc_house_train_small_frame['floors'] = self.kc_house_train_small_frame['floors'].astype(int)
-        self.kc_house_test_small_frame['floors'] = self.kc_house_test_small_frame['floors'].astype(int)
-        self.kc_house_valid_small_frame['floors'] = self.kc_house_valid_small_frame['floors'].astype(int)
+        self.kc_house['floors'] = self.kc_house['floors'].astype(int)
+        self.kc_house_train['floors'] = self.kc_house_train['floors'].astype(int)
+        self.kc_house_test['floors'] = self.kc_house_test['floors'].astype(int)
+        self.kc_house_valid['floors'] = self.kc_house_valid['floors'].astype(int)
 
     def test_01_compute_euclidean_distance(self):
         # Usage:
@@ -94,9 +99,9 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         output = ['price']
 
         # Extract features and output for train, test, and validation set
-        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train_small_frame, feature_list, output, 1)
-        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test_small_frame, feature_list, output, 1)
-        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid_small_frame, feature_list, output, 1)
+        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
+        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
+        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
         features_train, norms = self.normalize_features.l2_norm(features_train)
@@ -138,9 +143,9 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         output = ['price']
 
         # Extract features and output for train, test, and validation set
-        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train_small_frame, feature_list, output, 1)
-        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test_small_frame, feature_list, output, 1)
-        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid_small_frame, feature_list, output, 1)
+        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
+        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
+        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
         features_train, norms = self.normalize_features.l2_norm(features_train)
@@ -189,9 +194,9 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         output = ['price']
 
         # Extract features and output for train, test, and validation set
-        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train_small_frame, feature_list, output, 1)
-        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test_small_frame, feature_list, output, 1)
-        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid_small_frame, feature_list, output, 1)
+        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
+        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
+        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
         features_train, norms = self.normalize_features.l2_norm(features_train)
@@ -247,9 +252,9 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         output = ['price']
 
         # Extract features and output for train, test, and validation set
-        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train_small_frame, feature_list, output, 1)
-        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test_small_frame, feature_list, output, 1)
-        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid_small_frame, feature_list, output, 1)
+        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
+        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
+        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
         features_train, norms = self.normalize_features.l2_norm(features_train)

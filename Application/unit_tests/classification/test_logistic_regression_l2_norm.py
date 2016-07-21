@@ -1,10 +1,9 @@
-import unittest
 import json
+import unittest
 import numpy as np
 import pandas as pd
 from data_extraction.convert_numpy import ConvertNumpy
-from machine_learning.classification.logistic_regression_l2_norm.LogisticRegressionL2Norm \
-    import LogisticRegressionL2Norm
+from machine_learning.classification.logistic_regression_l2_norm import LogisticRegressionL2Norm
 from ml_math.log_likelihood import LogLikelihood
 from performance_assessment.accuracy import Accuracy
 
@@ -29,16 +28,16 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
         self.accuracy = Accuracy()
 
         # Load the important words
-        self.important_words = json.load(open('./unit_tests/test_data/important_words.json', 'r'))
+        self.important_words = json.load(open('./unit_tests/test_data/classification/important_words.json', 'r'))
 
         # Create an instance of the Logistic Regression with L2 Norm class
         self.logistic_regression_l2_norm = LogisticRegressionL2Norm()
 
         # Load the amazon baby train subset
-        self.training_data = pd.read_csv('./unit_tests/test_data/amazon_baby_subset_train.csv')
+        self.training_data = pd.read_csv('./unit_tests/test_data/classification/amazon_baby_subset_train.csv')
 
         # Load the amazon baby train subset
-        self.validation_data = pd.read_csv('./unit_tests/test_data/amazon_baby_subset_validation.csv')
+        self.validation_data = pd.read_csv('./unit_tests/test_data/classification/amazon_baby_subset_validation.csv')
 
     def test_01_gradient_ascent_no_penalty(self):
         # Usage:

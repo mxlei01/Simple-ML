@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 import pandas as pd
 from data_extraction.convert_numpy import ConvertNumpy
-from machine_learning.regression.linear_regression.LinearRegression import LinearRegression
+from machine_learning.regression.linear_regression import LinearRegression
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.residual_sum_squares import ResidualSumSquares
 
@@ -31,20 +31,20 @@ class TestLinearRegression(unittest.TestCase):
 
         # Create a dictionary type to store relevant data types so that our pandas
         # will read the correct information
-        dtype_dict = {'bathrooms':float, 'waterfront':int, 'sqft_above':int, 'sqft_living15':float,
-                      'grade':int, 'yr_renovated':int, 'price':float, 'bedrooms':float, 'zipcode':str,
-                      'long':float, 'sqft_lot15':float, 'sqft_living':float, 'floors':str, 'condition':int,
-                      'lat':float, 'date':str, 'sqft_basement':int, 'yr_built':int, 'id':str, 'sqft_lot':int,
-                      'view':int}
+        dtype_dict = {'bathrooms': float, 'waterfront': int, 'sqft_above': int, 'sqft_living15': float,
+                      'grade': int, 'yr_renovated': int, 'price': float, 'bedrooms': float, 'zipcode': str,
+                      'long': float, 'sqft_lot15': float, 'sqft_living': float, 'floors': str, 'condition': int,
+                      'lat': float, 'date': str, 'sqft_basement': int, 'yr_built': int, 'id': str, 'sqft_lot': int,
+                      'view': int}
 
-        # Create a kc_house_frame that encompasses all test and train data
-        self.kc_house_frame = pd.read_csv('./unit_tests/test_data/kc_house/kc_house_data.csv', dtype=dtype_dict)
+        # Create a kc_house that encompasses all test and train data
+        self.kc_house = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_data.csv', dtype=dtype_dict)
 
         # Create a kc_house_test_frame that encompasses only train data
-        self.kc_house_train_frame = pd.read_csv('./unit_tests/test_data/kc_house/kc_house_train_data.csv', dtype=dtype_dict)
+        self.kc_house_train = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_train_data.csv', dtype=dtype_dict)
 
         # Create a kc_house_frames that encompasses only test data
-        self.kc_test_frames = pd.read_csv('./unit_tests/test_data/kc_house/kc_house_test_data.csv', dtype=dtype_dict)
+        self.kc_house_test = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_test_data.csv', dtype=dtype_dict)
 
     def test_01_gradient_descent(self):
         # Usage:
@@ -59,7 +59,7 @@ class TestLinearRegression(unittest.TestCase):
         output = ['price']
 
         # Convert our pandas frame to numpy
-        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train_frame, features, output, 1)
+        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train, features, output, 1)
 
         # Create our initial weights
         initial_weights = np.array([-47000., 1.])
@@ -92,7 +92,7 @@ class TestLinearRegression(unittest.TestCase):
         output = ['price']
 
         # Convert our pandas frame to numpy
-        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train_frame, features, output, 1)
+        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train, features, output, 1)
 
         # Create our initial weights
         initial_weights = np.array([-100000., 1., 1.])
@@ -115,7 +115,7 @@ class TestLinearRegression(unittest.TestCase):
         test_output = ['price']
 
         # Convert our test pandas frame to numpy
-        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_test_frames, test_features, test_output, 1)
+        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features, test_output, 1)
 
         # Predict the output of test features
         predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, final_weights)
@@ -140,7 +140,7 @@ class TestLinearRegression(unittest.TestCase):
         output = ['price']
 
         # Convert our pandas frame to numpy
-        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train_frame, features, output, 1)
+        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train, features, output, 1)
 
         # Create our initial weights
         initial_weights = np.array([-47000., 1.])

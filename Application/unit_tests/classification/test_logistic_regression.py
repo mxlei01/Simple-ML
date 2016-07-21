@@ -1,10 +1,10 @@
-import unittest
 import json
 import string
+import unittest
 import numpy as np
 import pandas as pd
 from data_extraction.convert_numpy import ConvertNumpy
-from machine_learning.classification.logistic_regression.LogisticRegression import LogisticRegression
+from machine_learning.classification.logistic_regression import LogisticRegression
 from ml_math.log_likelihood import LogLikelihood
 from performance_assessment.predict_output import PredictOutput
 
@@ -32,10 +32,10 @@ class TestLogisticRegression(unittest.TestCase):
         self.logistic_regression = LogisticRegression()
 
         # Load the important words
-        self.important_words = json.load(open('./unit_tests/test_data/important_words.json', 'r'))
+        self.important_words = json.load(open('./unit_tests/test_data/classification/important_words.json', 'r'))
 
         # Load the amazon baby subset
-        self.review_frame = pd.read_csv('./unit_tests/test_data/amazon_baby_subset.csv')
+        self.review_frame = pd.read_csv('./unit_tests/test_data/classification/amazon_baby_subset.csv')
 
         # Review needs to be text
         self.review_frame['review'].astype(str)
