@@ -11,7 +11,7 @@ from performance_assessment.predict_output import PredictOutput
 
 class TestLogisticRegression(unittest.TestCase):
     #   Usage:
-    #       Tests for the Logistic Regression Class.
+    #       Tests for the Logistic Regression Class
 
     def setUp(self):
         # Usage:
@@ -32,10 +32,10 @@ class TestLogisticRegression(unittest.TestCase):
         self.logistic_regression = LogisticRegression()
 
         # Load the important words
-        self.important_words = json.load(open('./unit_tests/test_data/classification/important_words.json', 'r'))
+        self.important_words = json.load(open('./unit_tests/test_data/classification/amazon/important_words.json', 'r'))
 
         # Load the amazon baby subset
-        self.review_frame = pd.read_csv('./unit_tests/test_data/classification/amazon_baby_subset.csv')
+        self.review_frame = pd.read_csv('./unit_tests/test_data/classification/amazon/amazon_baby_subset.csv')
 
         # Review needs to be text
         self.review_frame['review'].astype(str)

@@ -159,7 +159,7 @@ class TestLassoRegression(unittest.TestCase):
         self.assertTrue(np.allclose(weights, np.array([21624998.3663629, 63157246.78545423, 0.]), True))
 
         # Predict the output
-        predicted_output = self.predict_output.predict_output_regression(normalized_feature_matrix, weights)
+        predicted_output = self.predict_output.regression(normalized_feature_matrix, weights)
 
         # Assert that the RSS is what we wanted
         self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(output, predicted_output), -10),
@@ -231,21 +231,21 @@ class TestLassoRegression(unittest.TestCase):
         test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, features, output, 1)
 
         # Predict the output
-        predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, normalized_weights1e4)
+        predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e4)
 
         # Assert that the RSS is what we wanted
         self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output), -12),
                           round(2.2778100476e+14, -12))
 
         # Predict the output
-        predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, normalized_weights1e7)
+        predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e7)
 
         # Assert that the RSS is what we wanted
         self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output), -12),
                           round(2.75962079909e+14, -12))
 
         # Predict the output
-        predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, normalized_weights1e8)
+        predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e8)
 
         # Assert that the RSS is what we wanted
         self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output), -12),

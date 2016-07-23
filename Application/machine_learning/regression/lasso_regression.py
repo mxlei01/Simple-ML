@@ -41,8 +41,8 @@ class LassoRegression:
         for j in range(feature_num):
 
             # prediction = y_i(w_-j), prediction without feature j
-            prediction = self.predict_output.predict_output_regression(np.delete(feature_matrix, j, axis=1),
-                                                                       np.delete(weights, j))
+            prediction = self.predict_output.regression(np.delete(feature_matrix, j, axis=1),
+                                                        np.delete(weights, j))
 
             # residual = output - prediction
             residual = real_output-prediction

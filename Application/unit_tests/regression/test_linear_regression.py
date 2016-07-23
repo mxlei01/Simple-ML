@@ -118,7 +118,7 @@ class TestLinearRegression(unittest.TestCase):
         test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features, test_output, 1)
 
         # Predict the output of test features
-        predicted_output = self.predict_output.predict_output_regression(test_feature_matrix, final_weights)
+        predicted_output = self.predict_output.regression(test_feature_matrix, final_weights)
 
         # Compute RSS
         rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
