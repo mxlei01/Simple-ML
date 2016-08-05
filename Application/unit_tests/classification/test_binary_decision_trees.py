@@ -76,3 +76,44 @@ class TestBinaryDecisionTrees(unittest.TestCase):
 
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
+
+
+    def test_02_greedy_recursive_early_stop(self):
+        # Usage:
+        #       Test out the greedy recursive algorithm with early stopping
+        # Arguments:
+        #       None
+
+        # Create a model with max_depth=6, min_node_size=100, min_error_reduction=0
+        model_1 = self.binary_decision_trees.greedy_recursive_early_stop(self.train_data, self.features, self.target,
+                                                                         max_depth=6, min_node_size=100,
+                                                                         min_error_reduction=0.0)
+
+        # Get the classification result of the first row
+        classification = self.predict_output.classification_binary_tree(model_1, self.test_data.iloc[0])
+
+        # Assert that the classification should be -1
+        self.assertEqual(classification, -1)
+
+        # Compute the accuracy of the decision tree
+        accuracy = self.accuracy.error_classification_binary_tree(model_1, self.test_data)
+
+        # Assert that the classification should be 0.38367083153813014
+        self.assertEqual(round(accuracy, 5), round(0.38367083153813014, 5))
+
+        # Create a model with max_depth=6, min_node_size=0, min_error_reduction=-1
+        model_2 = self.binary_decision_trees.greedy_recursive_early_stop(self.train_data, self.features, self.target,
+                                                                         max_depth=6, min_node_size=0,
+                                                                         min_error_reduction=-1)
+
+        # Get the classification result of the first row
+        classification = self.predict_output.classification_binary_tree(model_2, self.test_data.iloc[0])
+
+        # Assert that the classification should be -1
+        self.assertEqual(classification, -1)
+
+        # Compute the accuracy of the decision tree
+        accuracy = self.accuracy.error_classification_binary_tree(model_2, self.test_data)
+
+        # Assert that the classification should be 0.3837785437311504
+        self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
