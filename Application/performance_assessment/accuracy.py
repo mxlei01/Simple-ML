@@ -42,7 +42,28 @@ class Accuracy:
         # Compute the accuracy, which is the number of correct predictions divided by the length of feature matrix
         return num_correct / len(feature_matrix)
 
-    def error_classification_binary_tree(self, tree, data):
+    def accuracy_classification_decision_tree(self, data, predictions, target):
+        # Usage:
+        #       Computes accuracy for decision trees, which is based on accuracy = # correctly classified data points
+        #                                                                          ----------------------------------
+        #                                                                                 # total data points
+        # Arguments:
+        #       data        (pandas frame)  : train/testing data
+        #       predictions (pandas series) : a pandas series containing output prediction for data
+        #       target      (string)        : the target string
+        # Return:
+        #       accuracy    (float)
+
+        # Add the predictions to the data
+        data["prediction"] = predictions
+
+        # Calculate the number of mistakes
+        mistakes = data.apply(lambda x: x[target] != x["prediction"], axis=1).sum()
+
+        # One minus the mistakes divided by the length of the data
+        return 1-(float(mistakes)/float(len(data)))
+
+    def error_classification_binary_tree(self, tree, data, target):
         # usage:
         #       Computes classification error for binary tree classification, which is based on
         #                           classification error =    # mistakes
@@ -52,15 +73,17 @@ class Accuracy:
         #       tree                 (dict)         : a tree that uses a dictionary format, with is_leaf, prediction,
         #                                             left and right
         #       data                 (pandas frame) : a pandas frame that has the same features binary tree
+        #       target               (str)          : the target we want to predict
         # Return:
-        #       classification error (float) : the classification error of the tree
+        #       classification error (float)        : the classification error of the tree
 
         # Apply the classify(tree, x) to each row in your data
         prediction = data.apply(lambda x: self.predict_output.classification_binary_tree(tree, x), axis=1)
 
         # Once you've made the predictions, calculate the classification error and return it
         data["prediction"] = prediction
-        mistakes = data.apply(lambda x: x["safe_loans"] != x["prediction"], axis=1).sum()
+        mistakes = data.apply(lambda x: x[target] != x["prediction"], axis=1).sum()
 
         # Return mistakes/total examples
         return float(mistakes)/float(len(data))
+

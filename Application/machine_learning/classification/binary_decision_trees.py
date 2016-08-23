@@ -222,12 +222,14 @@ class BinaryDecisionTrees:
         # Usage:
         #       Determines the best splitting label, which we will pick the feature that offers the lowest
         #       classification error = # mistakes
-        #                              ----------
+        #                              ----------------
         #                              # total examples
         # Arguments:
-        #       data     (pandas frame) : current node pandas frame that contains one hot encoded features
-        #       features (list)         : list of feature names
-        #       target   (string)       : the target label that we are trying to predict
+        #       data         (pandas frame) : current node pandas frame that contains one hot encoded features
+        #       features     (list)         : list of feature names
+        #       target       (string)       : the target label that we are trying to predict
+        # Returns:
+        #       best_feature (string)       : the best feature to split on with the lowest classification error
 
         # Keep track of best feature and lowest error, since error is always less than 1, we need to setup
         # best_error that is greater than 1
@@ -272,6 +274,9 @@ class BinaryDecisionTrees:
         #       Creates a leaf node with prediction
         # Arguments:
         #       data_labels (numpy array) : array of labels (1 or -1)
+        # Returns:
+        #       leaf node   (dict)        : a leaf node that contains all None except is_leaf which is true, and
+        #                                   prediction will be the highest data label present
 
         # Count the number of data points that are +1 and -1
         num_ones = len(data_labels[data_labels == +1])

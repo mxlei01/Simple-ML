@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 class PredictOutput:
@@ -51,3 +52,26 @@ class PredictOutput:
                 return self.classification_binary_tree(tree['left'], data_point)
             else:
                 return self.classification_binary_tree(tree['right'], data_point)
+
+    def adaboost(self, prediction_method, models, weights, data):
+        # Usage:
+        #       Classifies a data point for adaboost algorithm by computing the sign of the weighted result
+        # Arguments:
+        #       models  (list)         : list of models computed by adaboost
+        #       weights (list)         : list of weights computed by adaboost
+        #       data    (pandas frame) : a pandas frame that contains training/testing data
+        # Returns:
+        #
+        # Create scores equal to the length of data
+        scores = pd.Series([0.] * len(data))
+
+        # Loop through each models
+        for i, model in enumerate(models):
+            predictions = data.apply(lambda x: prediction_method(model, x), axis=1)
+
+            # Accumulate predictions on scores array
+            predictions = predictions.apply(lambda x: x * weights[i])
+            scores = scores + predictions
+
+        # Return the prediction of each data
+        return scores.apply(lambda score: +1 if score > 0 else -1)
