@@ -72,7 +72,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(classification, -1)
 
         # Compute the accuracy of the decision tree
-        accuracy = self.accuracy.error_classification_binary_tree(decision_tree, self.test_data)
+        accuracy = self.accuracy.error_classification_binary_tree(decision_tree, self.test_data, self.target)
 
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
@@ -96,7 +96,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(classification, -1)
 
         # Compute the accuracy of the decision tree
-        accuracy = self.accuracy.error_classification_binary_tree(model_1, self.test_data)
+        accuracy = self.accuracy.error_classification_binary_tree(model_1, self.test_data, self.target)
 
         # Assert that the classification should be 0.38367083153813014
         self.assertEqual(round(accuracy, 5), round(0.38367083153813014, 5))
@@ -113,7 +113,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(classification, -1)
 
         # Compute the accuracy of the decision tree
-        accuracy = self.accuracy.error_classification_binary_tree(model_2, self.test_data)
+        accuracy = self.accuracy.error_classification_binary_tree(model_2, self.test_data, self.target)
 
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
