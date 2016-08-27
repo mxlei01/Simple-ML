@@ -2,6 +2,7 @@ import unittest
 import pandas as pd
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.accuracy import Accuracy
+from performance_assessment.error import Error
 from machine_learning.classification.binary_decision_trees import BinaryDecisionTrees
 
 
@@ -23,6 +24,9 @@ class TestBinaryDecisionTrees(unittest.TestCase):
 
         # Create an instance of the accuracy class
         self.accuracy = Accuracy()
+
+        # Create an instance of the error class
+        self.error = Error()
 
         # Pandas type set
         dtype_dict = {'grade': str, 'term': str, 'emp_length': str, 'bad_loans': int}
@@ -66,13 +70,13 @@ class TestBinaryDecisionTrees(unittest.TestCase):
                                                                     current_depth=0, max_depth=6)
 
         # Get the classification result of the first row
-        classification = self.predict_output.classification_binary_tree(decision_tree, self.test_data.iloc[0])
+        classification = self.predict_output.binary_tree(decision_tree, self.test_data.iloc[0])
 
         # Assert that the classification should be -1
         self.assertEqual(classification, -1)
 
         # Compute the accuracy of the decision tree
-        accuracy = self.accuracy.error_classification_binary_tree(decision_tree, self.test_data, self.target)
+        accuracy = self.error.binary_tree(decision_tree, self.test_data, self.target)
 
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
@@ -90,13 +94,13 @@ class TestBinaryDecisionTrees(unittest.TestCase):
                                                                          min_error_reduction=0.0)
 
         # Get the classification result of the first row
-        classification = self.predict_output.classification_binary_tree(model_1, self.test_data.iloc[0])
+        classification = self.predict_output.binary_tree(model_1, self.test_data.iloc[0])
 
         # Assert that the classification should be -1
         self.assertEqual(classification, -1)
 
         # Compute the accuracy of the decision tree
-        accuracy = self.accuracy.error_classification_binary_tree(model_1, self.test_data, self.target)
+        accuracy = self.error.binary_tree(model_1, self.test_data, self.target)
 
         # Assert that the classification should be 0.38367083153813014
         self.assertEqual(round(accuracy, 5), round(0.38367083153813014, 5))
@@ -107,13 +111,13 @@ class TestBinaryDecisionTrees(unittest.TestCase):
                                                                          min_error_reduction=-1)
 
         # Get the classification result of the first row
-        classification = self.predict_output.classification_binary_tree(model_2, self.test_data.iloc[0])
+        classification = self.predict_output.binary_tree(model_2, self.test_data.iloc[0])
 
         # Assert that the classification should be -1
         self.assertEqual(classification, -1)
 
         # Compute the accuracy of the decision tree
-        accuracy = self.accuracy.error_classification_binary_tree(model_2, self.test_data, self.target)
+        accuracy = self.error.binary_tree(model_2, self.test_data, self.target)
 
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))

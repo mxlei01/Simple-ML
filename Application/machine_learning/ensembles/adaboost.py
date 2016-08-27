@@ -12,7 +12,7 @@ class AdaBoost:
     #                                                             -------------------------------
     #                                                             total weight of all data points
     #       3. Recompute weights α_i, where α_i = α_i*e^-w_t, if f_t(x)=y_i (the prediction is correct)
-    #                                             a_i*e^w_t, if f_t(x)=/=y_i (the prediction is not correct)
+    #                                             α_i*e^w_t, if f_t(x)=/=y_i (the prediction is not correct)
     #       4. Normalize the weights α_i =        α_i
     #                                      ---------------------
     #                                      sum(α_j, for all α's)
@@ -22,7 +22,7 @@ class AdaBoost:
     #   we multiply the weight for that f_t(x). Each f_t(x) has it's own weight. Then using the sign, if the result
     #   is positive, then our output is +1, else -1.
 
-    def classification(self, data, features, target, iterations, predict_method, model, model_parameters):
+    def decision_tree(self, data, features, target, iterations, predict_method, model, model_parameters):
         # Usage:
         #       Uses a model, applies the adaboost algorithm and generates T number of models through
         #       the iterations parameter.
@@ -31,6 +31,7 @@ class AdaBoost:
         #       features         (list of str)      : List of features that we want to train
         #       target           (str)              : The target (output) that we want to train
         #       iterations       (int)              : Number of iterations
+        #       predict_method   (func)             : function to predict output
         #       model            (obj)              : A model that contains a predict function to predict the output
         #                                             based on some input features
         #       model_parameters (dict)             : Model parameters for the model, such as depth to train
@@ -52,7 +53,7 @@ class AdaBoost:
 
         # Loop through each iteration, and generate one model per generation
         for t in range(iterations):
-            # Use the model to generate a model
+            # Use the model to generate a model, the output will be a decision tree
             generated_model = model.fit(**{**{"data": data, "features": features, "target": target,
                                               "data_weights": alpha},
                                            **model_parameters})
@@ -74,9 +75,9 @@ class AdaBoost:
             # Best Possible Error: 0, Worst: 1.0, Random Classifier: 0.5
             weighted_error = sum(alpha[wrong])/sum(alpha)
 
-            # Compute w_t = w_t=1*ln( 1-weighted_error(f_t)
-            #                   -     ---------------------
-            #                   2      weighted_error(f_t)
+            # Compute w_t = w_t=1*ln(1-weighted_error(f_t))
+            #                   -    ---------------------
+            #                   2     weighted_error(f_t)
             # If f_t(x) classifier was a good classifier, then the weighted error will be low, which
             # results in a higher w_t for that classifier. If the classifier was a bad classifier, then the result
             # would be a classifier with lower w_t
@@ -104,5 +105,86 @@ class AdaBoost:
             #                            ---------------------
             #                            sum(α_j, for all α's)
             alpha = alpha/sum(alpha)
+
+        return weights_list, models_list
+
+    def logistic_regression(self, feature_matrix, label, iterations, predict_method, model, model_parameters):
+        # Usage:
+        #       Uses a model, applies the adaboost algorithm and generates T number of models through
+        #       the iterations parameter.
+        # Arguments:
+        #       feature_matrix   (numpy matrix) : features of a dataset
+        #       label            (numpy array)  : the label of a dataset
+        #       iterations       (int)              : Number of iterations
+        #       predict_method   (func)             : function to predict output
+        #       model            (obj)              : A model that contains a predict function to predict the output
+        #                                             based on some input features
+        #       model_parameters (dict)             : Model parameters for the model, such as depth to train
+        #                                             for a decision tree
+        # Returns:
+        #       list of tuple    (weights, model)   : list of tuples that has (weights, model)
+
+        # Each row of data (training data), has an alpha
+        alpha = np.array([1]*len(feature_matrix))
+
+        # Initialize a list of weights
+        weights_list = []
+
+        # Initialize a list of models
+        models_list = []
+
+        # Loop through each iteration, and generate one model per generation
+        for t in range(iterations):
+            # Use the model to generate a model, the output will be coefficients
+            generated_model = model.fit(**{**{"feature_matrix": feature_matrix, "label": label, "weights_list": alpha},
+                                           **model_parameters})
+
+            # Insert the new model to the models list
+            models_list.append(generated_model)
+
+            # Make predictions
+            predictions = predict_method(feature_matrix, generated_model)
+
+            # Creating an array of boolean values indicating if each data was correctly classified
+            correct = predictions == label
+            wrong = predictions != label
+
+            # Compute the weighted_error(f_t(x))
+            # Weighted Error =    total weight of mistakes
+            #                  -------------------------------
+            #                  total weight of all data points
+            # Best Possible Error: 0, Worst: 1.0, Random Classifier: 0.5
+            weighted_error = sum(alpha[wrong]) / sum(alpha)
+
+            # Compute w_t = w_t=1*ln(1-weighted_error(f_t))
+            #                   -    ----------------------
+            #                   2     weighted_error(f_t)
+            # If f_t(x) classifier was a good classifier, then the weighted error will be low, which
+            # results in a higher w_t for that classifier. If the classifier was a bad classifier, then the result
+            # would be a classifier with lower w_t
+            weight = 0.5 * math.log((1 - weighted_error) / weighted_error)
+
+            # Add the new weight to our weights list
+            weights_list.append(weight)
+
+            # Recompute weights α_i, where α_i = α_i*e^-w_t, if f_t(x)=y_i (the prediction is correct)
+            #                                    α_i*e^w_t, if f_t(x)=/=y_i (the prediction is not correct)
+            # If f_t classifier got the prediction correct at a point:
+            #   If w_t is high (2.3), then we multiply α by e^(-2.3)=0.1, which means we will decrease
+            #   the importance of α for that specific row of data.
+            #   If w_t is low (0), then we will multiply α by e^(0)=1, then we will keep the importance is the same.
+            # If f_t classifier got the prediction incorrect at a point:
+            #   If w_t is high (2.3), then we multiply α by e^(2.3)=9.98, which means we will increase the importance
+            #   of α for that specific row of data.
+            #   If w_t is low (0), then we will multiply α by e^(0)=1, then we will keep the importance the same.
+            exponential_weight = np.array([math.exp(-weight) if i else math.exp(weight) for i in correct])
+
+            # Scale alpha by multiplying by exponential_weight
+            alpha = alpha * exponential_weight
+
+            # Normalize the weights α_i =        α_i
+            #                            ---------------------
+            #                            sum(α_j, for all α's)
+            alpha = alpha / sum(alpha)
 
         return weights_list, models_list

@@ -18,7 +18,7 @@ class LogisticRegression:
         #       Gradient ascent algorithm: w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
         # Arguments:
         #       feature_matrix  (numpy matrix) : features of a dataset
-        #       sentiment       (numpy array)  : the label of a dataset
+        #       label           (numpy array)  : the label of a dataset
         #       initial_weights (numpy array)  : initial weights that are used
         #       step_size       (int)          : step size
         #       max_iter        (int)          : amount of iterations

@@ -2,6 +2,7 @@ import unittest
 import pandas as pd
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.accuracy import Accuracy
+from performance_assessment.error import Error
 from machine_learning.classification.weighted_binary_decision_trees import WeightedBinaryDecisionTrees
 from machine_learning.ensembles.adaboost import AdaBoost
 
@@ -27,6 +28,9 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
 
         # Create an instance of the accuracy class
         self.accuracy = Accuracy()
+
+        # Create an instance of the error class
+        self.error = Error()
 
         # Pandas type set
         dtype_dict = {'grade': str, 'term': str, 'emp_length': str, 'bad_loans': int}
@@ -73,7 +77,7 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
                                                                 data_weights, current_depth=0, max_depth=2)
 
         # Compute the accuracy of the decision tree
-        accuracy = self.accuracy.error_classification_binary_tree(decision_tree, self.train_data, self.target)
+        accuracy = self.error.binary_tree(decision_tree, self.train_data, self.target)
 
         # Assert that the classification should be 0.48124865678057166
         self.assertEqual(round(accuracy, 5), round(0.48124865678057166, 5))
@@ -85,11 +89,11 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         #       None
 
         # Create two weighted binary decision trees
-        weights_list, models_list = self.adaboost.classification(self.train_data, self.features, self.target,
-                                                                 iterations=2,
-                                                                 predict_method=self.predict.classification_binary_tree,
-                                                                 model=self.weighted_binary_decision_trees,
-                                                                 model_parameters={"max_depth": 1})
+        weights_list, models_list = self.adaboost.decision_tree(self.train_data, self.features, self.target,
+                                                                iterations=2,
+                                                                predict_method=self.predict.binary_tree,
+                                                                model=self.weighted_binary_decision_trees,
+                                                                model_parameters={"max_depth": 1})
 
         # The weights have to equal to [0.15802933659263743, 0.1768236329364191]
         self.assertEqual([round(i, 5) for i in weights_list],
@@ -102,23 +106,23 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         #       None
 
         # Create ten weighted binary decision trees
-        weights_list, models_list = self.adaboost.classification(self.train_data, self.features, self.target,
-                                                                 iterations=10,
-                                                                 predict_method=self.predict.classification_binary_tree,
-                                                                 model=self.weighted_binary_decision_trees,
-                                                                 model_parameters={"max_depth": 1})
+        weights_list, models_list = self.adaboost.decision_tree(self.train_data, self.features, self.target,
+                                                                iterations=10,
+                                                                predict_method=self.predict.binary_tree,
+                                                                model=self.weighted_binary_decision_trees,
+                                                                model_parameters={"max_depth": 1})
 
         # Get the predictions of each dataset in the test data
-        predictions = self.predict.adaboost(self.predict.classification_binary_tree, models_list, weights_list,
-                                            self.test_data)
+        predictions = self.predict.adaboost_binary_decision_tree(self.predict.binary_tree, models_list, weights_list,
+                                                                 self.test_data)
 
         # Assert the predictions
         self.assertEqual(list(predictions)[0:20],
                          [-1, 1, -1, -1, 1, -1, -1, 1, -1, -1, -1, 1, 1, -1, 1, 1, 1, -1, -1, -1])
 
         # Accuracy has to match 0.620314519604
-        self.assertEqual(round(self.accuracy.accuracy_classification_decision_tree(self.test_data,
-                                                                                   predictions,
-                                                                                   self.target),
+        self.assertEqual(round(self.accuracy.decision_tree(self.test_data,
+                                                           predictions,
+                                                           self.target),
                                5),
                          round(0.620314519604, 5))

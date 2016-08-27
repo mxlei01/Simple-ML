@@ -65,8 +65,8 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
                                                                         step_size=5e-6, l2_penalty=0, max_iter=501)
 
         # Get the accuracy
-        train_accuracy = self.accuracy.accuracy_classification(feature_matrix_train, label_train, coefficients)
-        validation_accuracy = self.accuracy.accuracy_classification(feature_matrix_valid, label_valid, coefficients)
+        train_accuracy = self.accuracy.logistic_regression(feature_matrix_train, label_train, coefficients)
+        validation_accuracy = self.accuracy.logistic_regression(feature_matrix_valid, label_valid, coefficients)
 
         # Make sure the accuraries are correct
         self.assertEqual(round(0.785156157787, 5), round(train_accuracy, 5))
@@ -98,8 +98,8 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
                                                                         step_size=5e-6, l2_penalty=10, max_iter=501)
 
         # Get the accuracy
-        train_accuracy = self.accuracy.accuracy_classification(feature_matrix_train, label_train, coefficients)
-        validation_accuracy = self.accuracy.accuracy_classification(feature_matrix_valid, label_valid, coefficients)
+        train_accuracy = self.accuracy.logistic_regression(feature_matrix_train, label_train, coefficients)
+        validation_accuracy = self.accuracy.logistic_regression(feature_matrix_valid, label_valid, coefficients)
 
         # Make sure the accuracies are correct
         self.assertEqual(round(0.784990911452, 5), round(train_accuracy, 5))

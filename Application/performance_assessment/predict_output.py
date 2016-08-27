@@ -17,7 +17,7 @@ class PredictOutput:
 
         return np.dot(feature_matrix, weights)
 
-    def classification(self, feature_matrix, coefficients):
+    def logistic_regression(self, feature_matrix, coefficients):
         # Usage:
         #       Predicts output based on y_i = +1 hw >= 0
         #                                      -1 hw <  0
@@ -26,11 +26,17 @@ class PredictOutput:
         #       label          (numpy array)  : a numpy array containing labels
         #       coefficients   (numpy array)  : a numpy array containing coefficients
         # Return:
-        #       Hw             (numpy array)
+        #       T(Hw)          (numpy array)  : The feature matrix dot product with coefficients
+        #                                       and then applied threshold if the value is greater than 0, then
+        #                                       return 1, else -1
 
-        return np.dot(feature_matrix, coefficients)
+        # The apply_threshold will create an array of 1 or -1 depending on the predictions
+        apply_threshold = np.vectorize(lambda x: 1. if x > 0 else -1.)
 
-    def classification_binary_tree(self, tree, data_point):
+        # Apply the function to the predictions
+        return apply_threshold(np.dot(feature_matrix, coefficients))
+
+    def binary_tree(self, tree, data_point):
         # Usage:
         #       Classifies a data point (pandas series), by traversing a binary decision tree
         # Arguments:
@@ -49,11 +55,11 @@ class PredictOutput:
 
             # If value is equal to 0, then go the left, otherwise right
             if split_feature_value == 0:
-                return self.classification_binary_tree(tree['left'], data_point)
+                return self.binary_tree(tree['left'], data_point)
             else:
-                return self.classification_binary_tree(tree['right'], data_point)
+                return self.binary_tree(tree['right'], data_point)
 
-    def adaboost(self, prediction_method, models, weights, data):
+    def adaboost_binary_decision_tree(self, prediction_method, models, weights, data):
         # Usage:
         #       Classifies a data point for adaboost algorithm by computing the sign of the weighted result
         # Arguments:
@@ -68,6 +74,29 @@ class PredictOutput:
         # Loop through each models
         for i, model in enumerate(models):
             predictions = data.apply(lambda x: prediction_method(model, x), axis=1)
+
+            # Accumulate predictions on scores array
+            predictions = predictions.apply(lambda x: x * weights[i])
+            scores = scores + predictions
+
+        # Return the prediction of each data
+        return scores.apply(lambda score: +1 if score > 0 else -1)
+
+    def adaboost_logistic_regression(self, prediction_method, models, weights, feature_matrix):
+        # Usage:
+        #       Classifies a data point for adaboost algorithm by computing the sign of the weighted result
+        # Arguments:
+        #       models  (list)         : list of models computed by adaboost
+        #       weights (list)         : list of weights computed by adaboost
+        #       feature_matrix  (numpy matrix) : features of a dataset
+        # Returns:
+        #
+        # Create scores equal to the length of data
+        scores = pd.Series([0.] * len(feature_matrix))
+
+        # Loop through each models
+        for i, model in enumerate(models):
+            predictions = pd.Series(prediction_method(feature_matrix, model))
 
             # Accumulate predictions on scores array
             predictions = predictions.apply(lambda x: x * weights[i])
