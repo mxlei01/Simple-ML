@@ -14,7 +14,7 @@ class WeightedLogisticRegression:
     #       1[y=+1]      : indicator function for y=+1
     #       P(y=1|x_i,w) : probability of y=1 for x_i using the current weights
 
-    def fit(self, feature_matrix, label, initial_coefficients, weights_list, step_size, max_iter):
+    def gradient_ascent(self, feature_matrix, label, initial_coefficients, weights_list, step_size, max_iter):
         # Usage:
         #       Gradient ascent algorithm with weights: w^(t+1) <= w^(t) + n*Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
         # Arguments:
@@ -52,7 +52,7 @@ class WeightedLogisticRegression:
             # in matrix form
             # We do a transpose of feature matrix to convert rows into the column data, since the
             # the sigma function works on all the values for a specific column, and we will multiply each
-            # row will error, which gives us Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
+            # row will error, then multiply by weights, which gives us Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
             coefficients = coefficients+step_size*np.dot(weights_list*np.transpose(feature_matrix), errors)
 
         # Return the weights

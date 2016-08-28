@@ -63,7 +63,7 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         self.train_data = pd.read_csv('./unit_tests/test_data/classification/lending_club/lending_club_train.csv')
         self.test_data = pd.read_csv('./unit_tests/test_data/classification/lending_club/lending_club_test.csv')
 
-    def test_01_fit(self):
+    def test_01_greedy_recursive(self):
         # Usage:
         #       Test out the greedy recursive algorithm for the weighted binary decision tree
         # Arguments:
@@ -73,8 +73,9 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         data_weights = pd.Series([1.] * 10 + [0.] * (len(self.train_data) - 20) + [1.] * 10)
 
         # Create a decision tree
-        decision_tree = self.weighted_binary_decision_trees.fit(self.train_data, self.features, self.target,
-                                                                data_weights, current_depth=0, max_depth=2)
+        decision_tree = self.weighted_binary_decision_trees.greedy_recursive(self.train_data, self.features,
+                                                                             self.target, data_weights,
+                                                                             current_depth=0, max_depth=2)
 
         # Compute the accuracy of the decision tree
         accuracy = self.error.binary_tree(decision_tree, self.train_data, self.target)
@@ -93,6 +94,7 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
                                                                 iterations=2,
                                                                 predict_method=self.predict.binary_tree,
                                                                 model=self.weighted_binary_decision_trees,
+                                                                model_method="greedy_recursive",
                                                                 model_parameters={"max_depth": 1})
 
         # The weights have to equal to [0.15802933659263743, 0.1768236329364191]
@@ -110,6 +112,7 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
                                                                 iterations=10,
                                                                 predict_method=self.predict.binary_tree,
                                                                 model=self.weighted_binary_decision_trees,
+                                                                model_method="greedy_recursive",
                                                                 model_parameters={"max_depth": 1})
 
         # Get the predictions of each dataset in the test data

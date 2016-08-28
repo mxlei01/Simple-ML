@@ -77,10 +77,10 @@ class TestWeightedLogisticRegression(unittest.TestCase):
         weights_list = np.array([1]*len(self.review_frame))
 
         # Compute the coefficients
-        coefficients = self.weighted_logistic_regression.fit(feature_matrix, sentiment,
-                                                             initial_coefficients=np.zeros(194),
-                                                             weights_list=weights_list,
-                                                             step_size=1e-7, max_iter=30)
+        coefficients = self.weighted_logistic_regression.gradient_ascent(feature_matrix, sentiment,
+                                                                         initial_coefficients=np.zeros(194),
+                                                                         weights_list=weights_list,
+                                                                         step_size=1e-7, max_iter=30)
 
         # Assert the coefficients
         self.assertEqual([round(i, 5) for i in coefficients[0:20]],
@@ -118,6 +118,7 @@ class TestWeightedLogisticRegression(unittest.TestCase):
                                                             iterations=15,
                                                             predict_method=self.predict.logistic_regression,
                                                             model=self.weighted_logistic_regression,
+                                                            model_method="gradient_ascent",
                                                             model_parameters={"step_size": 1e-7,
                                                                               "max_iter": 30,
                                                                               "initial_coefficients": np.zeros(194)})

@@ -7,7 +7,8 @@ class WeightedBinaryDecisionTrees:
     #               A. If nothing more to split, make prediction
     #               B. Otherwise, go to step 2 and continue
 
-    def fit(self, data, features, target, data_weights, current_depth=0, max_depth=10, minimum_error=1e-15):
+    def greedy_recursive(self, data, features, target, data_weights, current_depth=0, max_depth=10,
+                         minimum_error=1e-15):
         # Usage:
         #       Uses recursion to create a tree, and uses greedy method, which is to get construct
         #       nodes that has the lowest weighted_error error first.
@@ -86,9 +87,12 @@ class WeightedBinaryDecisionTrees:
             return self.create_leaf(right_split[target], data_weights)
 
         # Create the left tree by doing a recursion
-        left_tree = self.fit(left_split, remaining_features, target, left_data_weights, current_depth + 1, max_depth)
+        left_tree = self.greedy_recursive(left_split, remaining_features, target, left_data_weights,
+                                          current_depth + 1, max_depth)
+
         # Create the right tree by doing a recursion
-        right_tree = self.fit(right_split, remaining_features, target, right_data_weights, current_depth + 1, max_depth)
+        right_tree = self.greedy_recursive(right_split, remaining_features, target, right_data_weights,
+                                           current_depth + 1, max_depth)
 
         # Create a leaf node where this is not a leaf, and with no prediction
         return self.leaf_node(splitting_feature=splitting_feature, left=left_tree, right=right_tree, is_leaf=False,

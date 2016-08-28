@@ -22,7 +22,7 @@ class AdaBoost:
     #   we multiply the weight for that f_t(x). Each f_t(x) has it's own weight. Then using the sign, if the result
     #   is positive, then our output is +1, else -1.
 
-    def decision_tree(self, data, features, target, iterations, predict_method, model, model_parameters):
+    def decision_tree(self, data, features, target, iterations, predict_method, model, model_method, model_parameters):
         # Usage:
         #       Uses a model, applies the adaboost algorithm and generates T number of models through
         #       the iterations parameter.
@@ -34,6 +34,7 @@ class AdaBoost:
         #       predict_method   (func)             : function to predict output
         #       model            (obj)              : A model that contains a predict function to predict the output
         #                                             based on some input features
+        #       model_method     (func)             : Model's function to generate a model
         #       model_parameters (dict)             : Model parameters for the model, such as depth to train
         #                                             for a decision tree
         # Returns:
@@ -54,9 +55,9 @@ class AdaBoost:
         # Loop through each iteration, and generate one model per generation
         for t in range(iterations):
             # Use the model to generate a model, the output will be a decision tree
-            generated_model = model.fit(**{**{"data": data, "features": features, "target": target,
-                                              "data_weights": alpha},
-                                           **model_parameters})
+            generated_model = getattr(model, model_method)(**{**{"data": data, "features": features, "target": target,
+                                                                 "data_weights": alpha},
+                                                              **model_parameters})
 
             # Insert the new model to the models list
             models_list.append(generated_model)
@@ -108,7 +109,8 @@ class AdaBoost:
 
         return weights_list, models_list
 
-    def logistic_regression(self, feature_matrix, label, iterations, predict_method, model, model_parameters):
+    def logistic_regression(self, feature_matrix, label, iterations, predict_method, model, model_method,
+                            model_parameters):
         # Usage:
         #       Uses a model, applies the adaboost algorithm and generates T number of models through
         #       the iterations parameter.
@@ -119,6 +121,7 @@ class AdaBoost:
         #       predict_method   (func)             : function to predict output
         #       model            (obj)              : A model that contains a predict function to predict the output
         #                                             based on some input features
+        #       model_method     (func)             : Model's function to generate a model
         #       model_parameters (dict)             : Model parameters for the model, such as depth to train
         #                                             for a decision tree
         # Returns:
@@ -136,8 +139,9 @@ class AdaBoost:
         # Loop through each iteration, and generate one model per generation
         for t in range(iterations):
             # Use the model to generate a model, the output will be coefficients
-            generated_model = model.fit(**{**{"feature_matrix": feature_matrix, "label": label, "weights_list": alpha},
-                                           **model_parameters})
+            generated_model = getattr(model, model_method)(**{**{"feature_matrix": feature_matrix, "label": label,
+                                                                 "weights_list": alpha},
+                                                              **model_parameters})
 
             # Insert the new model to the models list
             models_list.append(generated_model)
