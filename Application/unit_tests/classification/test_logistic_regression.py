@@ -7,6 +7,7 @@ from data_extraction.convert_numpy import ConvertNumpy
 from machine_learning.classification.logistic_regression import LogisticRegression
 from ml_math.log_likelihood import LogLikelihood
 from performance_assessment.predict_output import PredictOutput
+from performance_assessment.confusion_matrix import ConfusionMatrix
 
 
 class TestLogisticRegression(unittest.TestCase):
@@ -30,6 +31,9 @@ class TestLogisticRegression(unittest.TestCase):
 
         # Create an instance of the Logistic Regression class
         self.logistic_regression = LogisticRegression()
+
+        # Create an instance of the confusion matrix class
+        self.confusion_matrix = ConfusionMatrix()
 
         # Load the important words
         self.important_words = json.load(open('./unit_tests/test_data/classification/amazon/important_words.json', 'r'))
@@ -146,6 +150,24 @@ class TestLogisticRegression(unittest.TestCase):
 
             # Assert that both values are the same
             self.assertEqual(round(pred_coef, 5), round(coef, 5))
+
+        # Get the output of the logistic regression with threshold 0
+        output = self.predict_output.logistic_regression(feature_matrix, coefficients, 0)
+
+        # Generate a confusion matrix
+        confusion_matrix = self.confusion_matrix.confusion_matrix(sentiment, output)
+
+        # Assert the values are to be expected
+        self.assertEqual(confusion_matrix, {'false_negatives': 7311, 'true_negatives': 20635,
+                                            'true_positives': 19268, 'false_positives': 5858})
+
+        # Assert that the precision is correct
+        self.assertEqual(round(self.confusion_matrix.precision(sentiment, output), 5),
+                         round(0.7249332179540239, 5))
+
+        # Assert that the recall is correct
+        self.assertEqual(round(self.confusion_matrix.recall(sentiment, output), 5),
+                         round(0.7668550505452519, 5))
 
     def test_02_log_likelihood(self):
         # Usage:

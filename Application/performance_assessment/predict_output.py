@@ -17,7 +17,7 @@ class PredictOutput:
 
         return np.dot(feature_matrix, weights)
 
-    def logistic_regression(self, feature_matrix, coefficients):
+    def logistic_regression(self, feature_matrix, coefficients, threshold=0):
         # Usage:
         #       Predicts output based on y_i = +1 hw >= 0
         #                                      -1 hw <  0
@@ -25,13 +25,14 @@ class PredictOutput:
         #       feature_matrix (numpy matrix) : a numpy matrix containing features
         #       label          (numpy array)  : a numpy array containing labels
         #       coefficients   (numpy array)  : a numpy array containing coefficients
+        #       threshold      (int)          : a threshold to determine 1, or -1
         # Return:
         #       T(Hw)          (numpy array)  : The feature matrix dot product with coefficients
         #                                       and then applied threshold if the value is greater than 0, then
         #                                       return 1, else -1
 
         # The apply_threshold will create an array of 1 or -1 depending on the predictions
-        apply_threshold = np.vectorize(lambda x: 1. if x > 0 else -1.)
+        apply_threshold = np.vectorize(lambda x: 1. if x > threshold else -1.)
 
         # Apply the function to the predictions
         return apply_threshold(np.dot(feature_matrix, coefficients))
