@@ -38,6 +38,40 @@ class LogLikelihood:
 
         return lp
 
+    def average_log_likelihood(self, feature_matrix, label, coefficients):
+        # Usage:
+        #       Used to compute the log likelihood, which is based on:
+        #           ℓℓa(w)=(1/N)*∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−wTh(xi))))
+        #       Where:
+        #           1[yi=+1]−1 : is an indicator function of yi=+1
+        #           w          : coefficients
+        #           h(xi)      : Nth feature
+        #           (1/N)      : averages the log likelihood by rows of feature_matrix
+        # Arguments:
+        #       feature_matrix (numpy matrix) : feature matrix
+        #       label          (numpy array)  : labels of the feature matrix
+        #       coefficients   (numpy array)  : coefficients computed using MLE (with or without L1/L2)
+        # Returns:
+        #       lp (float) : log likelihood
+
+        # Compute the indicator function 1[yi=+1]
+        indicator = (label == +1)
+
+        # Get the score, which is w^t*h(xi)
+        scores = np.dot(feature_matrix, coefficients)
+
+        # Compute the log of the score, ln(1+exp(−wTh(xi))
+        logexp = np.log(1. + np.exp(-scores))
+
+        # Simple check to prevent overflow
+        mask = np.isinf(logexp)
+        logexp[mask] = -scores[mask]
+
+        # Sum over all all the values of indicator*score - logexp
+        lp = np.sum((indicator-1)*scores - logexp)/len(feature_matrix)
+
+        return lp
+
     def log_likelihood_l2_norm(self, feature_matrix, label, coefficients, l2_penalty):
         # Usage:
         #       Used to compute the log likelihood with l2 norm, which is based on:

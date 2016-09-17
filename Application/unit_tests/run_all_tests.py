@@ -16,16 +16,16 @@ if __name__ == "__main__":
     loader = TestLoader()
 
     suite = TestSuite((
-            loader.loadTestsFromTestCase(TestLinearRegression),
-            loader.loadTestsFromTestCase(TestRidgeRegression),
-            loader.loadTestsFromTestCase(TestLassoRegression),
+            #loader.loadTestsFromTestCase(TestLinearRegression),
+            #loader.loadTestsFromTestCase(TestRidgeRegression),
+            #loader.loadTestsFromTestCase(TestLassoRegression),
             loader.loadTestsFromTestCase(TestLogisticRegression),
-            loader.loadTestsFromTestCase(TestKNearestNeighborRegression),
-            loader.loadTestsFromTestCase(TestLogisticRegressionL2Norm),
-            loader.loadTestsFromTestCase(TestBinaryDecisionTrees),
-            loader.loadTestsFromTestCase(TestWeightedBinaryDecisionTrees),
-            loader.loadTestsFromTestCase(TestWeightedLogisticRegression),
-            loader.loadTestsFromTestCase(TestWeightedLogisticRegressionL2Norm),
+            #loader.loadTestsFromTestCase(TestKNearestNeighborRegression),
+            #loader.loadTestsFromTestCase(TestLogisticRegressionL2Norm),
+            #loader.loadTestsFromTestCase(TestBinaryDecisionTrees),
+            #loader.loadTestsFromTestCase(TestWeightedBinaryDecisionTrees),
+            #loader.loadTestsFromTestCase(TestWeightedLogisticRegression),
+            #loader.loadTestsFromTestCase(TestWeightedLogisticRegressionL2Norm),
         ))
 
     runner = TextTestRunner()

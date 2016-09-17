@@ -58,6 +58,9 @@ class TestLogisticRegression(unittest.TestCase):
         for word in self.important_words:
             self.review_frame[word] = self.review_frame['review_clean'].apply(lambda s: s.split().count(word))
 
+        # Load training data
+        self.train_frame = pd.read_csv('./unit_tests/test_data/classification/amazon/amazon_baby_subset_train_mod2.csv')
+
     def test_01_gradient_ascent(self):
         # Usage:
         #       Test out the gradient ascent algorithm for logistic regression
@@ -169,7 +172,91 @@ class TestLogisticRegression(unittest.TestCase):
         self.assertEqual(round(self.confusion_matrix.recall(sentiment, output), 5),
                          round(0.7668550505452519, 5))
 
-    def test_02_log_likelihood(self):
+    def test_02_stochastic_gradient_ascent(self):
+        # Usage:
+        #       Test out the gradient ascent algorithm for logistic regression
+        # Arguments:
+        #       None
+
+        # We will use important words for the output
+        features = self.important_words
+
+        # Output will use sentiment
+        output = ['sentiment']
+
+        # Convert our pandas frame to numpy
+        feature_matrix, sentiment = self.convert_numpy.convert_to_numpy(self.train_frame, features, output, 1)
+
+        # Compute the coefficients
+        coefficients = self.logistic_regression.stochastic_gradient_ascent(feature_matrix, sentiment,
+                                                                           initial_coefficients=np.zeros(194),
+                                                                           step_size=5e-1, batch_size=1, max_iter=10)
+
+        # Real coefficients that we need to compare with the computed coefficients
+        real_coef = [0.26845909, 0.05510662, -0.78232359, 0.24929641, 0.1213813,
+                     -0.13194118, -0.42110769, 0.23944013, 0.52334226, 0.30746343,
+                     1.46697311, 0.15734639, 0.24112255, -0.22849175, -0.48095714,
+                     0., 0.05984944, -0.41942527, -0.48095714, 0.10654088,
+                     0., 0.06153186, -0.41942527, 0.43843464,  0.,
+                     0.21719583, 0., 0.84326475, 0.28108825, 0.28108825,
+                     0., 0., 0.24611428, -0.19986888, 0.15734639,
+                     0., 0., -0.48095714, 0.12623269,  0.,
+                     0.28108825, 0.07542718, 0., -0.42110769, 0.15734639,
+                     -0.48095714, 0.24611428, -0.48095714, 0.,  0.,
+                     0.06153186, 0.28108825, 0., 0., 0.,
+                     0.05984944, 0.5932902, 0.5621765, -0.48095714, 0.,
+                     0.05984944, 0.05984944, 0.31220195, 0.11805882, 0.,
+                     0.15085436, 0.24611428, 0., 0., 0.,
+                     0.06153186, 0.12623269, 0., 0., 0.,
+                     0., 0., 0., -0.35472444, 0.12623269,
+                     0.,  0., 0.68023532, 0.28108825, 0.06153186,
+                     0.0311137, 0.35651543, 0., 0.28108825, 0.,
+                     0.05984944, 0., 0.35651543, 0.28108825, 0.,
+                     0., 0., -0.90206483, 0.07542718, -0.48095714,
+                     0., 0., -0.48095714, 0., 0.,
+                     0., -0.25, 0.0311137, 0., 0.28108825,
+                     0., 0., 0., 0., 0.,
+                     0., 0.34262011, -0.48095714, 0.28108825, 0.,
+                     0., 0., 0., 0., 0.06153186,
+                     0.12623269, 0.05984944, 0., 0., 0.,
+                     0., 0.12623269, 0., 0., 0.12623269,
+                     0.07542718, 0.15085436, 0.07542718, -0.68082602, 0.,
+                     0., 0., 0.05984944, 0., 0.,
+                     0.28108825, 0., -0.25, 0., 0.,
+                     0.07542718, 0., 0., 0.28108825, 0.,
+                     0., 0., 0., 0., 0.,
+                     0.06153186, 0.0311137, 0., -0.48095714, 0.,
+                     0., 0., 0., 0., 0.,
+                     0., 0.40732094, 0., 0., 0.05984944,
+                     0., 0., 0., 0., 0.,
+                     0., 0., 0.06153186, 0., 0.06153186,
+                     0., -0.25, 0.05984944, 0., 0.,
+                     0., 0., -0.96191427, 0.]
+
+        # Loop through each value, the coefficients must be the same
+        for pred_coef, coef in zip(coefficients, real_coef):
+            # Assert that both values are the same
+            self.assertEqual(round(pred_coef, 5), round(coef, 5))
+
+        # Get the output of the logistic regression with threshold 0
+        output = self.predict_output.logistic_regression(feature_matrix, coefficients, 0)
+
+        # Generate a confusion matrix
+        confusion_matrix = self.confusion_matrix.confusion_matrix(sentiment, output)
+
+        # Assert the values are to be expected
+        self.assertEqual(confusion_matrix, {'false_negatives': 6517, 'true_negatives': 11707,
+                                            'true_positives': 17331, 'false_positives': 12225})
+
+        # Assert that the precision is correct
+        self.assertEqual(round(self.confusion_matrix.precision(sentiment, output), 5),
+                         round(0.72673, 5))
+
+        # Assert that the recall is correct
+        self.assertEqual(round(self.confusion_matrix.recall(sentiment, output), 5),
+                         round(0.58638, 5))
+
+    def test_03_log_likelihood(self):
         # Usage:
         #       Test Log Likelihood
         # Arguments:
@@ -185,3 +272,20 @@ class TestLogisticRegression(unittest.TestCase):
 
         # Assert the value
         self.assertEqual(round(lg, 5), round(-5.33141161544, 5))
+
+    def test_04_average_log_likelihood(self):
+        # Usage:
+        #       Test Average Log Likelihood
+        # Arguments:
+        #       None
+
+        # Generate test feature, coefficients, and label
+        feature_matrix = np.array([[1., 2., 3.], [1., -1., -1]])
+        coefficients = np.array([1., 3., -1.])
+        label = np.array([-1, 1])
+
+        # Compute the log likelihood
+        lg = self.log_likelhood.average_log_likelihood(feature_matrix, label, coefficients)
+
+        # Assert the value
+        self.assertEqual(round(lg, 5), round(-2.6657099999999998, 5))
