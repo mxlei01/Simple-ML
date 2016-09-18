@@ -6,3 +6,7 @@ requirements:
     - Python_Requirements/requirements.txt
 python-targets:
     - 3
+pep8:
+    full: true
+pylint:
+    run: true
