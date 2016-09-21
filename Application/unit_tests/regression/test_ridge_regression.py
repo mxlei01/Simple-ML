@@ -9,28 +9,22 @@ from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class TestRidgeRegression(unittest.TestCase):
-    #   Usage:
-    #       Tests for the Ridge Regression Class.
+    """Test for RidgeRegression.
+
+    Uses housing data to test RidgeRegression.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestRidgeRegression
-        # Arguments:
-        #       None
+        """Constructor for TestRidgeRegression.
 
-        # Create an instance of the Convert Numpy class
+        Loads housing data, and creates training and testing data.
+
+        """
         self.convert_numpy = ConvertNumpy()
-
-        # Create an instance of the Ridge Regression class
         self.ridge_regression = RidgeRegression()
-
-        # Create an instance of the Predict Output Class
         self.predict_output = PredictOutput()
-
-        # Create an instance of the Residual Sum Squares Class
         self.residual_sum_squares = ResidualSumSquares()
-
-        # Create an instance of the K Fold Cross Validation Class
         self.k_fold_cross_validation = KFoldCrossValidation()
 
         # Create a dictionary type to store relevant data types so that our pandas
@@ -54,15 +48,17 @@ class TestRidgeRegression(unittest.TestCase):
                                          dtype=dtype_dict)
 
         # Create a kc_house_train_valid_shuffled that encompasses both train and valid data and shuffled
-        self.kc_house_train_valid_shuffled = pd.read_csv('./unit_tests/test_data/regression/kc_house_with_validation_k_fold/wk3_kc_house_train_valid_shuffled.csv',
+        self.kc_house_train_valid_shuffled = pd.read_csv('./unit_tests/test_data/regression/'
+                                                         'kc_house_with_validation_k_fold/'
+                                                         'wk3_kc_house_train_valid_shuffled.csv',
                                                          dtype=dtype_dict)
 
     def test_01_gradient_descent_no_penalty(self):
-        # Usage:
-        #       Tests the result on gradient descent with low penalty
-        # Arguments:
-        #       None
+        """Tests gradient descent algorithm.
 
+        Tests the result on gradient descent with low penalty.
+
+        """
         # We will use sqft_living for our features
         features = ['sqft_living']
 
@@ -115,11 +111,11 @@ class TestRidgeRegression(unittest.TestCase):
         self.assertEquals(round(275723632153607.72, -5), round(rss, -5))
 
     def test_02_gradient_descent_high_penalty(self):
-        # Usage:
-        #       Tests the result on gradient descent with high penalty
-        # Arguments:
-        #       None
+        """Tests gradient descent.
 
+        Tests the result on gradient descent with high penalty.
+
+        """
         # We will use sqft_living for our features
         features = ['sqft_living']
 
@@ -173,11 +169,11 @@ class TestRidgeRegression(unittest.TestCase):
         self.assertEquals(round(694642101500000.0, -5), round(rss, -5))
 
     def test_03_gradient_descent_multiple_high_penalty(self):
-        # Usage:
-        #       Tests the result on gradient descent with high penalty
-        # Arguments:
-        #       None
+        """Tests gradient descent.
 
+        Tests gradient descent with multiple features, and high penalty.
+
+        """
         # We will use sqft_iving, and sqft_living15
         features = ['sqft_living', 'sqft_living15']
 
@@ -237,11 +233,11 @@ class TestRidgeRegression(unittest.TestCase):
         self.assertEquals(310000.0, test_output[0])
 
     def test_04_gradient_descent_k_fold(self):
-        # Usage:
-        #       Tests best l2_penalty for ridge regression using gradient descent
-        # Arguments:
-        #       None
+        """Tests gradient descent with K fold cross validation.
 
+        Tests best l2_penalty for ridge regression using gradient descent.
+
+        """
         # We will use sqft_living for our features
         features = ['sqft_living']
 
@@ -277,13 +273,12 @@ class TestRidgeRegression(unittest.TestCase):
                                 'l2_penalty': l2_penalty}
 
             # Compute the cross validation results
-            cross_validation = self.k_fold_cross_validation.k_fold_cross_validation(folds,
-                                                                                    self.kc_house_train,
-                                                                                    self.ridge_regression.gradient_descent,
-                                                                                    model_parameters, output, features)
+            cv = self.k_fold_cross_validation.k_fold_cross_validation(folds, self.kc_house_train,
+                                                                      self.ridge_regression.gradient_descent,
+                                                                      model_parameters, output, features)
 
             # Append it into the results
-            cross_validation_results.append((l2_penalty, cross_validation))
+            cross_validation_results.append((l2_penalty, cv))
 
         # Lowest Result
         lowest = sorted(cross_validation_results, key=lambda x: x[1])[0]
@@ -294,12 +289,12 @@ class TestRidgeRegression(unittest.TestCase):
         # Assert True that is the lowest l2_penalty
         self.assertEquals(round(120916225809145.0, 0), round(lowest[1], 0))
 
-    def test_05_hill_climbing(self):
-        # Usage:
-        #       Tests the result on hill climbing
-        # Arguments:
-        #       None
+    def test_05_gradient_ascent(self):
+        """Tests gradient ascent.
 
+        Tests gradient ascent and compare it with known values.
+
+        """
         # We will use sqft_living for our features
         features = ['sqft_living']
 
@@ -325,9 +320,9 @@ class TestRidgeRegression(unittest.TestCase):
         l2_penalty = 0.0
 
         # Compute our hill climbing value
-        final_weights = self.ridge_regression.hill_climbing(feature_matrix, output,
-                                                            initial_weights, step_size,
-                                                            tolerance, l2_penalty, max_iterations)
+        final_weights = self.ridge_regression.gradient_ascent(feature_matrix, output,
+                                                              initial_weights, step_size,
+                                                              tolerance, l2_penalty, max_iterations)
 
         # Assert that the weights is correct
         self.assertEquals(round(-7.7535764461428101e+70, -68), round(final_weights[0], -68))

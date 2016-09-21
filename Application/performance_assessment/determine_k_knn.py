@@ -1,36 +1,48 @@
 import sys
 from performance_assessment.residual_sum_squares import ResidualSumSquares
 
+
 class DetermineKKnn:
-    # Usage:
-    #   Computes best K for Knn
+    """Computes the best K for KNN algorithms.
+
+    Computes the best K for KNN algorithms by finding the best K that has the lowest RSS.
+
+    Attributes:
+        residual_sum_squares (ResidualSumSquares): Class to compute residual sum of squares.
+
+    """
 
     def __init__(self):
-        # Usage:
-        #       Constructor for DetermineKKnn, used to setup RSS computation
-        #       data to numpy.
-        # Arguments:
-        #       None
+        """Constructor for DetermineKKnn to setup RSS class.
 
-        # Create an instance of the Residual Sum Squares Class
+        Constructor to setup RSS Class.
+
+        """
         self.residual_sum_squares = ResidualSumSquares()
 
     def determine_k_knn(self, knn_model, start_k, end_k, features_train, features_valid, output_train, output_valid):
-        # Usage:
-        #       Determine the best K value for knn_model
-        # Arguments:
-        #       knn_model      (func)         : a function that can be called to compute knn with features_train,
-        #                                       output_train, and features_valid
-        #       start_k        (int)          : starting k value to compute
-        #       end_k          (int)          : ending k value to compute
-        #       features_train (numpy matrix) : a matrix of training points
-        #       features_valid (numpy matrix) : a matrix of validation points
-        #       output_train   (numpy array)  : outputs for training data
-        #       output_valid   (numpy array)  : outputs for validation data
-        # Return:
-        #       lowest_k       (int)          : best k value's RSS
-        #       lowest_k_index (int)          : best k value
+        """Determines the best K value for knn algorithms.
 
+        The best K value is computed by computing the lowest RSS value between K values start_k and end_k.
+
+        Args:
+            knn_model (function): A function that can be called to compute knn with features_train, output_train, and
+                features_valid.
+            start_k (int): Starting k value to compute.
+            end_k (int): Ending k value to compute.
+            features_train (numpy.matrix): A matrix of training points.
+            features_valid (numpy.matrix): A matrix of validation points.
+            output_train  (numpy.array): Outputs for training data.
+            output_valid  (numpy.array): Outputs for validation data.
+
+        Returns:
+            A tuple of lowest_k and lowest_k_index:
+                (
+                    lowest_k (float): Best k value's RSS.
+                    lowest_k_index (int): Best k value.
+                )
+
+        """
         # Get the largest number
         lowest_k = sys.maxsize
 
@@ -54,4 +66,4 @@ class DetermineKKnn:
                 lowest_k_index = k
 
         # Return the best k value and it's RSS
-        return (lowest_k, lowest_k_index)
+        return lowest_k, lowest_k_index

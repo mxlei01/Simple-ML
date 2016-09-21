@@ -4,42 +4,56 @@ import pandas as pd
 
 
 class AdaBoost:
-    # Usage:
-    #   AdaBoost is based on setting a weight α on each training sample, then for each iteration:
-    #       1. Generate another model f_t(x) with data weights α
-    #       2. Compute coefficient w_t, where w_t=1/2*ln((1-weighted_error(f_t)/(weighted_error(f_t))
-    #                                   where weighted_error(f_t)=   total weight of mistakes
-    #                                                             -------------------------------
-    #                                                             total weight of all data points
-    #       3. Recompute weights α_i, where α_i = α_i*e^-w_t, if f_t(x)=y_i (the prediction is correct)
-    #                                             α_i*e^w_t, if f_t(x)=/=y_i (the prediction is not correct)
-    #       4. Normalize the weights α_i =        α_i
-    #                                      ---------------------
-    #                                      sum(α_j, for all α's)
-    #   After T iteration (we can set this do a max number), we can predict the final result by:
-    #       y=sign(Σ, T, n=1, w_t*f_t(x))
-    #   Essentially for an input, we use f_t(x) to determine an output (-1, or +1 for binary decision trees), and
-    #   we multiply the weight for that f_t(x). Each f_t(x) has it's own weight. Then using the sign, if the result
-    #   is positive, then our output is +1, else -1.
+    """Class that implements Adaboost for decision tree and logistic regression.
 
-    def decision_tree(self, data, features, target, iterations, predict_method, model, model_method, model_parameters):
-        # Usage:
-        #       Uses a model, applies the adaboost algorithm and generates T number of models through
-        #       the iterations parameter.
-        # Arguments:
-        #       data             (pandas dataframe) : A pandas dataframe that contains training data
-        #       features         (list of str)      : List of features that we want to train
-        #       target           (str)              : The target (output) that we want to train
-        #       iterations       (int)              : Number of iterations
-        #       predict_method   (func)             : function to predict output
-        #       model            (obj)              : A model that contains a predict function to predict the output
-        #                                             based on some input features
-        #       model_method     (func)             : Model's function to generate a model
-        #       model_parameters (dict)             : Model parameters for the model, such as depth to train
-        #                                             for a decision tree
-        # Returns:
-        #       list of tuple    (weights, model)   : list of tuples that has (weights, model)
+    AdaBoost is based on setting a weight α on each training sample, then for each iteration:
+        1. Generate another model f_t(x) with data weights α.
+        2. Compute coefficient w_t, where w_t=1/2*ln((1-weighted_error(f_t)/(weighted_error(f_t)).
+                                    where weighted_error(f_t)=   Total weight of mistakes
+                                                              -------------------------------
+                                                              Total weight of all data points
+        3. Recompute weights α_i, where α_i = α_i*e^-w_t, if f_t(x)=y_i (the prediction is correct).
+                                              α_i*e^w_t, if f_t(x)=/=y_i (the prediction is not correct).
+        4. Normalize the weights α_i =        α_i
+                                      ---------------------
+                                      sum(α_j, for all α's)
 
+    After T iteration (we can set this do a max number), we can predict the final result by:
+        y=sign(Σ, T, n=1, w_t*f_t(x)).
+
+    Essentially for an input, we use f_t(x) to determine an output (-1, or +1 for binary decision trees), and
+    we multiply the weight for that f_t(x). Each f_t(x) has it's own weight. Then using the sign, if the result
+    is positive, then our output is +1, else -1.
+
+    """
+
+    @staticmethod
+    def decision_tree(data, features, target, iterations, predict_method, model, model_method, model_parameters):
+        """Decision Tree ensemble learning algorithm for Adaboost.
+
+        Uses a decision tree model, applies the adaboost algorithm and generates T number of models through the
+        iterations parameter.
+
+        Args:
+            data (pandas.DataFrame): Training data.
+            features (list of str): List of features that we want to train.
+            target (str): The target (output) that we want to train.
+            iterations (int): Number of iterations.
+            predict_method  (func): Function to predict output.
+            model (obj): A model that contains a predict function to predict the output based on some input features.
+            model_method (function): Model's function to generate a model.
+            model_parameters (dict): Model parameters for the model, such as depth to train for a decision tree.
+
+        Returns:
+            A list of tuples (weights, model):
+                [
+                    (
+                        list of float: List of weights for the coefficients.
+                        obj: Model trained.
+                    )
+                ]
+
+        """
         # Each row of data (training data), has an alpha
         alpha = pd.Series(data=[1]*len(data))
 
@@ -109,24 +123,32 @@ class AdaBoost:
 
         return weights_list, models_list
 
-    def logistic_regression(self, feature_matrix, label, iterations, predict_method, model, model_method,
-                            model_parameters):
-        # Usage:
-        #       Uses a model, applies the adaboost algorithm and generates T number of models through
-        #       the iterations parameter.
-        # Arguments:
-        #       feature_matrix   (numpy matrix) : features of a dataset
-        #       label            (numpy array)  : the label of a dataset
-        #       iterations       (int)              : Number of iterations
-        #       predict_method   (func)             : function to predict output
-        #       model            (obj)              : A model that contains a predict function to predict the output
-        #                                             based on some input features
-        #       model_method     (func)             : Model's function to generate a model
-        #       model_parameters (dict)             : Model parameters for the model, such as depth to train
-        #                                             for a decision tree
-        # Returns:
-        #       list of tuple    (weights, model)   : list of tuples that has (weights, model)
+    @staticmethod
+    def logistic_regression(feature_matrix, label, iterations, predict_method, model, model_method, model_parameters):
+        """Logistic regression ensemble learning algorithm for Adaboost.
 
+        Uses a logistic regression model, applies the adaboost algorithm and generates T number of models through the
+        iterations parameter.
+
+        Args:
+            feature_matrix (numpy.matrix): Features of a dataset.
+            label (numpy.array): The label of a dataset.
+            iterations (int): Number of iterations.
+            predict_method (func): Function to predict output.
+            model (obj): A model that contains a predict function to predict the output based on some input features.
+            model_method (function): Model's function to generate a model.
+            model_parameters (dict): Model parameters for the model, such as step size.
+
+        Returns:
+            A list of tuples (weights, model):
+                [
+                    (
+                        list of float: List of weights for the coefficients.
+                        obj: Model trained.
+                    )
+                ]
+
+        """
         # Each row of data (training data), has an alpha
         alpha = np.array([1]*len(feature_matrix))
 

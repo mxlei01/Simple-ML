@@ -2,24 +2,32 @@ import numpy as np
 
 
 class LogLikelihood:
-    # Usage:
-    #   A class to compute log likelihood
+    """Class for computing log likelihoods.
 
-    def log_likelihood(self, feature_matrix, label, coefficients):
-        # Usage:
-        #       Used to compute the log likelihood, which is based on:
-        #           ℓℓ(w)=∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−wTh(xi))))
-        #       Where:
-        #           1[yi=+1]−1 : is an indicator function of yi=+1
-        #           w          : coefficients
-        #           h(xi)      : Nth feature
-        # Arguments:
-        #       feature_matrix (numpy matrix) : feature matrix
-        #       label          (numpy array)  : labels of the feature matrix
-        #       coefficients   (numpy array)  : coefficients computed using MLE (with or without L1/L2)
-        # Returns:
-        #       lp (float) : log likelihood
+    Computes log likelihood, which can be used to calculate log likelihood on logistic regression algorithms.
 
+    """
+
+    @staticmethod
+    def log_likelihood(feature_matrix, label, coefficients):
+        """Computes log likelihood.
+
+        Used to compute the log likelihood, which is based on:
+            ℓℓ(w)=∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−w^Th(xi))))
+        Where,
+            1[yi=+1]−1: An indicator function of yi=+1.
+            w: Coefficients.
+            h(xi): Nth feature.
+
+        Args:
+            feature_matrix (numpy.matrix): Feature matrix.
+            label (numpy.array): Labels of the feature matrix.
+            coefficients (numpy.array): Coefficients computed using MLE (with or without L1/L2).
+
+        Returns:
+            lp (float): Log likelihood.
+
+        """
         # Compute the indicator function 1[yi=+1]
         indicator = (label == +1)
 
@@ -38,22 +46,27 @@ class LogLikelihood:
 
         return lp
 
-    def average_log_likelihood(self, feature_matrix, label, coefficients):
-        # Usage:
-        #       Used to compute the log likelihood, which is based on:
-        #           ℓℓa(w)=(1/N)*∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−wTh(xi))))
-        #       Where:
-        #           1[yi=+1]−1 : is an indicator function of yi=+1
-        #           w          : coefficients
-        #           h(xi)      : Nth feature
-        #           (1/N)      : averages the log likelihood by rows of feature_matrix
-        # Arguments:
-        #       feature_matrix (numpy matrix) : feature matrix
-        #       label          (numpy array)  : labels of the feature matrix
-        #       coefficients   (numpy array)  : coefficients computed using MLE (with or without L1/L2)
-        # Returns:
-        #       lp (float) : log likelihood
+    @staticmethod
+    def average_log_likelihood(feature_matrix, label, coefficients):
+        """Computes average log likelihood.
 
+        Used to compute the log likelihood, which is based on:
+            ℓℓa(w)=(1/N)*∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−w^Th(xi))))
+        Where,
+            1[yi=+1]−1: An indicator function of yi=+1.
+            w: Coefficients.
+            h(xi): Nth feature.
+            (1/N): Averages the log likelihood by rows of feature_matrix.
+
+        Args:
+            feature_matrix (numpy.matrix): Feature matrix.
+            label (numpy.array): Labels of the feature matrix.
+            coefficients (numpy.array): Coefficients computed using MLE (with or without L1/L2).
+
+        Returns:
+            lp (float): Average log likelihood.
+
+        """
         # Compute the indicator function 1[yi=+1]
         indicator = (label == +1)
 
@@ -72,23 +85,28 @@ class LogLikelihood:
 
         return lp
 
-    def log_likelihood_l2_norm(self, feature_matrix, label, coefficients, l2_penalty):
-        # Usage:
-        #       Used to compute the log likelihood with l2 norm, which is based on:
-        #           ℓℓ(w)=∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−wTh(xi))))-lambda||w||^2_2
-        #       Where:
-        #           1[yi=+1]−1 : is an indicator function of yi=+1
-        #           w          : coefficients
-        #           h(xi)      : Nth feature
-        #           lambda     : l2_penalty
-        # Arguments:
-        #       feature_matrix (numpy matrix) : feature matrix
-        #       label          (numpy array)  : labels of the feature matrix
-        #       coefficients   (numpy array)  : coefficients computed using MLE (with or without L1/L2)
-        #       l2_penalty     (float)        : l2 penalty value
-        # Returns:
-        #       lp (float) : log likelihood
+    @staticmethod
+    def log_likelihood_l2_norm(feature_matrix, label, coefficients, l2_penalty):
+        """Computes log likelihood with l2 norm.
 
+        Used to compute the log likelihood with l2 norm, which is based on:
+            ℓℓ(w)=∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−w^Th(xi))))-lambda||w||^2_2
+        Where,
+            1[yi=+1]−1: An indicator function of yi=+1.
+            w: Coefficients.
+            h(xi): Nth feature.
+            lambda: L2_penalty.
+
+        Args:
+            feature_matrix (numpy.matrix): Feature matrix.
+            label (numpy.array): Labels of the feature matrix.
+            coefficients (numpy.array): Coefficients computed using MLE (with or without L1/L2).
+            l2_penalty (float): L2 penalty value.
+
+        Returns:
+            lp (float): Log likelihood with l2 norm.
+
+        """
         # Compute the indicator function 1[yi=+1]
         indicator = (label == +1)
 

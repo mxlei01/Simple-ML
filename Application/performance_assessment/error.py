@@ -3,32 +3,47 @@ from performance_assessment.predict_output import PredictOutput
 
 
 class Error:
-    # Usage:
-    #   Used for computing error
+    """Computes error for classification.
+
+    Computes error for classification algorithms, such as binary tree.
+
+    Attributes:
+        predict_output (PredictOutput): Class for predicting output.
+
+    """
 
     def __init__(self):
-        # Usage:
-        #       Constructor for the error class, which is mainly used to set predict output class
-        # Arguments:
-        #       None
+        """Constructor for Error.
 
-        # Create a predict output class
+        Constructor for Error, sets up output prediction class.
+
+        """
         self.predict_output = PredictOutput()
 
     def binary_tree(self, tree, data, target):
-        # usage:
-        #       Computes classification error for binary tree classification, which is based on
-        #                           classification error =    # mistakes
-        #                                                  ----------------
-        #                                                  # total examples
-        # Arguments:
-        #       tree                 (dict)         : a tree that uses a dictionary format, with is_leaf, prediction,
-        #                                             left and right
-        #       data                 (pandas frame) : a pandas frame that has the same features binary tree
-        #       target               (str)          : the target we want to predict
-        # Return:
-        #       classification error (float)        : the classification error of the tree
+        """Computes classification error for binary tree.
 
+        Computes classification error for binary tree classification.
+        Classification error =    # Mistakes
+                              ----------------
+                              # Total examples
+
+        Args:
+            tree (dict): The top node of a binary tree, with the following dict format:
+                {
+                    'is_leaf' (bool): False,
+                    'prediction' (NoneType): None,
+                    'splitting_feature' (str): splitting_feature,
+                    'left' (dict): left_tree,
+                    'right' (dict): right_tree
+                }
+            data (pandas.DataFrame): A pandas frame that has the same features binary tree.
+            target (str): The target we want to predict.
+
+        Returns:
+            float: Clarification error.
+
+        """
         # Apply the classify(tree, x) to each row in your data
         prediction = data.apply(lambda x: self.predict_output.binary_tree(tree, x), axis=1)
 
@@ -38,4 +53,3 @@ class Error:
 
         # Return mistakes/total examples
         return float(mistakes)/float(len(data))
-

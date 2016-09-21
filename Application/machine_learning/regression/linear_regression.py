@@ -1,28 +1,37 @@
 import numpy as np
 
+
 class LinearRegression:
-    # Usage:
-    #   Linear Regression is based on: w^(t+1) <= w^(t) + 2nH^t(y-Hw) for gradient descent,
-    #   and w^(t+1) <= w^(t) - 2nH^t(y-Hw) for hill climbing
-    #       w(t)   : weight at iteration t
-    #       w(t+1) : weight at iteration t+1
-    #       n      : step size
-    #       H      : feature matrix
-    #       w      : weight vector
-    #       y      : input vector
+    """Class to compute Linear Regression.
 
-    def gradient_descent(self, feature_matrix, output, initial_weights, step_size, tolerance):
-        # Usage:
-        #       Gradient descent algorithm: w^(t+1) <= w^(t) + 2nH^t(y-Hw)
-        # Arguments:
-        #       feature_matrix  (numpy matrix) : features of a dataset
-        #       output          (numpy array)  : the output of a dataset
-        #       initial_weights (numpy array)  : initial weights that are used
-        #       step_size       (int)          : step size
-        #       tolerance       (int)          : tolerance (or epsilon)
-        # Return:
-        #       weights         (numpy array)  : the final weights after gradient descent
+    Linear Regression computes a line that best fit the continuous data using gradient descent.
 
+    """
+
+    @staticmethod
+    def gradient_descent(feature_matrix, output, initial_weights, step_size, tolerance):
+        """Gradient descent algorithm for linear regression.
+
+        Gradient descent algorithm: w^(t+1) <= w^(t) + 2nH^t(y-Hw).
+        Where,
+            w(t): Weight at iteration t.
+            w(t+1): Weight at iteration t+1.
+            n: Step size.
+            H: Feature matrix.
+            w: Weight vector.
+            y: Input vector.
+
+        Args:
+            feature_matrix (numpy.matrix): Features of a dataset.
+            output (numpy.array): The output of a dataset.
+            initial_weights (numpy.array): Initial weights that are used.
+            step_size (int): Step size.
+            tolerance (int): Tolerance (or epsilon).
+
+        Returns:
+            weights (numpy.array): The final weights after gradient descent.
+
+        """
         # Set Converged to False
         converged = False
 
@@ -50,21 +59,32 @@ class LinearRegression:
                 # Set converged to true so that we stop our while loop
                 converged = True
 
-        # Return the weights
         return weights
 
-    def hill_climbing(self, feature_matrix, output, initial_weights, step_size, tolerance):
-        # Usage:
-        #       Gradient descent algorithm: w^(t+1) <= w^(t) + 2nH^t(y-Hw)
-        # Arguments:
-        #       feature_matrix  (numpy matrix) : features of a dataset
-        #       output          (numpy array)  : the output of a dataset
-        #       initial_weights (numpy array)  : initial weights that are used
-        #       step_size       (int)          : step size
-        #       tolerance       (int)          : tolerance (or epsilon)
-        # Return:
-        #       weights         (numpy array)  : the final weights after gradient descent
+    @staticmethod
+    def gradient_ascent(feature_matrix, output, initial_weights, step_size, tolerance):
+        """Gradient ascent algorithm for linear regression.
 
+        Gradient ascent algorithm: w^(t+1) <= w^(t) - 2nH^t(y-Hw).
+        Where,
+            w(t): Weight at iteration t.
+            w(t+1): Weight at iteration t+1.
+            n: Step size.
+            H: Feature matrix.
+            w: Weight vector.
+            y: Input vector.
+
+        Args:
+            feature_matrix (numpy.matrix): Features of a dataset.
+            output (numpy.array): The output of a dataset.
+            initial_weights (numpy.array): Initial weights that are used.
+            step_size (int): Step size.
+            tolerance (int): Tolerance (or epsilon).
+
+        Returns:
+            weights (numpy.array): The final weights after gradient ascent.
+
+        """
         # Set Converged to False
         converged = False
 
@@ -90,5 +110,4 @@ class LinearRegression:
                 # Set converged to true so that we stop our while loop
                 converged = True
 
-        # Return the weights
         return weights

@@ -8,25 +8,21 @@ from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class TestLinearRegression(unittest.TestCase):
-    #   Usage:
-    #       Tests for the Linear Regression Class.
+    """Test for LinearRegression.
+
+    Uses housing data to test LinearRegression.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestLinearRegression
-        # Arguments:
-        #       None
+        """Constructor for TestLinearRegression.
 
-        # Create an instance of the Convert Numpy class
+        Loads housing data, and creates training and testing data.
+
+        """
         self.convert_numpy = ConvertNumpy()
-
-        # Create an instance of the Linear Regression class
         self.linear_regression = LinearRegression()
-
-        # Create an instance of the Predict Output Class
         self.predict_output = PredictOutput()
-
-        # Create an instance of the Residual Sum Squares Class
         self.residual_sum_squares = ResidualSumSquares()
 
         # Create a dictionary type to store relevant data types so that our pandas
@@ -41,17 +37,19 @@ class TestLinearRegression(unittest.TestCase):
         self.kc_house = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_data.csv', dtype=dtype_dict)
 
         # Create a kc_house_test_frame that encompasses only train data
-        self.kc_house_train = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_train_data.csv', dtype=dtype_dict)
+        self.kc_house_train = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_train_data.csv',
+                                          dtype=dtype_dict)
 
         # Create a kc_house_frames that encompasses only test data
-        self.kc_house_test = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_test_data.csv', dtype=dtype_dict)
+        self.kc_house_test = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_test_data.csv',
+                                         dtype=dtype_dict)
 
     def test_01_gradient_descent(self):
-        # Usage:
-        #       Tests the result on gradient descent
-        # Arguments:
-        #       None
+        """Test gradient descent.
 
+        Tests gradient descent and compare it to known values.
+
+        """
         # We will use sqft_living for our features
         features = ['sqft_living']
 
@@ -80,11 +78,11 @@ class TestLinearRegression(unittest.TestCase):
         self.assertEquals(round(281.91211917520917, 3), round(final_weights[1], 3))
 
     def test_02_gradient_descent_multiple(self):
-        # Usage:
-        #   Computes gradient descent on multiple input, and computes predicted model and RSS
-        # Arguments:
-        #   None
+        """Tests gradient descent on multiple features.
 
+        Computes gradient descent on multiple input, and computes predicted model and RSS.
+
+        """
         # We will use sqft_iving, and sqft_living15
         features = ['sqft_living', 'sqft_living15']
 
@@ -126,13 +124,12 @@ class TestLinearRegression(unittest.TestCase):
         # Assert that rss is correct
         self.assertEquals(round(270263443629803.41, -3), round(rss, -3))
 
+    def test_03_gradient_ascent(self):
+        """Test gradient ascent.
 
-    def test_03_hill_climbing(self):
-        # Usage:
-        #       Tests the result on hill climbing
-        # Arguments:
-        #       None
+        Test gradient ascent and compare it to known values.
 
+        """
         # We will use sqft_living for our features
         features = ['sqft_living']
 
@@ -152,9 +149,9 @@ class TestLinearRegression(unittest.TestCase):
         tolerance = 2.5e7
 
         # Compute our hill climbing value
-        final_weights = self.linear_regression.hill_climbing(feature_matrix, output,
-                                                             initial_weights, step_size,
-                                                             tolerance)
+        final_weights = self.linear_regression.gradient_ascent(feature_matrix, output,
+                                                               initial_weights, step_size,
+                                                               tolerance)
 
         # Assert that the weights is correct
         self.assertEquals(round(-47000.142201335177, 3), round(final_weights[0], 3))

@@ -3,29 +3,41 @@ from performance_assessment.predict_output import PredictOutput
 
 
 class Accuracy:
-    # Usage:
-    #   Used for computing accuracy
+    """Class for computing accuracy.
+
+    Computes accuracy for general method, decision trees, and logistic regression.
+
+    Attributes:
+        predict_output (PredictOutput): Class used to predict output.
+
+    """
 
     def __init__(self):
-        # Usage:
-        #       Constructor for the accuracy class, which is mainly used to set predict output class
-        # Arguments:
-        #       None
+        """Constructor for Accuracy class to setup predict output.
 
-        # Create a predict output class
+        Constructor for Accuracy class to setup predict output class.
+
+        """
         self.predict_output = PredictOutput()
 
-    def general(self, predictions, label):
-        # Usage:
-        #       General form of computing accuracy for classification = # correctly classified data points
-        #                                                               ----------------------------------
-        #                                                                      # total data points
-        # Arguments:
-        #       prediction (numpy matrix) : a numpy matrix containing features
-        #       label      (numpy array)  : a numpy array containing labels
-        # Return:
-        #       accuracy       (float)
+    @staticmethod
+    def general(predictions, label):
+        """Computes general form of accuracy for classification.
 
+        Needs to have predictions and labels before using this function.
+
+        General form of computing accuracy for classification = # Correctly classified data points
+                                                                ----------------------------------
+                                                                      # Total data points
+
+        Args:
+            predictions (numpy.matrix): A numpy matrix containing features.
+            label (numpy.array): A numpy array containing labels.
+
+        Returns:
+            float: Accuracy.
+
+        """
         # Sum the number of correct predictions
         num_correct = (pd.Series(predictions) == pd.Series(label)).sum()
 
@@ -33,17 +45,23 @@ class Accuracy:
         return num_correct / len(label)
 
     def logistic_regression(self, feature_matrix, label, coefficients):
-        # Usage:
-        #       Computes accuracy for classification, which is based on accuracy = # correctly classified data points
-        #                                                                          ----------------------------------
-        #                                                                                 # total data points
-        # Arguments:
-        #       feature_matrix (numpy matrix) : a numpy matrix containing features
-        #       label          (numpy array)  : a numpy array containing labels
-        #       coefficients   (numpy array)  : a numpy array containing coefficients
-        # Return:
-        #       accuracy       (float)
+        """Computes accuracy for logistic regression.
 
+        Can take in feature matrix and coefficients from logistic regression, and compute accuracy.
+
+        Computes accuracy for classification, which is based on accuracy = # Correctly classified data points
+                                                                          ----------------------------------
+                                                                                 # Total data points
+
+        Args:
+            feature_matrix (numpy.matrix): A numpy matrix containing features.
+            label (numpy.array): A numpy array containing labels.
+            coefficients (numpy.array): A numpy array containing coefficients.
+
+        Returns:
+            float: Accuracy.
+
+        """
         # Get the predictions
         predictions = self.predict_output.logistic_regression(feature_matrix, coefficients)
 
@@ -53,18 +71,25 @@ class Accuracy:
         # Compute the accuracy, which is the number of correct predictions divided by the length of feature matrix
         return num_correct / len(feature_matrix)
 
-    def decision_tree(self, data, predictions, target):
-        # Usage:
-        #       Computes accuracy for decision trees, which is based on accuracy = # correctly classified data points
-        #                                                                          ----------------------------------
-        #                                                                                 # total data points
-        # Arguments:
-        #       data        (pandas frame)  : train/testing data
-        #       predictions (pandas series) : a pandas series containing output prediction for data
-        #       target      (string)        : the target string
-        # Return:
-        #       accuracy    (float)
+    @staticmethod
+    def decision_tree(data, predictions, target):
+        """Computes accuracy for logistic regression.
 
+        Can take in data and predictions along with target from a decision tree to compute accuracy.
+
+        Computes accuracy for decision trees, which is based on accuracy = # Correctly classified data points
+                                                                           ----------------------------------
+                                                                                  # Total data points
+
+        Args:
+            data (pandas.DataFrame): Train/testing data.
+            predictions (pandas.Series): A pandas series containing output prediction for data.
+            target (str): The target string.
+
+        Returns:
+            float: Accuracy.
+
+        """
         # Add the predictions to the data
         data["prediction"] = predictions
 

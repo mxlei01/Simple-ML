@@ -11,28 +11,22 @@ from performance_assessment.accuracy import Accuracy
 
 
 class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
-    #   Usage:
-    #       Tests for the Weighted Logistic Regression Class L2 Norm
+    """Tests WeightedLogisticRegression class.
+
+    Uses Amazon data to test WeightedLogisticRegression class.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestWeightedLogisticRegression
-        # Arguments:
-        #       None
+        """Constructor for TestWeightedLogisticRegressionL2Norm.
 
-        # Create an instance of the Convert Numpy class
+        Loads Amazon data, and creates training and testing data.
+
+        """
         self.convert_numpy = ConvertNumpy()
-
-        # Create an instance of the Predict Output Class
         self.predict = PredictOutput()
-
-        # Create an instance of the adaboost meta algorithm class
         self.adaboost = AdaBoost()
-
-        # Create an instance of the accuracy class
         self.accuracy = Accuracy()
-
-        # Create an instance of the Weighted Logistic Regression class
         self.weighted_logistic_regression_l2_norm = WeightedLogisticRegressionL2Norm()
 
         # Load the important words
@@ -59,11 +53,11 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
             self.review_frame[word] = self.review_frame['review_clean'].apply(lambda s: s.split().count(word))
 
     def test_01_gradient_ascent(self):
-        # Usage:
-        #       Test out the gradient ascent algorithm for weighted logistic regression l2 norm
-        # Arguments:
-        #       None
+        """Tests gradient ascent algorithm.
 
+        Tests gradient ascent algorithm and compare it with known values.
+
+        """
         # We will use important words for the output
         features = self.important_words
 
@@ -100,11 +94,11 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
                          round(0.74356999999999995, 5))
 
     def test_02_adaboost(self):
-        # Usage:
-        #       Test out the adaboost algorithm with a weighted logistic regression l2 norm
-        # Arguments:
-        #       None
+        """Tests adaboost algorithm.
 
+        Tests the adaboost algorithm and compare it with known values.
+
+        """
         # We will use important words for the output
         features = self.important_words
 

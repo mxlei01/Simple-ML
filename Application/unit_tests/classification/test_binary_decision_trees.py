@@ -7,25 +7,33 @@ from machine_learning.classification.binary_decision_trees import BinaryDecision
 
 
 class TestBinaryDecisionTrees(unittest.TestCase):
-    #   Usage:
-    #       Tests for the binary decision trees class
+    """Tests for the BinaryDecisionTrees class.
+
+    Uses lending club data to test binary decision trees.
+
+    Attributes:
+        binary_decision_trees (BinaryDecisionTrees): Binary decision tree class.
+        predict_output (PredictOutput): Predict output class to predict output for decision tree.
+        accuracy (Accuracy): Measures the accuracy of algorithms.
+        error (Error): Measure the accuracy of algorithms.
+        loans_data (pandas.DataFrame): Lending Club Data.
+        features (list of str): List of features to build decision tree on.
+        target (str): The target that we are predicting.
+        train_data (pandas.DataFrame): Lending Club training Data.
+        test_data (pandas.DataFrame): Lending Club testing data.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestLogisticRegression
-        # Arguments:
-        #       None
+        """Constructor for TestBinaryDecisionTrees.
 
-        # Create an instance of the BinaryDecisionTree class
+        We will clean up the loans_data by doing one hot encoding our features list, however, in the end we will
+        use some pre-built data for training and testing, but it uses the same method for one hot encoding.
+
+        """
         self.binary_decision_trees = BinaryDecisionTrees()
-
-        # Create an instance of the Predict Output class
         self.predict_output = PredictOutput()
-
-        # Create an instance of the accuracy class
         self.accuracy = Accuracy()
-
-        # Create an instance of the error class
         self.error = Error()
 
         # Pandas type set
@@ -60,11 +68,11 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.test_data = pd.read_csv('./unit_tests/test_data/classification/lending_club/lending_club_test.csv')
 
     def test_01_greedy_recursive(self):
-        # Usage:
-        #       Test out the greedy recursive algorithm for the binary decision tree
-        # Arguments:
-        #       None
+        """Tests greedy recursive function for BinaryDecisionTrees class
 
+        We will use the training data to build a decision tree, and measure the accuracy with some known good values.
+
+        """
         # Create a decision tree
         decision_tree = self.binary_decision_trees.greedy_recursive(self.train_data, self.features, self.target,
                                                                     current_depth=0, max_depth=6)
@@ -81,13 +89,12 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
 
-
     def test_02_greedy_recursive_early_stop(self):
-        # Usage:
-        #       Test out the greedy recursive algorithm with early stopping
-        # Arguments:
-        #       None
+        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
 
+        We will use early stopping for greedy recursive, and measure performance.
+
+        """
         # Create a model with max_depth=6, min_node_size=100, min_error_reduction=0
         model_1 = self.binary_decision_trees.greedy_recursive_early_stop(self.train_data, self.features, self.target,
                                                                          max_depth=6, min_node_size=100,

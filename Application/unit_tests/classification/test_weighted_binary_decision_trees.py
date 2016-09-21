@@ -8,28 +8,23 @@ from machine_learning.ensembles.adaboost import AdaBoost
 
 
 class TestWeightedBinaryDecisionTrees(unittest.TestCase):
-    #   Usage:
-    #       Tests for the weighted binary decision trees class
+    """Tests for the BinaryDecisionTrees class.
+
+    Uses lending club data to test binary decision trees.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestLogisticRegression
-        # Arguments:
-        #       None
+        """Constructor for WeightedBinaryDecisionTrees.
 
-        # Create an instance of the BinaryDecisionTree class
+        We will clean up the loans_data by doing one hot encoding our features list, however, in the end we will
+        use some pre-built data for training and testing, but it uses the same method for one hot encoding.
+
+        """
         self.weighted_binary_decision_trees = WeightedBinaryDecisionTrees()
-
-        # Create an instance of the Adaboost class
         self.adaboost = AdaBoost()
-
-        # Create an instance of the Predict Output class
         self.predict = PredictOutput()
-
-        # Create an instance of the accuracy class
         self.accuracy = Accuracy()
-
-        # Create an instance of the error class
         self.error = Error()
 
         # Pandas type set
@@ -64,11 +59,11 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         self.test_data = pd.read_csv('./unit_tests/test_data/classification/lending_club/lending_club_test.csv')
 
     def test_01_greedy_recursive(self):
-        # Usage:
-        #       Test out the greedy recursive algorithm for the weighted binary decision tree
-        # Arguments:
-        #       None
+        """Tests greedy recursive function for BinaryDecisionTrees class
 
+        We will use the training data to build a decision tree, and measure the accuracy with some known good values.
+
+        """
         # Create data weights
         data_weights = pd.Series([1.] * 10 + [0.] * (len(self.train_data) - 20) + [1.] * 10)
 
@@ -84,11 +79,11 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(round(accuracy, 5), round(0.48124865678057166, 5))
 
     def test_02_adaboost(self):
-        # Usage:
-        #       Test out the adaboost algorithm with a weighted binary decision tree
-        # Arguments:
-        #       None
+        """Tests the adaboost algorithm.
 
+        Tests the adaboost algorithm with low number of iterations.
+
+        """
         # Create two weighted binary decision trees
         weights_list, models_list = self.adaboost.decision_tree(self.train_data, self.features, self.target,
                                                                 iterations=2,
@@ -102,11 +97,11 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
                          [round(0.15802933659263743, 5), round(0.1768236329364191, 5)])
 
     def test_03_adaboost_high_iterations(self):
-        # Usage:
-        #       Test out the adaboost algorithm with a weighted binary decision tree with higher number of iterations
-        # Arguments:
-        #       None
+        """Tests the adaboost algorithm.
 
+        Tests the adaboost algorithm with high number of iterations.
+
+        """
         # Create ten weighted binary decision trees
         weights_list, models_list = self.adaboost.decision_tree(self.train_data, self.features, self.target,
                                                                 iterations=10,

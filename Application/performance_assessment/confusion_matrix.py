@@ -2,23 +2,38 @@ import pandas as pd
 
 
 class ConfusionMatrix:
-    # Usage:
-    #   Used for computing a confusion matrix
+    """Class to compute confusion matrix.
 
-    def confusion_matrix(self, output, predicted_output):
-        # Usage:
-        #       Produces a confusion matrix, where:
-        #           True Label: +1, Predicted Label: +1 = True Positive
-        #           True Label: +1, Predicted Label: -1 = False Negative
-        #           True Label: -1, Predicted Label: +1 = False Positive
-        #           True Label: -1, Predicted Label: -1 = True Negative
-        # Arguments:
-        #       output           (numpy array)   : a numpy array containing real output
-        #       predicted_output (numpy array)   : a numpy array containing predicted output
-        # Return:
-        #       confusion matrix (dict)          : a dictionary containing keywords true_positives, false_negatives,
-        #                                          false_positives, true_negatives
+    Computes the confusion matrix for classification algorithms. Furthermore, includes functions to compute recall
+    and precision.
 
+    """
+
+    @staticmethod
+    def confusion_matrix(output, predicted_output):
+        """Computes confusion matrix.
+
+        Produces a confusion matrix.
+        Where,
+            True Label: +1, Predicted Label: +1 = True Positive
+            True Label: +1, Predicted Label: -1 = False Negative
+            True Label: -1, Predicted Label: +1 = False Positive
+            True Label: -1, Predicted Label: -1 = True Negative
+
+        Args:
+            output (numpy.array): A numpy array containing real output.
+            predicted_output (numpy.array): A numpy array containing predicted output.
+
+        Returns:
+            dict: A dictionary that contains the confusion matrix,
+                {
+                    'true_positives' (int): True positives count,
+                    'false_negatives' (int): False negatives count,
+                    'false_positives' (int): False positives count,
+                    'true_negatives' (int): True negatives count
+                }
+
+        """
         # Convert the output and predicted_output to pandas matrix
         df = pd.concat([pd.Series(output, name="output"), pd.Series(predicted_output, name="predicted_output")], axis=1)
 
@@ -39,17 +54,21 @@ class ConfusionMatrix:
                 "false_positives": false_positives, "true_negatives": true_negatives}
 
     def precision(self, output, predicted_output):
-        # Usage:
-        #       Computes the precision of the output and predicted_output, where
-        #               precision =         # true positives
-        #                           ------------------------------------
-        #                           # true positives + # false negatives
-        # Arguments:
-        #       output           (numpy array)   : a numpy array containing real output
-        #       predicted_output (numpy array)   : a numpy array containing predicted output
-        # Return:
-        #       precision        (float) : precision percentage
+        """Computes precision.
 
+        Computes the precision of the output and predicted_output.
+        Precision =         # True positives
+                   ------------------------------------
+                   # True positives + # False negatives
+
+        Args:
+            output (numpy.array): A numpy array containing real output.
+            predicted_output (numpy.array): A numpy array containing predicted output.
+
+        Returns:
+            float: Precision.
+
+        """
         # Get the confusion matrix
         confusion_matrix = self.confusion_matrix(output, predicted_output)
 
@@ -58,17 +77,21 @@ class ConfusionMatrix:
                                                                confusion_matrix["false_negatives"])
 
     def recall(self, output, predicted_output):
-        # Usage:
-        #       Computes the recall of the output and predcited_output, where
-        #               recall =        # true positives
-        #                       ------------------------------------
-        #                       # true positives + # false positives
-        # Arguments:
-        #       output           (numpy array)   : a numpy array containing real output
-        #       predicted_output (numpy array)   : a numpy array containing predicted output
-        # Return:
-        #       recall           (float) : precision percentage
+        """Computes recall.
 
+        Computes the recall of the output and predicted output.
+        Recall =        # True positives
+               ------------------------------------
+               # True positives + # False positives
+
+        Args:
+            output           (numpy.array): A numpy array containing real output.
+            predicted_output (numpy.array): A numpy array containing predicted output.
+
+        Returns:
+            float: Recall.
+
+        """
         # Get the confusion matrix
         confusion_matrix = self.confusion_matrix(output, predicted_output)
 

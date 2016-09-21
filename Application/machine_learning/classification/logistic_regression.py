@@ -3,37 +3,37 @@ import math
 
 
 class LogisticRegression:
-    # Usage:
-    #   Logistic Regression with gradient ascent based on:
-    #           w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-    #       w(t)         : weight at iteration t
-    #       w(t+1)       : weight at iteration t+1
-    #       n            : step size
-    #       h_j(X_i)     : feature for each row of a specific column
-    #       1[y=+1]      : indicator function for y=+1
-    #       P(y=1|x_i,w) : probability of y=1 for x_i using the current weights
-    #   Logistic Regression with stochastic gradient ascent is based on:
-    #           w^(t+1) <= w^(t) + n*Σ^N_b=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-    #       Σ^N_b        : summation up to batch size b, 1 for SGA, and anything above 1 is BGA (Batch)
-    #       w(t)         : weight at iteration t
-    #       w(t+1)       : weight at iteration t+1
-    #       n            : step size
-    #       h_j(X_i)     : feature for each row of a specific column
-    #       1[y=+1]      : indicator function for y=+1
-    #       P(y=1|x_i,w) : probability of y=1 for x_i using the current weights
+    """Class that has various functions to compute Logistic Regression.
 
-    def gradient_ascent(self, feature_matrix, label, initial_coefficients, step_size, max_iter):
-        # Usage:
-        #       Gradient ascent algorithm: w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-        # Arguments:
-        #       feature_matrix  (numpy matrix) : features of a dataset
-        #       label           (numpy array)  : the label of a dataset
-        #       initial_weights (numpy array)  : initial weights that are used
-        #       step_size       (int)          : step size
-        #       max_iter        (int)          : amount of iterations
-        # Return:
-        #       weights         (numpy array)  : the final weights after gradient descent
+    Logistic Regression is essentially using linear regression techniques to compute classification problems by fitting
+    a line between two classes.
 
+    """
+
+    @staticmethod
+    def gradient_ascent(feature_matrix, label, initial_coefficients, step_size, max_iter):
+        """Gradient ascent algorithm for Logistic Regression.
+
+        The gradient ascent algorithm: w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w)).
+        Where:
+            w(t): Weight at iteration t.
+            w(t+1): Weight at iteration t+1.
+            n: Step size.
+            h_j(X_i): Feature for each row of a specific column.
+            1[y=+1]: Indicator function for y=+1.
+            P(y=1|x_i,w): Probability of y=1 for x_i using the current weights.
+
+        Args:
+            feature_matrix (numpy.matrix): Features of a dataset.
+            label (numpy.array): The label of a dataset.
+            initial_coefficients (numpy.array): Initial weights for the model.
+            step_size (int): Step size.
+            max_iter (int): Amount of Iterations.
+
+        Returns:
+            coefficients (numpy.array): The final weights after gradient ascent finishes.
+
+        """
         # Make sure we are using numpy array
         coefficients = np.array(initial_coefficients)
 
@@ -64,21 +64,33 @@ class LogisticRegression:
 
         return coefficients
 
-
-    def stochastic_gradient_ascent(self, feature_matrix, label, initial_coefficients, step_size, batch_size,
+    @staticmethod
+    def stochastic_gradient_ascent(feature_matrix, label, initial_coefficients, step_size, batch_size,
                                    max_iter):
-        # Usage:
-        #       Gradient ascent algorithm: w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-        # Arguments:
-        #       feature_matrix  (numpy matrix) : features of a dataset
-        #       label           (numpy array)  : the label of a dataset
-        #       initial_weights (numpy array)  : initial weights that are used
-        #       step_size       (int)          : step size
-        #       batch_size      (int)          : number of items to sum per iteration
-        #       max_iter        (int)          : amount of iterations
-        # Return:
-        #       weights         (numpy array)  : the final weights after gradient descent
+        """Stochastic gradient ascent algorithm for Logistic Regression.
 
+        The gradient ascent algorithm: w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w)).
+        Where:
+            Σ^N_b: summation up to batch size b, 1 for SGA, and anything above 1 is BGA (Batch)
+            w(t): weight at iteration t.
+            w(t+1): weight at iteration t+1.
+            n: step size.
+            h_j(X_i): feature for each row of a specific column.
+            1[y=+1]: indicator function for y=+1.
+            P(y=1|x_i,w): probability of y=1 for x_i using the current weights.
+
+        Args:
+            feature_matrix (numpy.matrix): Features of a dataset.
+            label (numpy.array): The label of a dataset.
+            initial_coefficients (numpy.array): Initial weights for the model.
+            step_size (int): Step size.
+            batch_size (int): Number of items to sum per iteration.
+            max_iter (int): Amount of iterations.
+
+        Returns:
+            coefficients (numpy.array): The final weights after gradient ascent finishes.
+
+        """
         # Make sure we are using numpy array
         coefficients = np.array(initial_coefficients)
 
@@ -106,7 +118,6 @@ class LogisticRegression:
 
             # Compute P(y_i = +1 | x_i, w) using the link function
             predictions = [1/(1+math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
-
 
             # Compute indicator value for (y_i = +1), and we would slice it with [i:i+batch_size] to give us rows
             # between i and i+batch_size

@@ -3,50 +3,72 @@ import pandas as pd
 
 
 class PredictOutput:
-    # Usage:
-    #   Used for predicting outputs based on features and weights
+    """Class for predicting outputs.
 
-    def regression(self, feature_matrix, weights):
-        # Usage:
-        #       Predicts output based on y_hat = Hw
-        # Arguments:
-        #       feature_matrix (numpy matrix) : a numpy matrix containing features
-        #       weights        (numpy array)  : a numpy array containing weights
-        # Return:
-        #       Hw             (numpy array)
+    Used for predicting outputs based on features and weights, supports different types of algorithms such as
+    regression, logistic regression and adaboost.
 
+    """
+
+    @staticmethod
+    def regression(feature_matrix, weights):
+        """Predicts output for regression.
+
+        Predicts output based on y_hat = Hw
+
+        Args:
+            feature_matrix (numpy.matrix): A numpy matrix containing features.
+            weights (numpy.array): A numpy array containing weights.
+
+        Returns:
+            numpy.array: Hw
+
+        """
         return np.dot(feature_matrix, weights)
 
-    def logistic_regression(self, feature_matrix, coefficients, threshold=0):
-        # Usage:
-        #       Predicts output based on y_i = +1 hw >= 0
-        #                                      -1 hw <  0
-        # Arguments:
-        #       feature_matrix (numpy matrix) : a numpy matrix containing features
-        #       label          (numpy array)  : a numpy array containing labels
-        #       coefficients   (numpy array)  : a numpy array containing coefficients
-        #       threshold      (int)          : a threshold to determine 1, or -1
-        # Return:
-        #       T(Hw)          (numpy array)  : The feature matrix dot product with coefficients
-        #                                       and then applied threshold if the value is greater than 0, then
-        #                                       return 1, else -1
+    @staticmethod
+    def logistic_regression(feature_matrix, coefficients, threshold=0):
+        """Predicts output for logistic regression.
 
+        Predicts output based on y_i = +1 hw >= 0
+                                       -1 hw <  0
+
+        Args:
+            feature_matrix (numpy matrix): A numpy matrix containing features.
+            coefficients (numpy array): A numpy array containing coefficients.
+            threshold (int): A threshold to determine 1, or -1.
+
+        Returns:
+            numpy.array: T(Hw), The feature matrix dot product with coefficients and then applied threshold if the
+                value is greater than 0, then return 1, else -1
+
+        """
         # The apply_threshold will create an array of 1 or -1 depending on the predictions
         apply_threshold = np.vectorize(lambda x: 1. if x > threshold else -1.)
 
-        # Apply the function to the predictions
+        # Apply the apply_threshold to the predictions
         return apply_threshold(np.dot(feature_matrix, coefficients))
 
     def binary_tree(self, tree, data_point):
-        # Usage:
-        #       Classifies a data point (pandas series), by traversing a binary decision tree
-        # Arguments:
-        #       tree            (dict)          : a tree that uses a dictionary format, with is_leaf, prediction,
-        #                                         left and right
-        #       data_point      (pandas series) : a pandas series that contains features on the tree
-        # Return:
-        #       predicted class (string)        : returns the name of the predicted class
+        """Predicts output for binary tree.
 
+        Classifies a data point (pandas series), by traversing a binary decision tree
+
+        Args:
+            tree (dict): The top node of a binary tree, with the following dict format:
+                {
+                    'is_leaf' (bool): False,
+                    'prediction' (NoneType): None,
+                    'splitting_feature' (str): splitting_feature,
+                    'left' (dict): left_tree,
+                    'right' (dict): right_tree
+                }
+            data_point (pandas.Series): A pandas series that contains features on the tree.
+
+        Returns:
+            str: name of the predicted class
+
+        """
         # If the node is the leaf, then we can return the prediction
         if tree['is_leaf']:
             return tree['prediction']
@@ -60,15 +82,22 @@ class PredictOutput:
             else:
                 return self.binary_tree(tree['right'], data_point)
 
-    def adaboost_binary_decision_tree(self, prediction_method, models, weights, data):
-        # Usage:
-        #       Classifies a data point for adaboost algorithm by computing the sign of the weighted result
-        # Arguments:
-        #       models  (list)         : list of models computed by adaboost
-        #       weights (list)         : list of weights computed by adaboost
-        #       data    (pandas frame) : a pandas frame that contains training/testing data
-        # Returns:
-        #
+    @staticmethod
+    def adaboost_binary_decision_tree(prediction_method, models, weights, data):
+        """Predicts output for adaboost with binary decision tree.
+
+        Classifies a data point for adaboost algorithm by computing the sign of the weighted result.
+
+        Args:
+            prediction_method (func): Function to predict output data.
+            models (List of obj): List of models computed by adaboost.
+            weights (list of numpy.array): List of weights computed by adaboost.
+            data (pandas.DataFrame) : A pandas frame that contains training/testing data.
+
+        Returns:
+            scores (pandas.Series): Outputs for each set of feature.
+
+        """
         # Create scores equal to the length of data
         scores = pd.Series([0.] * len(data))
 
@@ -83,15 +112,22 @@ class PredictOutput:
         # Return the prediction of each data
         return scores.apply(lambda score: +1 if score > 0 else -1)
 
-    def adaboost_logistic_regression(self, prediction_method, models, weights, feature_matrix):
-        # Usage:
-        #       Classifies a data point for adaboost algorithm by computing the sign of the weighted result
-        # Arguments:
-        #       models  (list)         : list of models computed by adaboost
-        #       weights (list)         : list of weights computed by adaboost
-        #       feature_matrix  (numpy matrix) : features of a dataset
-        # Returns:
-        #
+    @staticmethod
+    def adaboost_logistic_regression(prediction_method, models, weights, feature_matrix):
+        """Predicts output for adaboost with logistic regression.
+
+        Classifies a data point for adaboost algorithm by computing the sign of the weighted result.
+
+        Args:
+            prediction_method (func): Function to predict output data.
+            models (list of obj): List of models computed by adaboost.
+            weights (list of numpy.array): List of weights computed by adaboost.
+            feature_matrix (numpy.ndarray): Features of a dataset.
+
+        Returns:
+            scores (pandas.Series): Outputs for each set of feature.
+
+        """
         # Create scores equal to the length of data
         scores = pd.Series([0.] * len(feature_matrix))
 

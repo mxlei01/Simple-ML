@@ -3,34 +3,43 @@ import math
 
 
 class WeightedLogisticRegressionL2Norm:
-    # Usage:
-    #   Weighted Logistic Regression with L2 Norm is based on:
-    #       w^(t+1) <= w^(t) + n(Σ^N_i=1α_i(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))-2*λ*w(t)),
-    #   for gradient ascent,
-    #       w(t)         : coefficient at iteration t
-    #       w(t+1)       : coefficient at iteration t+1
-    #       n            : step size
-    #       α_i          : weight at each point i
-    #       h_j(X_i)     : feature for each row of a specific column
-    #       1[y=+1]      : indicator function for y=+1
-    #       P(y=1|x_i,w) : probability of y=1 for x_i using the current coefficients
-    #       λ(lambda)       : l2 penalty
+    """Class that has various functions to compute Weighted Logistic Regression with L2 Norm.
 
-    def gradient_ascent(self, feature_matrix, label, initial_coefficients, weights_list, step_size, max_iter,
-                         l2_penalty):
-        # Usage:
-        #       Gradient ascent algorithm: w^(t+1) <= w^(t) + n(Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))-2*λ*w(t)),
-        # Arguments:
-        #       feature_matrix       (numpy matrix) : features of a dataset
-        #       label                (numpy array)  : the label of a dataset
-        #       initial_coefficients (numpy array)  : initial coefficients that are used
-        #       weights_list    (numpy array)  : list of weights
-        #       step_size            (int)          : step size
-        #       max_iter             (int)          : amount of iterations
-        #       l2_penalty           (float)        : l2 penalty value
-        # Return:
-        #       coefficients         (numpy array)  : the final coefficients after gradient descent
+    Weighted Logistic Regression is essentially using linear regression techniques to compute classification problems
+    by fitting a line between two classes, however, we use weights so that we can train the model to focus on data
+    points that we misclassified, furthermore we can use this with Adaboost ensemble learning. This algorithm uses L2
+    norm to minimizes coefficients.
 
+    """
+
+    @staticmethod
+    def gradient_ascent(feature_matrix, label, initial_coefficients, weights_list, step_size, max_iter, l2_penalty):
+        """Weighted Gradient ascent algorithm with L2 Norm for Logistic Regression.
+
+        The gradient ascent algorithm: w^(t+1) <= w^(t) + n(Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))-2*λ*w(t)).
+        Where:
+            w(t): Weight at iteration t.
+            w(t+1): Weight at iteration t+1.
+            n: Step size.
+            α_i: Weight at each point i.
+            h_j(X_i): Feature for each row of a specific column.
+            1[y=+1]: Indicator function for y=+1.
+            P(y=1|x_i,w): Probability of y=1 for x_i using the current weights.
+            λ(lambda): L2 penalty.
+
+        Args:
+            feature_matrix (numpy.matrix): Features of a dataset.
+            label (numpy.array): The label of a dataset.
+            initial_coefficients (numpy.array): Initial weights for the model.
+            weights_list (numpy.array): List of weights
+            step_size (int): Step size.
+            max_iter (int): Amount of iterations.
+            l2_penalty (float): L2 penalty value.
+
+        Returns:
+            coefficients (numpy.array): The final weights after gradient ascent finishes.
+
+        """
         # Make sure we are using numpy array
         coefficients = np.array(initial_coefficients)
 

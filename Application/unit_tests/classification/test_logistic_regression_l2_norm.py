@@ -9,22 +9,20 @@ from performance_assessment.accuracy import Accuracy
 
 
 class TestLogisticRegressionL2Norm(unittest.TestCase):
-    #   Usage:
-    #       Tests for the Logistic Regression Class.
+    """Tests for LogisticRegressionL2Norm class.
+
+    Uses Amazon data to test logistic regression.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestLogisticRegression
-        # Arguments:
-        #       None
+        """Constructor for TestLogisticRegression.
 
-        # Create an instance of the Convert Numpy class
+        Loads Amazon data, and creates training and testing data.
+
+        """
         self.convert_numpy = ConvertNumpy()
-
-        # Create an instance of log likelihood
         self.log_likelhood = LogLikelihood()
-
-        # Create an instance of the accuracy class
         self.accuracy = Accuracy()
 
         # Load the important words
@@ -40,11 +38,11 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
         self.validation_data = pd.read_csv('./unit_tests/test_data/classification/amazon/amazon_baby_subset_validation.csv')
 
     def test_01_gradient_ascent_no_penalty(self):
-        # Usage:
-        #       Test out the gradient ascent algorithm for logistic regression with l2 norm with no penalty
-        # Arguments:
-        #       None
+        """Tests gradient ascent algorithm.
 
+        Tests the gradient ascent algorithm but with no l2 penalty.
+
+        """
         # We will use important words for the output
         features = self.important_words
 
@@ -73,11 +71,11 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
         self.assertEqual(round(0.78143964149, 5), round(validation_accuracy, 5))
 
     def test_02_gradient_ascent_10_penalty(self):
-        # Usage:
-        #       Test out the gradient ascent algorithm for logistic regression with l2 norm with 10 l2 penalty
-        # Arguments:
-        #       None
+        """Test gradient ascent algorithm.
 
+        Tests the gradient ascent algorithm with penalty.
+
+        """
         # We will use important words for the output
         features = self.important_words
 
@@ -106,11 +104,11 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
         self.assertEqual(round(0.781719727383, 5), round(validation_accuracy, 5))
 
     def test_03_log_likelihood(self):
-        # Usage:
-        #       Test Log Likelihood with L2 Norm
-        # Arguments:
-        #       None
+        """Tests log likelihood with l2 norm.
 
+        Tests the log likelihood with l2 norm and compare it with known values.
+
+        """
         # Generate test feature, coefficients, and label
         feature_matrix = np.array([[1., 2., 3.], [1., -1., -1]])
         coefficients = np.array([1., 3., -1.])

@@ -2,43 +2,50 @@ from data_extraction.convert_numpy import ConvertNumpy
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.residual_sum_squares import ResidualSumSquares
 
+
 class KFoldCrossValidation:
-    # Usage:
-    #   Computes K Fold Cross Validation
+    """Class for K Fold Cross Validation.
+
+    Class for K Fold Cross Validation for selecting best parameters.
+
+    Attributes:
+        convert_numpy (ConvertNumpy): Pandas to Numpy conversion class.
+        predict_output (PredictOutput): Output prediction.
+        residual_sum_squares (ResidualSumSquares): Computes residual sum of squares.
+
+    """
 
     def __init__(self):
-        # Usage:
-        #       Constructor for KFoldCrossValidation, used to setup ConvertNumpy class to convert pandas
-        #       data to numpy.
-        # Arguments:
-        #       None
+        """Constructor for KFoldCrossValidation.
 
-        # Create an instance of the Convert Numpy class
+        Constructor for KFoldCrossValidation, used to setup numpy conversion, output prediction, and residual sum
+        of squares.
+
+        """
         self.convert_numpy = ConvertNumpy()
-
-        # Create an instance of the Predict Output Class
         self.predict_output = PredictOutput()
-
-        # Create an instance of the Residual Sum Squares Class
         self.residual_sum_squares = ResidualSumSquares()
 
     def k_fold_cross_validation(self, k, data, model, model_parameters, output, features):
-        # Usage:
-        #       Takes in our data, and splits the data to smaller subsets, and these smaller subsets
-        #       are used as validation sets, and everything else not included in the validation set is used
-        #       as training sets. The model will be trained using the training set, and the performance assessment
-        #       such as RSS would be used on the validation set against the model.
-        # Parameters:
-        #       k                (int)            : number of folds
-        #       data             (pandas object)  : data used for k folds cross validation
-        #       model            (object)         : model used for k folds cross validation
-        #       model_parameters (dict)           : model parameters to train the specified model
-        #       features         (list of string) : a list of feature names
-        #       output           (string)         : output name
-        # Return:
-        #       validation_error (double)        : average validation error
+        """Performs K Fold Cross Validation.
 
-        # Get the length of the data
+        Takes in our data, and splits the data to smaller subsets, and these smaller subsets are used as validation
+        sets, and everything else not included in the validation set is used as training sets. The model will be
+        trained using the training set, and the performance assessment such as RSS would be used on the validation
+        set against the model.
+
+        Args:
+            k (int): Number of folds.
+            data (pandas.DataFrame): Data used for k folds cross validation.
+            model (obj): Model used for k folds cross validation.
+            model_parameters (dict): Model parameters to train the specified model.
+            features (list of str): A list of feature names.
+            output (str): Output name.
+
+        Returns:
+            float: Average validation error.
+
+        """
         length_data = len(data)
 
         # Sum of the validation error, will divide by k (fold) later
@@ -46,7 +53,6 @@ class KFoldCrossValidation:
 
         # Loop through each fold
         for i in range(k):
-
             # Compute the start section of the current fold
             start = int((length_data*i)/k)
 

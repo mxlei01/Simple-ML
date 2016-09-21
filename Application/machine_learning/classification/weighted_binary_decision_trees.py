@@ -1,49 +1,62 @@
 class WeightedBinaryDecisionTrees:
-    # Usage:
-    #       A Weighted Binary Decision Tree algorithm is implemented as:
-    #           1. Start with an empty tree
-    #           2. Select a feature to split data <- Split according to lowest weighted error
-    #           For each split:
-    #               A. If nothing more to split, make prediction
-    #               B. Otherwise, go to step 2 and continue
+    """A Weighted Binary Decision Tree algorithm for building Decision Trees.
+
+    A Binary Decision Tree algorithm are implemented as:
+        1. Start with an empty tree.
+        2. Select a feature to split data <- Split according to lowest weighted error.
+            For each split:
+                1. If nothing more to split, make prediction.
+                2. Otherwise, go to step 2 and continue.
+
+    """
 
     def greedy_recursive(self, data, features, target, data_weights, current_depth=0, max_depth=10,
                          minimum_error=1e-15):
-        # Usage:
-        #       Uses recursion to create a tree, and uses greedy method, which is to get construct
-        #       nodes that has the lowest weighted_error error first.
-        #       Create leaf if we encounter:
-        #           1. No weighted error after selecting majority class
-        #           2. No remaining features to split
-        #           3. Max depth is encountered
-        #           4. If the left split is equal to the amount of data
-        #           5. If the right split is equal to the amount of data
-        # Arguments:
-        #       data               (pandas frame)  : one hot encoded features with target
-        #       features           (list)          : list of features that we will decide to split on
-        #       target             (string)        : the feature that we want to predict
-        #       data_weights       (pandas series) : pandas series of weights for corresponding label
-        #       current_depth      (int)           : the current depth of the recursion
-        #       max_depth          (int)           : the maximum depth that the tree will be created
-        #       minimum_error      (float)         : the minimum error to count as no error
-        # Return:
-        #       decision tree root (dict) : a decision tree root, where an intermediate stump has the following dict:
-        #                                       {'is_leaf'          : False,
-        #                                        'prediction'       : None,
-        #                                        'splitting_feature': splitting_feature,
-        #                                        'left'             : left_tree,
-        #                                        'right'            : right_tree}
-        #                                    where left_tree and right_tree has the same dictionary format as the
-        #                                    decision tree root. The splitting_feature tells us the feature
-        #                                    used to split.
-        #                                    At the leafs, we use the following dict:
-        #                                       {'splitting_feature' : None,
-        #                                        'prediction': 1 or -1,
-        #                                        'left' : None,
-        #                                        'right' : None,
-        #                                        'is_leaf': True}
-        #                                    We will have the prediction equal to -1 or 1
+        """Greedy recursive approach to build a weighted binary decision tree.
 
+        Uses recursion to create a tree, and uses greedy method, which is to get construct
+        nodes that has the lowest weighted error error first.
+
+        Create leaf if we encounter:
+            1. No weighted error after selecting majority class.
+            2. No remaining features to split.
+            3. Max depth is encountered.
+            4. If the left split is equal to the amount of data.
+            5. If the right split is equal to the amount of data.
+        Otherwise we create a decision stump.
+
+        Args:
+            data (pandas.DataFrame): One hot encoded features with target.
+            features (list of str): List of features that we will decide to split on.
+            data_weights (pandas.Series): Weights for corresponding label
+            target (str): The feature that we want to predict.
+            current_depth (int): The current depth of the recursion.
+            max_depth (int): The maximum depth that the tree will be created.
+            minimum_error (float): The minimum error to count as no error.
+
+        Returns:
+            A decision tree root, where an intermediate stump has the following dict:
+                {
+                    'is_leaf' (bool): False,
+                    'prediction' (NoneType): None,
+                    'splitting_feature' (str): splitting_feature,
+                    'left' (dict): left_tree,
+                    'right' (dict): right_tree
+                }
+            where left_tree and right_tree has the same dictionary format as the
+            decision tree root. The splitting_feature tells us the feature
+            used to split.
+
+            At the leafs, we use the following dict:
+                {
+                    'is_leaf' (bool): True
+                    'prediction' (int): 1 or -1 depending on prediction,
+                    'splitting_feature' (NoneType): None,
+                    'left' (NoneType): None,
+                    'right' (NoneType): None
+                }
+
+        """
         # Make a copy of the features
         remaining_features = features[:]
 
@@ -95,19 +108,27 @@ class WeightedBinaryDecisionTrees:
                                            current_depth + 1, max_depth)
 
         # Create a leaf node where this is not a leaf, and with no prediction
-        return self.leaf_node(splitting_feature=splitting_feature, left=left_tree, right=right_tree, is_leaf=False,
-                              prediction=None)
+        return self.create_node(splitting_feature=splitting_feature, left=left_tree, right=right_tree, is_leaf=False,
+                                prediction=None)
 
-    def intermediate_node_weighted_mistakes(self, data_labels, data_weights):
-        # Usage:
-        #       Determine which labels (+1 or -1) have the lowest weighted errors. We will return 1 is +1 has the
-        #       lowest weighted error.
-        # Arguments:
-        #       data_labels          (numpy array)     : array of labels (1 or -1)
-        #       data_weights         (pandas series)   : pandas series of weights for corresponding label
-        # Return:
-        #       weight, label        (weight, label)   : the weight and label
+    @staticmethod
+    def intermediate_node_weighted_mistakes(data_labels, data_weights):
+        """Computes and returns number of errors of lowest weighted error.
 
+        Determine which labels (+1 or -1) have the lowest weighted errors. We will return 1 is +1 has the
+        lowest weighted error.
+
+        Args:
+            data_labels (numpy.array): Array of labels (1 or -1).
+            data_weights (pandas.Series): Pandas series of weights for corresponding label.
+
+        Returns:
+            A tuple that contains weight, and label:
+                (
+                    float: Lowest weighted error.
+                    int: Corresponding label for lowest weighted error.
+                )
+        """
         # Sum of the weight where the label data are == 1, which means the weight of mistakes if we chose -1
         weighted_mistakes_negative = sum(data_weights[data_labels == 1])
 
@@ -120,19 +141,23 @@ class WeightedBinaryDecisionTrees:
             else (weighted_mistakes_positive, 1)
 
     def best_feature(self, data, features, target, data_weights):
-        # Usage:
-        #       Determines the best splitting label, which we will pick the feature that offers the lowest
-        #       Weighted error = sum weighted error
-        #                        ------------------
-        #                         # total examples
-        # Arguments:
-        #       data         (pandas frame)  : current node pandas frame that contains one hot encoded features
-        #       features     (list)          : list of feature names
-        #       target       (string)        : the target label that we are trying to predict
-        #       data_weights (pandas series) : pandas series of weights for corresponding label
-        # Returns:
-        #       best_feature (string)       : the best feature to split on with the lowest weighted error
+        """Determines the best feature to split.
 
+        Determines the best splitting label, which we will pick the feature that offers the lowest weighted error.
+        Weighted error = sum weighted error
+                        ------------------
+                         # total examples
+
+        Args:
+            data (pandas.DataFrame): Current node pandas frame that contains one hot encoded features.
+            features (list of str): List of feature names.
+            target (str): The target label that we are trying to predict.
+            data_weights (pandas.Series): Weights for corresponding error
+
+        Returns:
+            best_feature (str): The best feature to split on with the lowest weighted error.
+
+        """
         # Keep track of best feature and lowest error, since error is always less than 1, we need to setup
         # best_error that is greater than 1
         best_feature = None
@@ -176,34 +201,59 @@ class WeightedBinaryDecisionTrees:
         return best_feature
 
     def create_leaf(self, data_labels, data_weights):
-        # Usage:
-        #       Creates a leaf node with prediction
-        # Arguments:
-        #       data_labels (numpy array) : array of labels (1 or -1)
-        #       data_weights (pandas series) : pandas series of weights for corresponding label
-        # Returns:
-        #       leaf node   (dict)        : a leaf node that contains all None except is_leaf which is true, and
-        #                                   prediction will be the lowest weighted error for a split on +1 or -1
+        """Creates a leaf node for decision tree algorithm.
 
-        # Computed weight of mistakes.
+        Creates a leaf node with prediction.
+
+        Args:
+            data_labels (numpy.array): Array of labels (1 or -1).
+            data_weights (pandas.Series): Weights for corresponding label.
+
+        Returns:
+            leaf node (dict): A leaf node that contains all None except is_leaf which is true, and prediction.
+                will be the highest data label present, and has the following dict format:
+                {
+                    'is_leaf' (bool): True
+                    'prediction' (int): 1 or -1 depending on prediction,
+                    'splitting_feature' (NoneType): None,
+                    'left' (NoneType): None,
+                    'right' (NoneType): None,
+                }
+
+        """
+        # Computed the best class to split at this node
         weighted_error, best_class = self.intermediate_node_weighted_mistakes(data_labels, data_weights)
 
-        # Return the leaf node
-        return self.leaf_node(splitting_feature=None, left=None, right=None, is_leaf=True, prediction=best_class)
+        return self.create_node(splitting_feature=None, left=None, right=None, is_leaf=True, prediction=best_class)
 
-    def leaf_node(self, splitting_feature, left, right, is_leaf, prediction):
-        # Usage:
-        #       Creates a leaf node
-        # Arguments:
-        #       splitting_feature (string)       : the feature that is split in this node
-        #       left              (pandas frame) : the left node pandas frame
-        #       right             (pandas frame) : the right node pandas frame
-        #       is_leaf           (boolean)      : flag that indicates if this is a leaf
-        #       prediction        (int)          : the prediction value (1 or -1), only if there is a leaf
-        # Return:
-        #       leaf node         (dict)         : a dictionary using the input arguments
+    @staticmethod
+    def create_node(splitting_feature, left, right, is_leaf, prediction):
+        """Creates a leaf node with passed parameters.
 
-        # Create a dictionary out of the input arguments, and return it
+        Creates a leaf nodes from arguments passed in. This can be used for both decision tree stumps and leaves.
+
+        Args:
+            splitting_feature (str or NoneType): The feature that is split in this node, can be None if this is a leaf.
+            left (pandas.DataFrame or NoneType): The left node pandas frame, can be None if this is a leaf.
+            right (pandas.DataFrame or NoneType): The right node pandas frame, can be None if this is a leaf.
+            is_leaf (bool): Flag that indicates if this is a leaf, hence true if leaf, and vice versa.
+            prediction (int or NoneType): The prediction value (1 or -1), only if there is a leaf, and None if this
+                node is not a leaf.
+
+        Returns:
+            leaf node (dict): A leaf node that contains all None except is_leaf which is true, and prediction.
+                will be the highest data label present, and has the following dict format:
+                {
+                    'is_leaf' (bool): Flag that indicates if this is a leaf, hence true if leaf, and vice versa
+                    'prediction' (int or NoneType): The prediction value (1 or -1), only if there is a leaf, and None
+                        if this node is not a leaf,
+                    'splitting_feature' (str or NoneType): The feature that is split in this node, can be None if
+                        this is a leaf,
+                    'left' (pandas.DataFrame or NoneType): The left node pandas frame, can be None if this is a leaf,
+                    'right '(pandas.DataFrame or NoneType): The right node pandas frame, can be None if this is a leaf
+                }
+
+        """
         return {'splitting_feature': splitting_feature,
                 'left': left,
                 'right': right,

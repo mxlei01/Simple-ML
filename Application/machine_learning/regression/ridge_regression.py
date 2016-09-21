@@ -1,31 +1,40 @@
 import numpy as np
 
+
 class RidgeRegression:
-    # Usage:
-    #   Ridge Regression is based on: w^(t+1) <= w^(t) - 2nH^t(y-Hw) + l2_penalty*2*w(t) for gradient descent,
-    #   and w^(t+1) <= w^(t) + 2nH^t(y-Hw) + l2_penalty*2*w(t) for hill climbing
-    #       w(t)       : weight at iteration t
-    #       w(t+1)     : weight at iteration t+1
-    #       n          : step size
-    #       H          : feature matrix
-    #       w          : weight vector
-    #       y          : input vector
-    #       l2_penalty : l2_penalty value
+    """Class to compute Ridge Regression.
 
-    def gradient_descent(self, feature_matrix, output, initial_weights, step_size, tolerance, l2_penalty, max_iteration=100):
-        # Usage:
-        #       Gradient descent algorithm with ridge: w^(t+1) <= w^(t) - 2nH^t(y-Hw) + l2_penalty*2*w(t)
-        # Arguments:
-        #       feature_matrix  (numpy matrix) : features of a dataset
-        #       output          (numpy array)  : the output of a dataset
-        #       initial_weights (numpy array)  : initial weights that are used
-        #       step_size       (int)          : step size
-        #       tolerance       (int)          : tolerance (or epsilon)
-        #       l2_penalty      (double)       : l2_penalty value
-        #       max_iteration   (int)          : maximum iteration to compute
-        # Return:
-        #       weights         (numpy array)  : the final weights after gradient descent
+    Ridge Regression is essentially L2 Norm with Linear Regression.
 
+    """
+
+    @staticmethod
+    def gradient_descent(feature_matrix, output, initial_weights, step_size, tolerance, l2_penalty, max_iteration=100):
+        """Gradient descent algorithm for ridge regression.
+
+        Gradient descent algorithm:  w^(t+1) <= w^(t) - 2nH^t(y-Hw) + l2_penalty*2*w(t).
+        Where,
+            w(t): Weight at iteration t.
+            w(t+1): Weight at iteration t+1.
+            n: Step size.
+            H: Feature matrix.
+            w: Weight vector.
+            y: Input vector.
+            l2_penalty: L2 penalty value.
+
+        Args:
+            feature_matrix (numpy.matrix): Features of a dataset.
+            output (numpy.array): The output of a dataset.
+            initial_weights (numpy.array): Initial weights that are used.
+            step_size (int): Step size.
+            tolerance (int): Tolerance (or epsilon).
+            l2_penalty (float): L2 penalty value.
+            max_iteration (int): Maximum iteration to compute.
+
+        Returns:
+            weights (numpy.array): The final weights after gradient descent.
+
+        """
         # Set Converged to False
         converged = False
 
@@ -67,27 +76,37 @@ class RidgeRegression:
 
                     # Set converged to true so that we stop our while loop
                     converged = True
-
-            # Increment iteration
             iteration += 1
 
-        # Return the weights
         return weights
 
-    def hill_climbing(self, feature_matrix, output, initial_weights, step_size, tolerance, l2_penalty, max_iteration=100):
-        # Usage:
-        #       Gradient descent algorithm with ridge: w^(t+1) <= w^(t) + 2nH^t(y-Hw) + l2_penalty*2*w(t)
-        # Arguments:
-        #       feature_matrix  (numpy matrix) : features of a dataset
-        #       output          (numpy array)  : the output of a dataset
-        #       initial_weights (numpy array)  : initial weights that are used
-        #       step_size       (int)          : step size
-        #       tolerance       (int)          : tolerance (or epsilon)
-        #       l2_penalty      (double)       : l2_penalty value
-        #       max_iteration   (int)          : maximum iteration to compute
-        # Return:
-        #       weights         (numpy array)  : the final weights after gradient descent
+    @staticmethod
+    def gradient_ascent(feature_matrix, output, initial_weights, step_size, tolerance, l2_penalty, max_iteration=100):
+        """Gradient ascent algorithm for ridge regression.
 
+        Gradient ascent algorithm:  w^(t+1) <= w^(t) + 2nH^t(y-Hw) + l2_penalty*2*w(t).
+        Where
+            w(t): Weight at iteration t.
+            w(t+1): Weight at iteration t+1.
+            n: Step size.
+            H: Feature matrix.
+            w: Weight vector.
+            y: Input vector.
+            l2_penalty: L2 penalty value.
+
+        Args:
+            feature_matrix (numpy.matrix): Features of a dataset.
+            output (numpy.array): The output of a dataset.
+            initial_weights (numpy.array): Initial weights that are used.
+            step_size (int): Step size.
+            tolerance (int): Tolerance (or epsilon).
+            l2_penalty (float): L2 penalty value.
+            max_iteration (int): Maximum iteration to compute.
+
+        Returns:
+            weights (numpy.array): The final weights after gradient descent.
+
+        """
         # Set Converged to False
         converged = False
 
@@ -126,12 +145,8 @@ class RidgeRegression:
                 # Although we use this nice norm function, but
                 # recall that the magnitude/length of a vector [g[0], g[1], g[2]] is sqrt(g[0]^2 + g[1]^2 + g[2]^2)
                 if np.linalg.norm(gradient) > tolerance:
-
                     # Set converged to true so that we stop our while loop
                     converged = True
-
-            # Increment iteration
             iteration += 1
 
-        # Return the weights
         return weights

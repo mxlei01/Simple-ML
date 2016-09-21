@@ -11,31 +11,23 @@ from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class TestLassoRegression(unittest.TestCase):
-    #   Usage:
-    #       Tests for the Lasso Regression Class.
+    """Tests for TestLassoRegression.
+
+    Uses housing data to test LassoRegression.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestLassoRegression
-        # Arguments:
-        #       None
+        """Constructor for TestLassoRegression.
 
-        # Create an instance of the Convert Numpy class
+        Loads housing data, and creates training and testing data.
+
+        """
         self.convert_numpy = ConvertNumpy()
-
-        # Create an instance of the Normalize Features class
         self.normalize_features = NormalizeFeatures()
-
-        # Create an instance of the Lasso Regression class
         self.lasso_regression = LassoRegression()
-
-        # Create an instance of the Predict Output Class
         self.predict_output = PredictOutput()
-
-        # Create an instance of the Residual Sum Squares Class
         self.residual_sum_squares = ResidualSumSquares()
-
-        # Create an instance of the K Fold Cross Validation Class
         self.k_fold_cross_validation = KFoldCrossValidation()
 
         # Create a dictionary type to store relevant data types so that our pandas
@@ -50,10 +42,12 @@ class TestLassoRegression(unittest.TestCase):
         self.kc_house = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_data.csv', dtype=dtype_dict)
 
         # Create a kc_house_test_frame that encompasses only train data
-        self.kc_house_train = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_train_data.csv', dtype=dtype_dict)
+        self.kc_house_train = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_train_data.csv',
+                                          dtype=dtype_dict)
 
         # Create a kc_house_frames that encompasses only test data
-        self.kc_house_test = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_test_data.csv', dtype=dtype_dict)
+        self.kc_house_test = pd.read_csv('./unit_tests/test_data/regression/kc_house/kc_house_test_data.csv',
+                                         dtype=dtype_dict)
 
         # Convert all the frames with the floors to float type
         self.kc_house['floors'] = self.kc_house['floors'].astype(float)
@@ -66,10 +60,11 @@ class TestLassoRegression(unittest.TestCase):
         self.kc_house_test['floors'] = self.kc_house['floors'].astype(int)
 
     def test_01_normalize_features(self):
-        # Usage:
-        #       Test normalizing features
-        # Arguments:
-        #       None
+        """Tests normalizing features.
+
+        Test normalization features, and compare it with known values.
+
+        """
 
         # Normalize the features, and also return the norms
         features, norms = self.normalize_features.l2_norm(np.array([[3., 6., 9.], [4., 8., 12.]]))
@@ -81,11 +76,11 @@ class TestLassoRegression(unittest.TestCase):
         self.assertTrue(np.array_equal(np.array([5., 10., 15.]), norms), True)
 
     def test_02_compute_ro(self):
-        # Usage:
-        #       Test ro computation
-        # Arguments:
-        #       None
+        """Test compute ro
 
+        Test compute one round of ro.
+
+        """
         # We will use sqft_iving, and sqft_living15
         features = ['sqft_living', 'bedrooms']
 
@@ -108,11 +103,11 @@ class TestLassoRegression(unittest.TestCase):
         self.assertTrue(np.allclose(ro_j, np.array([79400300.03492916, 87939470.77299108, 80966698.67596565])))
 
     def test_03_compute_coordinate_descent_step(self):
-        # Usage:
-        #       Test coordinate descent step
-        # Arguments:
-        #       None
+        """Test one coordinate descent step.
 
+        Test one coordinate descent step and compare it with known values.
+
+        """
         # Assert that both are equal
         self.assertEquals(round(self.lasso_regression.lasso_coordinate_descent_step(1,
                                                                                     np.array([[3./math.sqrt(13),
@@ -125,11 +120,11 @@ class TestLassoRegression(unittest.TestCase):
                           round(0.425558846691, 8))
 
     def test_04_coordinate_descent(self):
-        # Usage:
-        #       Test coordinate descent
-        # Arguments:
-        #       None
+        """Test coordinate descent.
 
+        Test coordinate descent and compare with known values.
+
+        """
         # We will use sqft_iving, and sqft_living15
         features = ['sqft_living', 'bedrooms']
 
@@ -162,16 +157,16 @@ class TestLassoRegression(unittest.TestCase):
         predicted_output = self.predict_output.regression(normalized_feature_matrix, weights)
 
         # Assert that the RSS is what we wanted
-        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(output, predicted_output), -10),
+        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(output,
+                                                                                          predicted_output), -10),
                           round(1.63049248148e+15, -10))
 
     def test_05_coordinate_descent_with_normalization(self):
-        # Usage:
-        #       Test coordinate descent and then normalize the result, so that we can use
-        #       the weights on a test set
-        # Arguments:
-        #       None
+        """Test coordinate descent with normalization.
 
+        Test coordinate descent and then normalize the result, so that we can use the weights on a test set.
+
+        """
         # We will use multiple features
         features = ['bedrooms',
                     'bathrooms',
@@ -234,19 +229,22 @@ class TestLassoRegression(unittest.TestCase):
         predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e4)
 
         # Assert that the RSS is what we wanted
-        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output), -12),
+        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
+                                                                                          predicted_output), -12),
                           round(2.2778100476e+14, -12))
 
         # Predict the output
         predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e7)
 
         # Assert that the RSS is what we wanted
-        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output), -12),
+        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
+                                                                                          predicted_output), -12),
                           round(2.75962079909e+14, -12))
 
         # Predict the output
         predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e8)
 
         # Assert that the RSS is what we wanted
-        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output), -12),
+        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
+                                                                                          predicted_output), -12),
                           round(5.37049248148e+14, -12))

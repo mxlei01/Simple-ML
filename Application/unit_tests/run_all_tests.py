@@ -1,3 +1,9 @@
+"""Unit Tests for all machine learning algorithms.
+
+Uses a testLoader to run multiple tests from different python unittests file
+
+"""
+
 from unittest import TestLoader, TextTestRunner, TestSuite
 from unit_tests.classification.test_logistic_regression import TestLogisticRegression
 from unit_tests.classification.test_logistic_regression_l2_norm import TestLogisticRegressionL2Norm
@@ -10,7 +16,6 @@ from unit_tests.classification.test_weighted_binary_decision_trees import TestWe
 from unit_tests.classification.test_weighted_logistic_regression import TestWeightedLogisticRegression
 from unit_tests.classification.test_weighted_logistic_regression_l2_norm import TestWeightedLogisticRegressionL2Norm
 
-# Uses a testLoader to run multiple tests from different python unit tests file
 if __name__ == "__main__":
 
     loader = TestLoader()

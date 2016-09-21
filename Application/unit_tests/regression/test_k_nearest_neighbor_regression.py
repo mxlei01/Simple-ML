@@ -10,28 +10,22 @@ from performance_assessment.determine_k_knn import DetermineKKnn
 
 
 class TestKNearestNeighborRegression(unittest.TestCase):
-    #   Usage:
-    #       Tests for the K Nearest Neighbor Regression
+    """Tests for TestKNearestNeighborRegression.
+
+    Uses housing data to test KNearestNeighborRegression.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestLassoRegression
-        # Arguments:
-        #       None
+        """Constructor for TestKNearestNeighborRegression.
 
-        # Create an instance of the Convert Numpy class
+        Loads housing data, and creates training and testing data.
+
+        """
         self.convert_numpy = ConvertNumpy()
-
-        # Create an instance of the Normalize Features class
         self.normalize_features = NormalizeFeatures()
-
-        # Create an instance of the Linear Regression class
         self.knn = KNearestNeighborRegression()
-
-        # Create an instance of the euclidean distance class
         self.euclidean_distance = EuclideanDistance()
-
-        # Create an instance of determine knn class
         self.determine_k_knn = DetermineKKnn()
 
         # Create a dictionary type to store relevant data types so that our pandas
@@ -47,7 +41,8 @@ class TestKNearestNeighborRegression(unittest.TestCase):
                                     dtype=dtype_dict)
 
         # Create a kc_house_test_frame that encompasses only train data
-        self.kc_house_train = pd.read_csv('./unit_tests/test_data/regression/kc_house_knn/kc_house_data_small_train.csv',
+        self.kc_house_train = pd.read_csv('./unit_tests/test_data/regression/kc_house_knn/'
+                                          'kc_house_data_small_train.csv',
                                           dtype=dtype_dict)
 
         # Create a kc_house_frames that encompasses only test data
@@ -71,11 +66,11 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         self.kc_house_valid['floors'] = self.kc_house_valid['floors'].astype(int)
 
     def test_01_compute_euclidean_distance(self):
-        # Usage:
-        #       Test to compute euclidean distance
-        # Arguments:
-        #       None
+        """Tests Euclidean distance.
 
+        Tests Euclidean distance and compare it with known values.
+
+        """
         # List of features to convert to numpy
         feature_list = ['bedrooms',
                         'bathrooms',
@@ -101,12 +96,13 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         # Extract features and output for train, test, and validation set
         features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
         features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
-        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list, output, 1)
+        # features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list,
+        #                                                                    output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
         features_train, norms = self.normalize_features.l2_norm(features_train)
         features_test = features_test / norms
-        features_valid = features_valid / norms
+        # features_valid = features_valid / norms
 
         # Compute the euclidean distance
         distance = self.euclidean_distance.euclidean_distance(features_test[0], features_train[9])
@@ -115,11 +111,11 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         self.assertEqual(round(distance, 3), round(0.059723593716661257, 3))
 
     def test_02_compute_euclidean_distance_query_point(self):
-        # Usage:
-        #       Test to compute euclidean distance from a query point to multiple points in the training set
-        # Arguments:
-        #       None
+        """Tests Euclidean distance with a set of query points.
 
+        Test to compute euclidean distance from a query point to multiple points in the training set
+
+        """
         # List of features to convert to numpy
         feature_list = ['bedrooms',
                         'bathrooms',
@@ -145,17 +141,19 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         # Extract features and output for train, test, and validation set
         features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
         features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
-        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list, output, 1)
+        # features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list,
+        #                                                                    output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
         features_train, norms = self.normalize_features.l2_norm(features_train)
         features_test = features_test / norms
-        features_valid = features_valid / norms
+        # features_valid = features_valid / norms
 
         # Determine the smallest euclidean distance set we get
         smallest = sys.maxsize
         smallest_index = 0
-        for index, val in enumerate(self.euclidean_distance.euclidean_distance_cmp_one_value(features_train,features_test[2])):
+        for index, val in enumerate(self.euclidean_distance.euclidean_distance_cmp_one_value(features_train,
+                                                                                             features_test[2])):
             if val < smallest:
                 smallest = val
                 smallest_index = index
@@ -166,11 +164,11 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         self.assertEqual(smallest_index, 382)
 
     def test_03_compute_knn(self):
-        # Usage:
-        #       Test to compute knn
-        # Arguments:
-        #       None
+        """Tests knn regression algorithm.
 
+        Tests the knn algorithm and compare it with known values.
+
+        """
         # List of features to convert to numpy
         feature_list = ['bedrooms',
                         'bathrooms',
@@ -196,25 +194,29 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         # Extract features and output for train, test, and validation set
         features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
         features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
-        features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list, output, 1)
+        # features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list,
+        #                                                                    output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
         features_train, norms = self.normalize_features.l2_norm(features_train)
         features_test = features_test / norms
-        features_valid = features_valid / norms
+        # features_valid = features_valid / norms
 
         # Assert that the array is the closest with the 3rd house in features_test
         self.assertTrue(np.array_equal(self.knn.k_nearest_neighbor_regression(4, features_train, features_test[2]),
                                        np.array([382, 1149, 4087, 3142])))
 
         # Assert that the 413987.5 is the correct prediction
-        self.assertEqual(self.knn.predict_k_nearest_neighbor_regression(4, features_train, output_train, features_test[2]),
+        self.assertEqual(self.knn.predict_k_nearest_neighbor_regression(4, features_train,
+                                                                        output_train, features_test[2]),
                          413987.5)
 
         # Compute the lowest predicted value
         lowest_predicted = sys.maxsize
         lowest_predicted_index = 0
-        for index, val in enumerate(self.knn.predict_k_nearest_neighbor_all_regression(10, features_train, output_train, features_test[0:10])):
+        for index, val in enumerate(self.knn.predict_k_nearest_neighbor_all_regression(10, features_train,
+                                                                                       output_train,
+                                                                                       features_test[0:10])):
             if val < lowest_predicted:
                 lowest_predicted = val
                 lowest_predicted_index = index
@@ -224,11 +226,11 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         self.assertEqual(lowest_predicted_index, 6)
 
     def test_03_compute_best_k(self):
-        # Usage:
-        #       Test to compute best k for knn
-        # Arguments:
-        #       None
+        """Compute best K for KNN Regression.
 
+        Compute best K using K Fold Cross Validation.
+
+        """
         # List of features to convert to numpy
         feature_list = ['bedrooms',
                         'bathrooms',
@@ -253,19 +255,20 @@ class TestKNearestNeighborRegression(unittest.TestCase):
 
         # Extract features and output for train, test, and validation set
         features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
-        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
+        # features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list,
+        #                                                                  output, 1)
         features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list, output, 1)
 
         # Normalize our training features, and then normalize the test set and valid set
         features_train, norms = self.normalize_features.l2_norm(features_train)
-        features_test = features_test / norms
+        # features_test = features_test / norms
         features_valid = features_valid / norms
 
         # Compute the lowest K and lowest K's RSS
-        lowest_k_rss, lowest_k_index = self.determine_k_knn.determine_k_knn(self.knn.predict_k_nearest_neighbor_all_regression,
-                                                                      1, 16, features_train, features_valid,
-                                                                      output_train, output_valid)
+        low_rss, low_idx = self.determine_k_knn.determine_k_knn(self.knn.predict_k_nearest_neighbor_all_regression,
+                                                                1, 16, features_train, features_valid,
+                                                                output_train, output_valid)
 
         # Assert that the lowest k and rss is correct
-        self.assertEqual(round(lowest_k_rss, -13), round(6.73616787355e+13, -13))
-        self.assertEqual(lowest_k_index, 8)
+        self.assertEqual(round(low_rss, -13), round(6.73616787355e+13, -13))
+        self.assertEqual(low_idx, 8)

@@ -11,28 +11,22 @@ from performance_assessment.confusion_matrix import ConfusionMatrix
 
 
 class TestLogisticRegression(unittest.TestCase):
-    #   Usage:
-    #       Tests for the Logistic Regression Class
+    """Tests for LogisticRegression class.
+
+    Uses Amazon data to test logistic regression.
+
+    """
 
     def setUp(self):
-        # Usage:
-        #       Constructor for TestLogisticRegression
-        # Arguments:
-        #       None
+        """Constructor for TestLogisticRegression.
 
-        # Create an instance of the Convert Numpy class
+        Loads Amazon data, and creates training and testing data.
+
+        """
         self.convert_numpy = ConvertNumpy()
-
-        # Create an instance of log likelihood
         self.log_likelhood = LogLikelihood()
-
-        # Create an instance of the Predict Output Class
         self.predict_output = PredictOutput()
-
-        # Create an instance of the Logistic Regression class
         self.logistic_regression = LogisticRegression()
-
-        # Create an instance of the confusion matrix class
         self.confusion_matrix = ConfusionMatrix()
 
         # Load the important words
@@ -62,11 +56,11 @@ class TestLogisticRegression(unittest.TestCase):
         self.train_frame = pd.read_csv('./unit_tests/test_data/classification/amazon/amazon_baby_subset_train_mod2.csv')
 
     def test_01_gradient_ascent(self):
-        # Usage:
-        #       Test out the gradient ascent algorithm for logistic regression
-        # Arguments:
-        #       None
+        """Test gradient ascent algorithm.
 
+        Tests the gradient ascent algorithm and compare it with known values.
+
+        """
         # We will use important words for the output
         features = self.important_words
 
@@ -173,11 +167,11 @@ class TestLogisticRegression(unittest.TestCase):
                          round(0.7668550505452519, 5))
 
     def test_02_stochastic_gradient_ascent(self):
-        # Usage:
-        #       Test out the gradient ascent algorithm for logistic regression
-        # Arguments:
-        #       None
+        """Test stochastic gradient descent for logistic regression.
 
+        Tests stochastic gradient descent and test it with some known values.
+
+        """
         # We will use important words for the output
         features = self.important_words
 
@@ -257,11 +251,11 @@ class TestLogisticRegression(unittest.TestCase):
                          round(0.58638, 5))
 
     def test_03_log_likelihood(self):
-        # Usage:
-        #       Test Log Likelihood
-        # Arguments:
-        #       None
+        """Test log likelihood.
 
+        Test the log likelihood algorithm, and compare it with some known values.
+
+        """
         # Generate test feature, coefficients, and label
         feature_matrix = np.array([[1., 2., 3.], [1., -1., -1]])
         coefficients = np.array([1., 3., -1.])
@@ -274,11 +268,11 @@ class TestLogisticRegression(unittest.TestCase):
         self.assertEqual(round(lg, 5), round(-5.33141161544, 5))
 
     def test_04_average_log_likelihood(self):
-        # Usage:
-        #       Test Average Log Likelihood
-        # Arguments:
-        #       None
+        """Test average log likelihood.
 
+        Test the average log likelihood algorithm, and compare it with some known values.
+
+        """
         # Generate test feature, coefficients, and label
         feature_matrix = np.array([[1., 2., 3.], [1., -1., -1]])
         coefficients = np.array([1., 3., -1.])
