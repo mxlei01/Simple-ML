@@ -58,14 +58,15 @@ class LogisticRegressionL2Norm:
 
             # Need to compute the intercept, because it does not have L2 normalization
             # This is based on MLE: w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-            intercept = coefficients[0]+step_size*np.dot(np.transpose(feature_matrix[:, 0]), errors)
+            intercept = coefficients[0] + step_size*np.dot(np.transpose(feature_matrix[:, 0]), errors)
 
             # Compute the coefficients by using w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))-2*lambda*coefficients
             # in matrix form
             # We do a transpose of feature matrix to convert rows into the column data, since the
             # the sigma function works on all the values for a specific column, and we will multiply each
             # row will error, which gives us Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-            coefficients = coefficients+step_size*(np.dot(np.transpose(feature_matrix), errors)-2*l2_penalty*coefficients)
+            coefficients = coefficients + step_size * (np.dot(np.transpose(feature_matrix),
+                                                              errors)-2 * l2_penalty * coefficients)
 
             # The first coefficient should not be affected by L2 normalization
             coefficients[0] = intercept

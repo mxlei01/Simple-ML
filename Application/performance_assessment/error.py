@@ -1,4 +1,3 @@
-import numpy as np
 from performance_assessment.predict_output import PredictOutput
 
 

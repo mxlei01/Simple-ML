@@ -134,8 +134,8 @@ class LogisticRegression:
             # row will error, which gives us Σ^N_b=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
             # Then norm constant is (1/batch_size), multiplying this with the summation gives us
             # n*Σ^N_b=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w)) * norm constant
-            coefficients = coefficients + step_size * np.dot(np.transpose(feature_matrix[i:i+batch_size,:]), errors) \
-                                          * (1./batch_size)
+            coefficients = coefficients + step_size * np.dot(np.transpose(feature_matrix[i:i+batch_size, :]),
+                                                             errors) * (1./batch_size)
 
             # i is the current index of row of feature_matrix, increment it so that we can see the next batch
             i += batch_size

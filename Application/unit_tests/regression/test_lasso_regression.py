@@ -65,7 +65,6 @@ class TestLassoRegression(unittest.TestCase):
         Test normalization features, and compare it with known values.
 
         """
-
         # Normalize the features, and also return the norms
         features, norms = self.normalize_features.l2_norm(np.array([[3., 6., 9.], [4., 8., 12.]]))
 
