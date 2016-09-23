@@ -1,9 +1,12 @@
+"""Implements Adaboost."""
+
 import numpy as np
 import math
 import pandas as pd
 
 
 class AdaBoost:
+
     """Class that implements Adaboost for decision tree and logistic regression.
 
     AdaBoost is based on setting a weight α on each training sample, then for each iteration:

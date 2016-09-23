@@ -1,3 +1,5 @@
+"""Implements TestBinaryDecisionTrees Unittest."""
+
 import unittest
 import pandas as pd
 from performance_assessment.predict_output import PredictOutput
@@ -7,6 +9,7 @@ from machine_learning.classification.binary_decision_trees import BinaryDecision
 
 
 class TestBinaryDecisionTrees(unittest.TestCase):
+
     """Tests for the BinaryDecisionTrees class.
 
     Uses lending club data to test binary decision trees.

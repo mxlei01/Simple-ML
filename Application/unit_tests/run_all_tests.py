@@ -1,6 +1,11 @@
 """Unit Tests for all machine learning algorithms.
 
-Uses a testLoader to run multiple tests from different python unittests file
+Uses a testLoader to run multiple tests from different python unittests file.
+
+Attributes:
+    loader (TestLoader): Test loader to load tests.
+    suite (TestSuite): Creates a test suite from loader.
+    runner (TextTestRunner): Runner to run the suite of tests.
 
 """
 

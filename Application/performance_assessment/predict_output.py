@@ -1,8 +1,11 @@
+"""Implements PredictOutput."""
+
 import numpy as np
 import pandas as pd
 
 
 class PredictOutput:
+
     """Class for predicting outputs.
 
     Used for predicting outputs based on features and weights, supports different types of algorithms such as

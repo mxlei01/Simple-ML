@@ -1,7 +1,10 @@
+"""Implements LinearRegression."""
+
 import numpy as np
 
 
 class LinearRegression:
+
     """Class to compute Linear Regression.
 
     Linear Regression computes a line that best fit the continuous data using gradient descent.

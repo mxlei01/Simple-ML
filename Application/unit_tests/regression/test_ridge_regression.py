@@ -1,3 +1,5 @@
+"""Implements TestRidgeRegression Unittest."""
+
 import unittest
 import numpy as np
 import pandas as pd
@@ -9,6 +11,7 @@ from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class TestRidgeRegression(unittest.TestCase):
+
     """Test for RidgeRegression.
 
     Uses housing data to test RidgeRegression.

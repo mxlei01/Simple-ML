@@ -1,8 +1,4 @@
-"""Implementation of Logistic Regression.
-
-This module implements the Logistic Regression.
-
-"""
+"""Implements LogisticRegression."""
 
 import numpy as np
 import math

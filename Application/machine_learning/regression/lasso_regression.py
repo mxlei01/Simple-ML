@@ -1,8 +1,11 @@
+"""Implements LassoRegression."""
+
 import numpy as np
 from performance_assessment.predict_output import PredictOutput
 
 
 class LassoRegression:
+
     """Class to compute Lasso Regression.
 
     Lasso Regression is essentially L1 Norm with Linear Regression. We cannot use gradient descent since the

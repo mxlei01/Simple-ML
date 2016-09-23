@@ -1,8 +1,11 @@
+"""Implements Accuracy."""
+
 import pandas as pd
 from performance_assessment.predict_output import PredictOutput
 
 
 class Accuracy:
+
     """Class for computing accuracy.
 
     Computes accuracy for general method, decision trees, and logistic regression.

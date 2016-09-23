@@ -1,3 +1,5 @@
+"""Implements TestWeightedBinaryDecisionTrees Unittest."""
+
 import unittest
 import pandas as pd
 from performance_assessment.predict_output import PredictOutput
@@ -8,6 +10,7 @@ from machine_learning.ensembles.adaboost import AdaBoost
 
 
 class TestWeightedBinaryDecisionTrees(unittest.TestCase):
+
     """Tests for the BinaryDecisionTrees class.
 
     Uses lending club data to test binary decision trees.

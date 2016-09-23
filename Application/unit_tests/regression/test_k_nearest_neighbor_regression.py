@@ -1,3 +1,5 @@
+"""Implements TestKNearestNeighborRegression Unittest."""
+
 import sys
 import unittest
 import numpy as np
@@ -10,6 +12,7 @@ from performance_assessment.determine_k_knn import DetermineKKnn
 
 
 class TestKNearestNeighborRegression(unittest.TestCase):
+
     """Tests for TestKNearestNeighborRegression.
 
     Uses housing data to test KNearestNeighborRegression.

@@ -1,7 +1,10 @@
+"""Implements ResidualSumSquares."""
+
 import numpy as np
 
 
 class ResidualSumSquares:
+
     """Computes Residual Sum of Squares.
 
     Class to compute residual sum of squares, which can be used for linear regression problems.

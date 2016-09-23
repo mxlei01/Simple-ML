@@ -1,8 +1,11 @@
+"""Implements LogisticRegressionL2Norm."""
+
 import numpy as np
 import math
 
 
 class LogisticRegressionL2Norm:
+
     """Class that has various functions to compute Logistic Regression with L2 Norm.
 
     Logistic Regression is essentially using linear regression techniques to compute classification problems by fitting

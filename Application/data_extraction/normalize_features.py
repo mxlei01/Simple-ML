@@ -1,8 +1,4 @@
-"""Normalizing features.
-
-This module contains the NormalizeFeatures that is useful for normalizing features.
-
-"""
+"""Implements NormalizeFeatures."""
 
 import numpy as np
 

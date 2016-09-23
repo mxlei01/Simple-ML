@@ -1,3 +1,5 @@
+"""Implements TestLassoRegression Unittest."""
+
 import math
 import unittest
 import numpy as np
@@ -11,6 +13,7 @@ from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class TestLassoRegression(unittest.TestCase):
+
     """Tests for TestLassoRegression.
 
     Uses housing data to test LassoRegression.

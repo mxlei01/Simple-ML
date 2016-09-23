@@ -1,8 +1,11 @@
+"""Implements KNearestNeighborRegression."""
+
 import numpy as np
 from ml_math.euclidean_distance import EuclideanDistance
 
 
 class KNearestNeighborRegression:
+
     """Class that uses KNN to compute Regression.
 
     This class uses K Nearest Neighbor to compute regression by utilizing Euclidean Distance.

@@ -1,3 +1,5 @@
+"""Implements TestWeightedLogisticRegressionL2Norm Unittest."""
+
 import json
 import string
 import unittest
@@ -11,6 +13,7 @@ from performance_assessment.accuracy import Accuracy
 
 
 class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
+
     """Tests WeightedLogisticRegression class.
 
     Uses Amazon data to test WeightedLogisticRegression class.

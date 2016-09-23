@@ -1,4 +1,8 @@
+"""Implements WeightedBinaryDecisionTrees."""
+
+
 class WeightedBinaryDecisionTrees:
+
     """A Weighted Binary Decision Tree algorithm for building Decision Trees.
 
     A Binary Decision Tree algorithm are implemented as:

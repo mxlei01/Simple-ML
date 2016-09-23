@@ -1,7 +1,10 @@
+"""Implements ConfusionMatrix."""
+
 import pandas as pd
 
 
 class ConfusionMatrix:
+
     """Class to compute confusion matrix.
 
     Computes the confusion matrix for classification algorithms. Furthermore, includes functions to compute recall

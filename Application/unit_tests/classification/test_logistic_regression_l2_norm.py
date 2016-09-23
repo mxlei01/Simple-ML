@@ -1,3 +1,5 @@
+"""Implements TestLogisticRegressionL2Norm Unittest."""
+
 import json
 import unittest
 import numpy as np
@@ -9,6 +11,7 @@ from performance_assessment.accuracy import Accuracy
 
 
 class TestLogisticRegressionL2Norm(unittest.TestCase):
+
     """Tests for LogisticRegressionL2Norm class.
 
     Uses Amazon data to test logistic regression.

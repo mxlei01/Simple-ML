@@ -1,7 +1,10 @@
+"""Implements LogLikelihood."""
+
 import numpy as np
 
 
 class LogLikelihood:
+
     """Class for computing log likelihoods.
 
     Computes log likelihood, which can be used to calculate log likelihood on logistic regression algorithms.

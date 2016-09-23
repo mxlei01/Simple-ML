@@ -1,3 +1,5 @@
+"""Implements TestLogisticRegression Unittest."""
+
 import json
 import string
 import unittest
@@ -11,6 +13,7 @@ from performance_assessment.confusion_matrix import ConfusionMatrix
 
 
 class TestLogisticRegression(unittest.TestCase):
+
     """Tests for LogisticRegression class.
 
     Uses Amazon data to test logistic regression.

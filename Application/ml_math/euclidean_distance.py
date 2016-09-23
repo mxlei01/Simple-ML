@@ -1,7 +1,10 @@
+"""Implements EuclideanDistance."""
+
 import numpy as np
 
 
 class EuclideanDistance:
+
     """Class for computing euclidean distances.
 
     Computes Euclidean distances which is required for algorithms such as K Nearest Neighbor.

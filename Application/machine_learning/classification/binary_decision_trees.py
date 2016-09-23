@@ -1,8 +1,4 @@
-"""Implementation of Binary Decision Trees.
-
-This module contains a Binary Decision Tree implementation for binary classes.
-
-"""
+"""Implements BinaryDecisionTrees."""
 
 
 class BinaryDecisionTrees:

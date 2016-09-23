@@ -1,8 +1,11 @@
+"""Implements DetermineKKnn."""
+
 import sys
 from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class DetermineKKnn:
+
     """Computes the best K for KNN algorithms.
 
     Computes the best K for KNN algorithms by finding the best K that has the lowest RSS.

@@ -1,7 +1,10 @@
+"""Implements Error."""
+
 from performance_assessment.predict_output import PredictOutput
 
 
 class Error:
+
     """Computes error for classification.
 
     Computes error for classification algorithms, such as binary tree.

@@ -1,8 +1,11 @@
+"""Implements WeightedLogisticRegressionL2Norm."""
+
 import numpy as np
 import math
 
 
 class WeightedLogisticRegressionL2Norm:
+
     """Class that has various functions to compute Weighted Logistic Regression with L2 Norm.
 
     Weighted Logistic Regression is essentially using linear regression techniques to compute classification problems

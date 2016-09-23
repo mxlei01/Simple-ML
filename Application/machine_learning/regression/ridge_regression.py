@@ -1,7 +1,10 @@
+"""Implements RidgeRegression."""
+
 import numpy as np
 
 
 class RidgeRegression:
+
     """Class to compute Ridge Regression.
 
     Ridge Regression is essentially L2 Norm with Linear Regression.

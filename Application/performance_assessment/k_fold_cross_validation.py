@@ -1,9 +1,12 @@
+"""Implements KFoldCrossValidation."""
+
 from data_extraction.convert_numpy import ConvertNumpy
 from performance_assessment.predict_output import PredictOutput
 from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class KFoldCrossValidation:
+
     """Class for K Fold Cross Validation.
 
     Class for K Fold Cross Validation for selecting best parameters.
