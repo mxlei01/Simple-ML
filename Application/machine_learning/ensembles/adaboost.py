@@ -67,7 +67,7 @@ class AdaBoost:
         target_values = data[target]
 
         # Loop through each iteration, and generate one model per generation
-        for t in range(iterations):
+        for _ in range(iterations):
             # Use the model to generate a model, the output will be a decision tree
             generated_model = getattr(model, model_method)(**{**{"data": data, "features": features, "target": target,
                                                                  "data_weights": alpha},
@@ -159,7 +159,7 @@ class AdaBoost:
         models_list = []
 
         # Loop through each iteration, and generate one model per generation
-        for t in range(iterations):
+        for _ in range(iterations):
             # Use the model to generate a model, the output will be coefficients
             generated_model = getattr(model, model_method)(**{**{"feature_matrix": feature_matrix, "label": label,
                                                                  "weights_list": alpha},

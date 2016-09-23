@@ -106,7 +106,7 @@ class LogisticRegression:
         i = 0
 
         # Do a linear scan over data
-        for itr in range(max_iter):
+        for _ in range(max_iter):
             # we would need to compute the prediction, which is based on the link function, and we would
             # slice the i-th row of feature_matrix with [i:i+batch_size, :], this will give us rows between
             # i and i+batch size

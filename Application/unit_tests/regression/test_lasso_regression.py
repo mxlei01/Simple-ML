@@ -90,7 +90,7 @@ class TestLassoRegression(unittest.TestCase):
         feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house, features, output, 1)
 
         # Create our initial weights
-        normalized_feature_matrix, norms = self.normalize_features.l2_norm(feature_matrix)
+        normalized_feature_matrix, _ = self.normalize_features.l2_norm(feature_matrix)
 
         # Set initial weights
         weights = np.array([1., 4., 1.])
@@ -134,7 +134,7 @@ class TestLassoRegression(unittest.TestCase):
         feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house, features, output, 1)
 
         # Create our initial weights
-        normalized_feature_matrix, norms = self.normalize_features.l2_norm(feature_matrix)
+        normalized_feature_matrix, _ = self.normalize_features.l2_norm(feature_matrix)
 
         # Set initial weights
         initial_weights = np.zeros(3)

@@ -139,8 +139,8 @@ class TestKNearestNeighborRegression(unittest.TestCase):
         output = ['price']
 
         # Extract features and output for train, test, and validation set
-        features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
-        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
+        features_train, _ = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
+        features_test, _ = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
         # features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list,
         #                                                                    output, 1)
 
@@ -193,7 +193,7 @@ class TestKNearestNeighborRegression(unittest.TestCase):
 
         # Extract features and output for train, test, and validation set
         features_train, output_train = self.convert_numpy.convert_to_numpy(self.kc_house_train, feature_list, output, 1)
-        features_test, output_test = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
+        features_test, _ = self.convert_numpy.convert_to_numpy(self.kc_house_test, feature_list, output, 1)
         # features_valid, output_valid = self.convert_numpy.convert_to_numpy(self.kc_house_valid, feature_list,
         #                                                                    output, 1)
 

@@ -41,7 +41,7 @@ class WeightedLogisticRegression:
         coefficients = np.array(initial_coefficients)
 
         # Compute the weights up to max_iter
-        for itr in range(max_iter):
+        for _ in range(max_iter):
             # we would need to compute the prediction, which is based on the link function
             #           1
             # -------------------   = P(y=1|x_i,w)

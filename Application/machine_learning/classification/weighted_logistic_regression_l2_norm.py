@@ -44,7 +44,7 @@ class WeightedLogisticRegressionL2Norm:
         coefficients = np.array(initial_coefficients)
 
         # Compute the coefficients up to max_iter
-        for itr in range(max_iter):
+        for _ in range(max_iter):
             #           1
             # -------------------   = P(y=1|x_i,w)
             # 1 + exp(-w^t*h(x_i))
@@ -69,8 +69,8 @@ class WeightedLogisticRegressionL2Norm:
             # We do a transpose of feature matrix to convert rows into the column data, since the
             # the sigma function works on all the values for a specific column, and we will multiply each
             # row will error, then multiply by weights, which gives us Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-            coefficients = coefficients+step_size*(np.dot(weights_list*np.transpose(feature_matrix), errors)
-                                                   -2*l2_penalty*coefficients)
+            coefficients = coefficients + step_size * (np.dot(weights_list*np.transpose(feature_matrix),
+                                                              errors) - 2 * l2_penalty * coefficients)
 
             # The first coefficient should not be affected by L2 normalization
             coefficients[0] = intercept

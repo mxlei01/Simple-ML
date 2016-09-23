@@ -85,12 +85,12 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
 
         """
         # Create two weighted binary decision trees
-        weights_list, models_list = self.adaboost.decision_tree(self.train_data, self.features, self.target,
-                                                                iterations=2,
-                                                                predict_method=self.predict.binary_tree,
-                                                                model=self.weighted_binary_decision_trees,
-                                                                model_method="greedy_recursive",
-                                                                model_parameters={"max_depth": 1})
+        weights_list, _ = self.adaboost.decision_tree(self.train_data, self.features, self.target,
+                                                      iterations=2,
+                                                      predict_method=self.predict.binary_tree,
+                                                      model=self.weighted_binary_decision_trees,
+                                                      model_method="greedy_recursive",
+                                                      model_parameters={"max_depth": 1})
 
         # The weights have to equal to [0.15802933659263743, 0.1768236329364191]
         self.assertEqual([round(i, 5) for i in weights_list],

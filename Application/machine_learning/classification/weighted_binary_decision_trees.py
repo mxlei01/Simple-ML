@@ -180,10 +180,10 @@ class WeightedBinaryDecisionTrees:
             right_data_weights = data_weights[data[feature] == 1]
 
             # Calculate the weight of mistakes for left and right sides
-            left_weighted_mistakes, left_class = self.intermediate_node_weighted_mistakes(left_split[target],
-                                                                                          left_data_weights)
-            right_weighted_mistakes, right_class = self.intermediate_node_weighted_mistakes(right_split[target],
-                                                                                            right_data_weights)
+            left_weighted_mistakes, _ = self.intermediate_node_weighted_mistakes(left_split[target],
+                                                                                 left_data_weights)
+            right_weighted_mistakes, _ = self.intermediate_node_weighted_mistakes(right_split[target],
+                                                                                  right_data_weights)
 
             # Compute the weighted error of this split.
             # error = # of left mistakes + # of right mistakes
@@ -222,7 +222,7 @@ class WeightedBinaryDecisionTrees:
 
         """
         # Computed the best class to split at this node
-        weighted_error, best_class = self.intermediate_node_weighted_mistakes(data_labels, data_weights)
+        _, best_class = self.intermediate_node_weighted_mistakes(data_labels, data_weights)
 
         return self.create_node(splitting_feature=None, left=None, right=None, is_leaf=True, prediction=best_class)
 

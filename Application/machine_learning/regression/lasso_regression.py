@@ -77,7 +77,7 @@ class LassoRegression:
         return weights
 
     def lasso_coordinate_descent_step(self, i, feature_matrix, output, weights, l1_penalty):
-        """ Computes the Lasso coordinate descent step.
+        """Computes the Lasso coordinate descent step.
 
         Computes the Lasso coordinate descent step, which is essentially computing a new ro_i, and based on the
         index and ro_i, compute new w_i weight.
