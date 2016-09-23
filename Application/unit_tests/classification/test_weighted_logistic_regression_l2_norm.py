@@ -50,7 +50,7 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
 
         # Count the number of words that appears in each review, and make an indepedent column
         for word in self.important_words:
-            self.review_frame[word] = self.review_frame['review_clean'].apply(lambda s: s.split().count(word))
+            self.review_frame[word] = self.review_frame['review_clean'].apply(lambda s, w=word: s.split().count(w))
 
     def test_01_gradient_ascent(self):
         """Tests gradient ascent algorithm.

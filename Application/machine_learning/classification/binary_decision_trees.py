@@ -1,4 +1,5 @@
 class BinaryDecisionTrees:
+
     """A Binary Decision Tree algorithm for building Decision Trees.
 
     A Binary Decision Tree algorithm are implemented as:

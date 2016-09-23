@@ -21,8 +21,13 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
         Loads Amazon data, and creates training and testing data.
 
         """
+        # Create an instance of the Convert Numpy class
         self.convert_numpy = ConvertNumpy()
+
+        # Create an instance of log likelihood
         self.log_likelhood = LogLikelihood()
+
+        # Create an instance of the accuracy class
         self.accuracy = Accuracy()
 
         # Load the important words
@@ -35,7 +40,8 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
         self.training_data = pd.read_csv('./unit_tests/test_data/classification/amazon/amazon_baby_subset_train.csv')
 
         # Load the amazon baby train subset
-        self.validation_data = pd.read_csv('./unit_tests/test_data/classification/amazon/amazon_baby_subset_validation.csv')
+        self.validation_data = pd.read_csv('./unit_tests/test_data/'
+                                           'classification/amazon/amazon_baby_subset_validation.csv')
 
     def test_01_gradient_ascent_no_penalty(self):
         """Tests gradient ascent algorithm.

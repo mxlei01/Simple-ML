@@ -50,7 +50,7 @@ class TestLogisticRegression(unittest.TestCase):
 
         # Count the number of words that appears in each review, and make an indepedent column
         for word in self.important_words:
-            self.review_frame[word] = self.review_frame['review_clean'].apply(lambda s: s.split().count(word))
+            self.review_frame[word] = self.review_frame['review_clean'].apply(lambda s, w=word: s.split().count(w))
 
         # Load training data
         self.train_frame = pd.read_csv('./unit_tests/test_data/classification/amazon/amazon_baby_subset_train_mod2.csv')

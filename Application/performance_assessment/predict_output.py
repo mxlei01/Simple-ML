@@ -103,10 +103,10 @@ class PredictOutput:
 
         # Loop through each models
         for i, model in enumerate(models):
-            predictions = data.apply(lambda x: prediction_method(model, x), axis=1)
+            predictions = data.apply(lambda x, m=model: prediction_method(m, x), axis=1)
 
             # Accumulate predictions on scores array
-            predictions = predictions.apply(lambda x: x * weights[i])
+            predictions = predictions.apply(lambda x, w=weights: x * w[i])
             scores = scores + predictions
 
         # Return the prediction of each data
@@ -136,7 +136,7 @@ class PredictOutput:
             predictions = pd.Series(prediction_method(feature_matrix, model))
 
             # Accumulate predictions on scores array
-            predictions = predictions.apply(lambda x: x * weights[i])
+            predictions = predictions.apply(lambda x, w=weights: x * w[i])
             scores = scores + predictions
 
         # Return the prediction of each data

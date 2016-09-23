@@ -1,7 +1,14 @@
+"""Converting other data types of numpy.
+
+This module contains the ConvertNumpy class that is useful to convert other data types.
+
+"""
+
 import copy
 
 
 class ConvertNumpy:
+
     """For converting Pandas data to Numpy array or matrix.
 
     The ConvertNumpy class contains useful functions to convert widely known data format, such as Pandas to

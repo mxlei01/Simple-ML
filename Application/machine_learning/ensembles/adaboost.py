@@ -77,7 +77,7 @@ class AdaBoost:
             models_list.append(generated_model)
 
             # Make predictions
-            predictions = data.apply(lambda x: predict_method(generated_model, x), axis=1)
+            predictions = data.apply(lambda x, gm=generated_model: predict_method(gm, x), axis=1)
 
             # Creating an array of boolean values indicating if each data was correctly classified
             correct = predictions == target_values
@@ -111,7 +111,7 @@ class AdaBoost:
             #   If w_t is high (2.3), then we multiply α by e^(2.3)=9.98, which means we will increase the importance
             #   of α for that specific row of data.
             #   If w_t is low (0), then we will multiply α by e^(0)=1, then we will keep the importance the same.
-            exponential_weight = correct.apply(lambda is_correct: math.exp(-weight) if is_correct else math.exp(weight))
+            exponential_weight = correct.apply(lambda is_correct, w=weight: math.exp(-w) if is_correct else math.exp(w))
 
             # Scale alpha by multiplying by exponential_weight
             alpha = alpha*exponential_weight

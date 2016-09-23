@@ -1,7 +1,14 @@
+"""Normalize Features.
+
+This module contains the NormalizeFeatures that is useful for normalizing features.
+
+"""
+
 import numpy as np
 
 
 class NormalizeFeatures:
+
     """For normalizing a numpy matrices.
 
     The NormalizeFeatures class contains useful functions to normalize features, for example, applying
