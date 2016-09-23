@@ -1,3 +1,10 @@
+"""Implementation of Binary Decision Trees.
+
+This module contains a Binary Decision Tree implementation for binary classes.
+
+"""
+
+
 class BinaryDecisionTrees:
 
     """A Binary Decision Tree algorithm for building Decision Trees.

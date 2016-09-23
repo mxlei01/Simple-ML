@@ -1,8 +1,15 @@
+"""Implementation of Logistic Regression.
+
+This module implements the Logistic Regression.
+
+"""
+
 import numpy as np
 import math
 
 
 class LogisticRegression:
+
     """Class that has various functions to compute Logistic Regression.
 
     Logistic Regression is essentially using linear regression techniques to compute classification problems by fitting

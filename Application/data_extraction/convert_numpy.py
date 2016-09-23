@@ -1,4 +1,4 @@
-"""Converting other data types of numpy.
+"""Converting data types.
 
 This module contains the ConvertNumpy class that is useful to convert other data types.
 

@@ -106,7 +106,7 @@ class PredictOutput:
             predictions = data.apply(lambda x, m=model: prediction_method(m, x), axis=1)
 
             # Accumulate predictions on scores array
-            predictions = predictions.apply(lambda x, w=weights: x * w[i])
+            predictions = predictions.apply(lambda x, idx=i, w=weights: x * w[idx])
             scores = scores + predictions
 
         # Return the prediction of each data
@@ -136,7 +136,7 @@ class PredictOutput:
             predictions = pd.Series(prediction_method(feature_matrix, model))
 
             # Accumulate predictions on scores array
-            predictions = predictions.apply(lambda x, w=weights: x * w[i])
+            predictions = predictions.apply(lambda x, idx=i, w=weights: x * w[idx])
             scores = scores + predictions
 
         # Return the prediction of each data

@@ -1,4 +1,4 @@
-"""Normalize Features.
+"""Normalizing features.
 
 This module contains the NormalizeFeatures that is useful for normalizing features.
 
