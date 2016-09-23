@@ -40,7 +40,7 @@ class LogisticRegressionL2Norm:
         coefficients = np.array(initial_coefficients)
 
         # Compute the coefficients up to max_iter
-        for itr in range(max_iter):
+        for _ in range(max_iter):
             #           1
             # -------------------   = P(y=1|x_i,w)
             # 1 + exp(-w^t*h(x_i))
