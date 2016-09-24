@@ -49,29 +49,13 @@ class KFoldCrossValidation:
             float: Average validation error.
 
         """
-        length_data = len(data)
-
         # Sum of the validation error, will divide by k (fold) later
         validation_error_sum = 0
 
         # Loop through each fold
         for i in range(k):
-            # Compute the start section of the current fold
-            start = int((length_data*i)/k)
-
-            # Compute the end section of the current fold
-            end = int((length_data*(i+1))/k-1)
-
-            # Get our validation set from the start to the end+1 (+1 since we need to include the end)
-            # <Start : end + 1> Validation Set
-            validation_set = data[start:end+1]
-
-            # The Training set the left and the right parts of the validation set
-            # < 0       : Start >   Train Set 1
-            # < Start   : End + 1 > Validation Set
-            # < End + 1 : n >       Train Set 2
-            # Train Set 1 + Train Set 2 = All data excluding validation set
-            training_set = data[0:start].append(data[end+1:length_data])
+            # Computes validation, and training set
+            validation_set, training_set = self.create_validation_training_set(data, k, i)
 
             # Convert our pandas frame to numpy
             validation_feature_matrix, validation_output = self.convert_numpy.convert_to_numpy(validation_set, features,
@@ -94,3 +78,42 @@ class KFoldCrossValidation:
 
         # Return the validation_error_sum divided by fold
         return validation_error_sum/k
+
+    @staticmethod
+    def create_validation_training_set(data, k, iteration):
+        """Slice data according to k, iteration, and size of data.
+
+        Computes the validation, and training set according to the k number of folds, and the current iteration.
+
+        Args:
+            data (pandas.DataFrame): Data used for k folds cross validation.
+            k (int): Number of folds.
+            iteration (int): Current K fold validation iteration.
+
+        Returns:
+            A tuple that contains training set, and validation set:
+                (
+                    validation_set (pandas.DataFrame): Validation set.
+                    training_set (pandas.DataFrame): Training set.
+                )
+        """
+        length_data = len(data)
+
+        # Compute the start section of the current fold
+        start = int((length_data * iteration) / k)
+
+        # Compute the end section of the current fold
+        end = int((length_data * (iteration + 1)) / k - 1)
+
+        # Get our validation set from the start to the end+1 (+1 since we need to include the end)
+        # <Start : end + 1> Validation Set
+        validation_set = data[start:end + 1]
+
+        # The Training set the left and the right parts of the validation set
+        # < 0       : Start >   Train Set 1
+        # < Start   : End + 1 > Validation Set
+        # < End + 1 : n >       Train Set 2
+        # Train Set 1 + Train Set 2 = All data excluding validation set
+        training_set = data[0:start].append(data[end + 1:length_data])
+
+        return validation_set, training_set
