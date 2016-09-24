@@ -57,16 +57,12 @@ class KFoldCrossValidation:
             # Computes validation, and training set
             validation_set, training_set = self.create_validation_training_set(data, k, i)
 
-            # Convert our pandas frame to numpy
+            # Convert our pandas frame to numpy to create validation set
             validation_feature_matrix, validation_output = self.convert_numpy.convert_to_numpy(validation_set, features,
                                                                                                output, 1)
 
-            # Convert our pandas frame to numpy
-            training_feature_matrix, training_output = self.convert_numpy.convert_to_numpy(training_set, features,
-                                                                                           output, 1)
-
             # Create a model with Train Set 1 + Train Set 2
-            final_weights = model(**model_parameters, feature_matrix=training_feature_matrix, output=training_output)
+            final_weights = self.create_weights(model, model_parameters, output, training_set, features)
 
             # Predict the output of test features
             predicted_output = self.predict_output.regression(validation_feature_matrix,
@@ -117,3 +113,27 @@ class KFoldCrossValidation:
         training_set = data[0:start].append(data[end + 1:length_data])
 
         return validation_set, training_set
+
+    def create_weights(self, model, model_parameters, output, training_set, features):
+        """Use model to create weights.
+
+        Use model, model parameters, and training set, create a set of coefficients.
+
+        Args:
+            model (obj): Model that can be run.
+            model_parameters (dict): A dictionary of model parameters.
+            output (str): Output name.
+            training_set (pandas.DataFrame): Train set used for k folds cross validation.
+            features (list of str): A list of feature names.
+
+        Returns:
+            numpy.array: numpy array of weights created by running model
+
+        """
+
+        # Convert our pandas frame to numpy to create training set
+        training_feature_matrix, training_output = self.convert_numpy.convert_to_numpy(training_set, features,
+                                                                                       output, 1)
+
+        # Create a model with Train Set 1 + Train Set 2
+        return model(**model_parameters, feature_matrix=training_feature_matrix, output=training_output)

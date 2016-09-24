@@ -24,7 +24,7 @@ class ConvertNumpy:
         Args:
             pandas_frame (pandas.DataFrame): A pandas frame that we want to convert to numpy.
             features (list): An array of string that indicates the column that we want to extract.
-            output (array of str): An array of string that indicates the column that we want to extract for output.
+            output (str): A string that indicates the column that we want to extract for output.
             constant (int): A constant that we want to add.
 
         Returns:
