@@ -81,7 +81,51 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         # Assert that the classification should be 0.48124865678057166
         self.assertEqual(round(accuracy, 5), round(0.48124865678057166, 5))
 
-    def test_02_adaboost(self):
+    def test_02_greedy_recursive_high_depth_low_features(self):
+        """Tests greedy recursive function for BinaryDecisionTrees class
+
+        We will use the training data to build a decision tree, and measure the accuracy with some known good values.
+
+        """
+        # Create data weights
+        data_weights = pd.Series([1.] * 10 + [0.] * (len(self.train_data) - 20) + [1.] * 10)
+
+        # Create a decision tree
+        decision_tree = self.weighted_binary_decision_trees.greedy_recursive(self.train_data, ['grade.A', 'grade.B'],
+                                                                             self.target, data_weights,
+                                                                             current_depth=0, max_depth=2000)
+
+        # Compute the accuracy of the decision tree
+        accuracy = self.error.binary_tree(decision_tree, self.train_data, self.target)
+
+        # Assert that the classification should be 0.54148
+        self.assertEqual(round(accuracy, 5), round(0.54148, 5))
+
+    def test_03_greedy_recursive_high_depth_low_features(self):
+        """Tests greedy recursive function for BinaryDecisionTrees class
+
+        We will use the training data to build a decision tree, and measure the accuracy with some known good values.
+
+        """
+        # Create data weights
+        data_weights = pd.Series([1.] * 10 + [2.] * (len(self.train_data) - 20) + [-1.] * 10)
+
+        # Create a decision tree
+        decision_tree = self.weighted_binary_decision_trees.greedy_recursive(self.train_data, ['grade.A', 'grade.B',
+                                                                                               'grade.C', 'grade.D',
+                                                                                               'grade.E', 'grade.F',
+                                                                                               'grade.G',
+                                                                                               'term. 36 months'],
+                                                                             self.target, data_weights,
+                                                                             current_depth=0, max_depth=20000)
+
+        # Compute the accuracy of the decision tree
+        accuracy = self.error.binary_tree(decision_tree, self.train_data, self.target)
+
+        # Assert that the classification should be 0.54148
+        self.assertEqual(round(accuracy, 5), round(0.54148, 5))
+
+    def test_04_adaboost(self):
         """Tests the adaboost algorithm.
 
         Tests the adaboost algorithm with low number of iterations.
@@ -99,7 +143,7 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual([round(i, 5) for i in weights_list],
                          [round(0.15802933659263743, 5), round(0.1768236329364191, 5)])
 
-    def test_03_adaboost_high_iterations(self):
+    def test_05_adaboost_high_iterations(self):
         """Tests the adaboost algorithm.
 
         Tests the adaboost algorithm with high number of iterations.

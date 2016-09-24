@@ -97,10 +97,12 @@ class WeightedBinaryDecisionTrees:
         # 4. If the left split is equal to the amount of data
         # This is done since if the feature split has exactly the same data, then there's nothing we need to do
         if len(left_split) == len(data):
+            print("Left equal")
             return self.create_leaf(left_split[target], data_weights)
 
         # 5. If the right split is equal to the amount of data
         if len(right_split) == len(data):
+            print("Right equal")
             return self.create_leaf(right_split[target], data_weights)
 
         # Create the left tree by doing a recursion

@@ -92,7 +92,51 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
 
-    def test_02_greedy_recursive_early_stop(self):
+    def test_02_greedy_recursive_high_depth_low_feature(self):
+        """Tests greedy recursive function for BinaryDecisionTrees class
+
+        We will use the training data to build a decision tree, and use high depth.
+
+        """
+        # Create a decision tree
+        decision_tree = self.binary_decision_trees.greedy_recursive(self.train_data, ['grade.A', 'grade.B'],
+                                                                    self.target, current_depth=0, max_depth=1000)
+
+        # Get the classification result of the first row
+        classification = self.predict_output.binary_tree(decision_tree, self.test_data.iloc[0])
+
+        # Assert that the classification should be -1
+        self.assertEqual(classification, -1)
+
+        # Compute the accuracy of the decision tree
+        accuracy = self.error.binary_tree(decision_tree, self.test_data, self.target)
+
+        # Assert that the classification should be 0.38432
+        self.assertEqual(round(accuracy, 5), round(0.38432, 5))
+
+    def test_04_greedy_recursive_high_depth(self):
+        """Tests greedy recursive function for BinaryDecisionTrees class
+
+        We will use the training data to build a decision tree, and use high depth.
+
+        """
+        # Create a decision tree
+        decision_tree = self.binary_decision_trees.greedy_recursive(self.train_data, self.features, self.target,
+                                                                    current_depth=0, max_depth=10000)
+
+        # Get the classification result of the first row
+        classification = self.predict_output.binary_tree(decision_tree, self.test_data.iloc[0])
+
+        # Assert that the classification should be -1
+        self.assertEqual(classification, -1)
+
+        # Compute the accuracy of the decision tree
+        accuracy = self.error.binary_tree(decision_tree, self.test_data, self.target)
+
+        # Assert that the classification should be 0.37732
+        self.assertEqual(round(accuracy, 5), round(0.37732, 5))
+
+    def test_03_greedy_recursive_early_stop(self):
         """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
 
         We will use early stopping for greedy recursive, and measure performance.
