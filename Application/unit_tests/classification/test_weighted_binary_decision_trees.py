@@ -122,8 +122,8 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         # Compute the accuracy of the decision tree
         accuracy = self.error.binary_tree(decision_tree, self.train_data, self.target)
 
-        # Assert that the classification should be 0.54148
-        self.assertEqual(round(accuracy, 5), round(0.54148, 5))
+        # Assert that the classification should be 0.38491
+        self.assertEqual(round(accuracy, 5), round(0.38491, 5))
 
     def test_04_adaboost(self):
         """Tests the adaboost algorithm.
