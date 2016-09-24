@@ -276,9 +276,10 @@ class TestRidgeRegression(unittest.TestCase):
                                 'l2_penalty': l2_penalty}
 
             # Compute the cross validation results
-            cv = self.k_fold_cross_validation.k_fold_cross_validation(folds, self.kc_house_train,
-                                                                      self.ridge_regression.gradient_descent,
-                                                                      model_parameters, output, features)
+            cv = self.k_fold_cross_validation.k_fold_cross_validation(folds, self.ridge_regression.gradient_descent,
+                                                                      model_parameters, {"data": self.kc_house_train,
+                                                                                         "output": output,
+                                                                                         "features": features})
 
             # Append it into the results
             cross_validation_results.append((l2_penalty, cv))

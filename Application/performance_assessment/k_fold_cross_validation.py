@@ -29,7 +29,7 @@ class KFoldCrossValidation:
         self.predict_output = PredictOutput()
         self.residual_sum_squares = ResidualSumSquares()
 
-    def k_fold_cross_validation(self, k, data, model, model_parameters, output, features):
+    def k_fold_cross_validation(self, k, model, model_parameters, data_parameters):
         """Performs K Fold Cross Validation.
 
         Takes in our data, and splits the data to smaller subsets, and these smaller subsets are used as validation
@@ -38,12 +38,15 @@ class KFoldCrossValidation:
         set against the model.
 
         Args:
-            k (int): Number of folds.
-            data (pandas.DataFrame): Data used for k folds cross validation.
+            k (int): Number of folds.=
             model (obj): Model used for k folds cross validation.
             model_parameters (dict): Model parameters to train the specified model.
-            features (list of str): A list of feature names.
-            output (str): Output name.
+            data_parameters (dict): A dictionary of data information:
+                {
+                    data (pandas.DataFrame): Data used for k folds cross validation,
+                    output (str): Output name,
+                    features (list of str): A list of feature names.
+                }
 
         Returns:
             float: Average validation error.
@@ -55,17 +58,18 @@ class KFoldCrossValidation:
         # Loop through each fold
         for i in range(k):
             # Computes validation, and training set
-            validation_set, training_set = self.create_validation_training_set(data, k, i)
+            validation_set, training_set = self.create_validation_training_set(data_parameters["data"], k, i)
 
             # Convert our pandas frame to numpy to create validation set
-            validation_feature_matrix, validation_output = self.convert_numpy.convert_to_numpy(validation_set, features,
-                                                                                               output, 1)
+            validation_set_matrix, validation_output = self.convert_numpy.convert_to_numpy(validation_set,
+                                                                                           data_parameters["features"],
+                                                                                           data_parameters["output"], 1)
 
             # Create a model with Train Set 1 + Train Set 2
-            final_weights = self.create_weights(model, model_parameters, output, training_set, features)
+            final_weights = self.create_weights(model, model_parameters, training_set, data_parameters)
 
             # Predict the output of test features
-            predicted_output = self.predict_output.regression(validation_feature_matrix,
+            predicted_output = self.predict_output.regression(validation_set_matrix,
                                                               final_weights)
 
             # compute squared error (in other words, rss)
@@ -114,7 +118,7 @@ class KFoldCrossValidation:
 
         return validation_set, training_set
 
-    def create_weights(self, model, model_parameters, output, training_set, features):
+    def create_weights(self, model, model_parameters, training_set, data_parameters):
         """Use model to create weights.
 
         Use model, model parameters, and training set, create a set of coefficients.
@@ -122,18 +126,22 @@ class KFoldCrossValidation:
         Args:
             model (obj): Model that can be run.
             model_parameters (dict): A dictionary of model parameters.
-            output (str): Output name.
             training_set (pandas.DataFrame): Train set used for k folds cross validation.
-            features (list of str): A list of feature names.
+            data_parameters (dict): A dictionary of data information:
+                {
+                    data (pandas.DataFrame): Data used for k folds cross validation,
+                    output (str): Output name,
+                    features (list of str): A list of feature names.
+                }
 
         Returns:
-            numpy.array: numpy array of weights created by running model
+            numpy.array: numpy array of weights created by running model.
 
         """
-
         # Convert our pandas frame to numpy to create training set
-        training_feature_matrix, training_output = self.convert_numpy.convert_to_numpy(training_set, features,
-                                                                                       output, 1)
+        training_feature_matrix, training_output = self.convert_numpy.convert_to_numpy(training_set,
+                                                                                       data_parameters["features"],
+                                                                                       data_parameters["output"], 1)
 
         # Create a model with Train Set 1 + Train Set 2
         return model(**model_parameters, feature_matrix=training_feature_matrix, output=training_output)
