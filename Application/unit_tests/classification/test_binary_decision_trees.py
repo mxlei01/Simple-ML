@@ -175,3 +175,55 @@ class TestBinaryDecisionTrees(unittest.TestCase):
 
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
+
+
+    def test_04_greedy_recursive_early_stop_high_depth(self):
+        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
+
+        We will use early stopping for greedy recursive, and measure performance.
+
+        """
+        # Create a model with max_depth=5000, min_node_size=0, min_error_reduction=0
+        model_1 = self.binary_decision_trees.greedy_recursive_early_stop(self.train_data, ['grade.A', 'grade.B'],
+                                                                         self.target, max_depth=5000, min_node_size=0,
+                                                                         min_error_reduction=0.0)
+
+        # Get the classification result of the first row
+        classification = self.predict_output.binary_tree(model_1, self.test_data.iloc[0])
+
+        # Assert that the classification should be -1
+        self.assertEqual(classification, -1)
+
+        # Compute the accuracy of the decision tree
+        accuracy = self.error.binary_tree(model_1, self.test_data, self.target)
+
+        # Assert that the classification should be 0.38432
+        self.assertEqual(round(accuracy, 5), round(0.38432, 5))
+
+
+    def test_05_greedy_recursive_early_stop_high_depth(self):
+        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
+
+        We will use early stopping for greedy recursive, and measure performance.
+
+        """
+        # Create a model with max_depth=5000, min_node_size=0, min_error_reduction=0
+        model_1 = self.binary_decision_trees.greedy_recursive_early_stop(self.train_data, ['grade.A', 'grade.B',
+                                                                                           'grade.C', 'grade.D',
+                                                                                           'grade.E', 'grade.F',
+                                                                                           'grade.G',
+                                                                                           'term. 36 months'],
+                                                                         self.target, max_depth=5000, min_node_size=0,
+                                                                         min_error_reduction=-50000)
+
+        # Get the classification result of the first row
+        classification = self.predict_output.binary_tree(model_1, self.test_data.iloc[0])
+
+        # Assert that the classification should be -1
+        self.assertEqual(classification, -1)
+
+        # Compute the accuracy of the decision tree
+        accuracy = self.error.binary_tree(model_1, self.test_data, self.target)
+
+        # Assert that the classification should be 0.38162
+        self.assertEqual(round(accuracy, 5), round(0.38162, 5))
