@@ -98,7 +98,8 @@ class TestRidgeRegression(unittest.TestCase):
         test_output = ['price']
 
         # Convert our test pandas frame to numpy
-        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features, test_output, 1)
+        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features,
+                                                                               test_output, 1)
 
         # Predict the output of test features
         predicted_output = self.predict_output.regression(test_feature_matrix, final_weights)
@@ -155,7 +156,8 @@ class TestRidgeRegression(unittest.TestCase):
         test_output = ['price']
 
         # Convert our test pandas frame to numpy
-        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features, test_output, 1)
+        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features,
+                                                                               test_output, 1)
 
         # Predict the output of test features
 
@@ -213,7 +215,8 @@ class TestRidgeRegression(unittest.TestCase):
         test_output = ['price']
 
         # Convert our test pandas frame to numpy
-        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features, test_output, 1)
+        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features,
+                                                                               test_output, 1)
 
         # Predict the output of test features
         predicted_output = self.predict_output.regression(test_feature_matrix, final_weights)
@@ -331,3 +334,100 @@ class TestRidgeRegression(unittest.TestCase):
         # Assert that the weights is correct
         self.assertEquals(round(-7.7535764461428101e+70, -68), round(final_weights[0], -68))
         self.assertEquals(round(-1.9293745396177612e+74, -70), round(final_weights[1], -70))
+
+    def test_07_gradient_ascent_high_tolerance(self):
+        """Tests gradient ascent.
+
+        Tests gradient ascent and compare it with known values.
+
+        """
+        # We will use sqft_living for our features
+        features = ['sqft_living']
+
+        # Output will be price
+        output = ['price']
+
+        # Convert our pandas frame to numpy
+        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train, features, output, 1)
+
+        # Create our initial weights
+        initial_weights = np.array([0., 0.])
+
+        # Step size
+        step_size = 1e-12
+
+        # Max Iterations to Run
+        max_iterations = 1000
+
+        # Tolerance
+        tolerance = 1
+
+        # L2 Penalty
+        l2_penalty = 0.0
+
+        # Compute our hill climbing value
+        final_weights = self.ridge_regression.gradient_ascent(feature_matrix, output,
+                                                              initial_weights, step_size,
+                                                              tolerance, l2_penalty, max_iterations)
+
+        # Assert that the weights is correct
+        self.assertEquals(0, round(final_weights[0], -68))
+        self.assertEquals(0, round(final_weights[1], -70))
+
+    def test_08_gradient_descent_no_penalty_high_tolerance(self):
+        """Tests gradient descent algorithm.
+
+        Tests the result on gradient descent with low penalty.
+
+        """
+        # We will use sqft_living for our features
+        features = ['sqft_living']
+
+        # Output will use price
+        output = ['price']
+
+        # Convert our pandas frame to numpy
+        feature_matrix, output = self.convert_numpy.convert_to_numpy(self.kc_house_train, features, output, 1)
+
+        # Create our initial weights
+        initial_weights = np.array([0., 0.])
+
+        # Step size
+        step_size = 1e-12
+
+        # Max Iterations to Run
+        max_iterations = 100000
+
+        # Tolerance
+        tolerance = 10000000000
+
+        # L2 Penalty
+        l2_penalty = 0.0
+
+        # Compute our gradient descent value
+        final_weights = self.ridge_regression.gradient_descent(feature_matrix, output,
+                                                               initial_weights, step_size,
+                                                               tolerance, l2_penalty, max_iterations)
+
+        # We will use sqft_iving, and sqft_living15
+        test_features = ['sqft_living']
+
+        # Output will be price
+        test_output = ['price']
+
+        # Convert our test pandas frame to numpy
+        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features,
+                                                                               test_output, 1)
+
+        # Predict the output of test features
+        predicted_output = self.predict_output.regression(test_feature_matrix, final_weights)
+
+        # Compute RSS
+        rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
+
+        # Assert that the weights is correct
+        self.assertEquals(round(0.093859999999999999, 5), round(final_weights[0], 5))
+        self.assertEquals(round(262.98200000000003, 3), round(final_weights[1], 3))
+
+        # Assert that rss is correct
+        self.assertEquals(round(275724298300000.0, -5), round(rss, -5))

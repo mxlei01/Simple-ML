@@ -29,8 +29,8 @@ class RidgeRegression:
             feature_matrix (numpy.matrix): Features of a dataset.
             output (numpy.array): The output of a dataset.
             initial_weights (numpy.array): Initial weights that are used.
-            step_size (int): Step size.
-            tolerance (int): Tolerance (or epsilon).
+            step_size (float): Step size.
+            tolerance (int or None): Tolerance (or epsilon).
             l2_penalty (float): L2 penalty value.
             max_iteration (int): Maximum iteration to compute.
 
@@ -76,7 +76,6 @@ class RidgeRegression:
                 # Although we use this nice norm function, but
                 # recall that the magnitude/length of a vector [g[0], g[1], g[2]] is sqrt(g[0]^2 + g[1]^2 + g[2]^2)
                 if np.linalg.norm(gradient) < tolerance:
-
                     # Set converged to true so that we stop our while loop
                     converged = True
             iteration += 1
@@ -101,8 +100,8 @@ class RidgeRegression:
             feature_matrix (numpy.matrix): Features of a dataset.
             output (numpy.array): The output of a dataset.
             initial_weights (numpy.array): Initial weights that are used.
-            step_size (int): Step size.
-            tolerance (int): Tolerance (or epsilon).
+            step_size (float): Step size.
+            tolerance (int or None): Tolerance (or epsilon).
             l2_penalty (float): L2 penalty value.
             max_iteration (int): Maximum iteration to compute.
 
