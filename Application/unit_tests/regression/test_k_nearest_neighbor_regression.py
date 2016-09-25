@@ -269,8 +269,10 @@ class TestKNearestNeighborRegression(unittest.TestCase):
 
         # Compute the lowest K and lowest K's RSS
         low_rss, low_idx = self.determine_k_knn.determine_k_knn(self.knn.predict_k_nearest_neighbor_all_regression,
-                                                                1, 16, features_train, features_valid,
-                                                                output_train, output_valid)
+                                                                1, 16, {"features_train": features_train,
+                                                                        "features_valid": features_valid,
+                                                                        "output_train": output_train,
+                                                                        "output_valid": output_valid})
 
         # Assert that the lowest k and rss is correct
         self.assertEqual(round(low_rss, -13), round(6.73616787355e+13, -13))

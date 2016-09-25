@@ -176,7 +176,6 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         # Assert that the classification should be 0.3837785437311504
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
 
-
     def test_04_greedy_recursive_early_stop_high_depth(self):
         """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
 
@@ -199,7 +198,6 @@ class TestBinaryDecisionTrees(unittest.TestCase):
 
         # Assert that the classification should be 0.38432
         self.assertEqual(round(accuracy, 5), round(0.38432, 5))
-
 
     def test_05_greedy_recursive_early_stop_high_depth(self):
         """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
