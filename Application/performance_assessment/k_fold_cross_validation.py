@@ -144,4 +144,4 @@ class KFoldCrossValidation:
                                                                                        data_parameters["output"], 1)
 
         # Create a model with Train Set 1 + Train Set 2
-        return model(**model_parameters, feature_matrix=training_feature_matrix, output=training_output)
+        return model(model_parameters=model_parameters, feature_matrix=training_feature_matrix, output=training_output)

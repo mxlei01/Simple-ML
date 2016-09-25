@@ -88,8 +88,11 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Compute our gradient descent value
         final_weights = self.ridge_regression.gradient_descent(feature_matrix, output,
-                                                               initial_weights, step_size,
-                                                               tolerance, l2_penalty, max_iterations)
+                                                               {"initial_weights": initial_weights,
+                                                                "step_size": step_size,
+                                                                "tolerance": tolerance,
+                                                                "l2_penalty": l2_penalty,
+                                                                "max_iteration": max_iterations})
 
         # We will use sqft_iving, and sqft_living15
         test_features = ['sqft_living']
@@ -146,8 +149,11 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Compute our gradient descent value
         final_weights = self.ridge_regression.gradient_descent(feature_matrix, output,
-                                                               initial_weights, step_size,
-                                                               tolerance, l2_penalty, max_iterations)
+                                                               {"initial_weights": initial_weights,
+                                                                "step_size": step_size,
+                                                                "tolerance": tolerance,
+                                                                "l2_penalty": l2_penalty,
+                                                                "max_iteration": max_iterations})
 
         # We will use sqft_iving
         test_features = ['sqft_living']
@@ -205,8 +211,11 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Compute our gradient descent value
         final_weights = self.ridge_regression.gradient_descent(feature_matrix, output,
-                                                               initial_weights, step_size,
-                                                               tolerance, l2_penalty, max_iterations)
+                                                               {"initial_weights": initial_weights,
+                                                                "step_size": step_size,
+                                                                "tolerance": tolerance,
+                                                                "l2_penalty": l2_penalty,
+                                                                "max_iteration": max_iterations})
 
         # We will use sqft_iving, and sqft_living15
         test_features = ['sqft_living', 'sqft_living15']
@@ -328,8 +337,11 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Compute our hill climbing value
         final_weights = self.ridge_regression.gradient_ascent(feature_matrix, output,
-                                                              initial_weights, step_size,
-                                                              tolerance, l2_penalty, max_iterations)
+                                                              {"initial_weights": initial_weights,
+                                                               "step_size": step_size,
+                                                               "tolerance": tolerance,
+                                                               "l2_penalty": l2_penalty,
+                                                               "max_iteration": max_iterations})
 
         # Assert that the weights is correct
         self.assertEquals(round(-7.7535764461428101e+70, -68), round(final_weights[0], -68))
@@ -367,8 +379,11 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Compute our hill climbing value
         final_weights = self.ridge_regression.gradient_ascent(feature_matrix, output,
-                                                              initial_weights, step_size,
-                                                              tolerance, l2_penalty, max_iterations)
+                                                              {"initial_weights": initial_weights,
+                                                               "step_size": step_size,
+                                                               "tolerance": tolerance,
+                                                               "l2_penalty": l2_penalty,
+                                                               "max_iteration": max_iterations})
 
         # Assert that the weights is correct
         self.assertEquals(0, round(final_weights[0], -68))
@@ -406,8 +421,11 @@ class TestRidgeRegression(unittest.TestCase):
 
         # Compute our gradient descent value
         final_weights = self.ridge_regression.gradient_descent(feature_matrix, output,
-                                                               initial_weights, step_size,
-                                                               tolerance, l2_penalty, max_iterations)
+                                                               {"initial_weights": initial_weights,
+                                                                "step_size": step_size,
+                                                                "tolerance": tolerance,
+                                                                "l2_penalty": l2_penalty,
+                                                                "max_iteration": max_iterations})
 
         # We will use sqft_iving, and sqft_living15
         test_features = ['sqft_living']

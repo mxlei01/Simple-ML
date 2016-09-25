@@ -24,7 +24,7 @@ class LassoRegression:
         """
         self.predict_output = PredictOutput()
 
-    def lasso_cyclical_coordinate_descent(self, feature_matrix, output, initial_weights, l1_penalty, tolerance):
+    def lasso_cyclical_coordinate_descent(self, feature_matrix, output, model_parameters):
         """Coordinate descent algorithm for Lasso regression.
 
         Performs a Lasso Cyclical Coordinate Descent, which will loop over each features and then perform
@@ -43,9 +43,14 @@ class LassoRegression:
         Args:
             feature_matrix (numpy.ndarray): Feature matrix.
             output (numpy.array): Real output for the feature matrix.
-            initial_weights (numpy.array): The starting initial weights.
-            l1_penalty (float): L1 penalty value.
-            tolerance (float): Tolerance to test against all changed weights.
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    initial_weights (numpy.array): The starting initial weights,
+                    step_size (float): Step size,
+                    tolerance (float or None): Tolerance (or epsilon),
+                    l1_penalty (float): L1 penalty value,
+                    max_iteration (int): Maximum iteration to compute.
+                }
 
         Returns:
             numpy.array: final weights after coordinate descent has been completed
@@ -55,7 +60,7 @@ class LassoRegression:
         low_change = False
 
         # Set Weights to initial_weights
-        weights = initial_weights
+        weights = model_parameters["initial_weights"]
 
         # While the change is not too low (meaning lower than tolerance)
         while not low_change:
@@ -69,47 +74,58 @@ class LassoRegression:
                 old_weights_i = weights[i]
 
                 # Compute the current weight
-                weights[i] = self.lasso_coordinate_descent_step(i, feature_matrix, output, weights, l1_penalty)
+                weights[i] = self.lasso_coordinate_descent_step({"i": i, "weights": weights}, feature_matrix, output,
+                                                                model_parameters)
 
                 # Returns true if any weight changes greater than tolerance
-                change.append(abs(old_weights_i-weights[i]) > tolerance)
+                change.append(abs(old_weights_i-weights[i]) > model_parameters["tolerance"])
 
             # Returns true if all the changes are less than tolerance
             low_change = not any(change)
 
         return weights
 
-    def lasso_coordinate_descent_step(self, i, feature_matrix, output, weights, l1_penalty):
+    def lasso_coordinate_descent_step(self, step_parameters, feature_matrix, output, model_parameters):
         """Computes the Lasso coordinate descent step.
 
         Computes the Lasso coordinate descent step, which is essentially computing a new ro_i, and based on the
         index and ro_i, compute new w_i weight.
 
         Args:
-            i (int): Feature i.
+            step_parameters (dict): A dictionary for step data,
+                {
+                    i (int): Feature i,
+                    weights (numpy.array): Current weights.
+                }
             feature_matrix (numpy.ndarray): Feature matrix.
             output (numpy.array): Real output for feature_matrix.
-            weights (numpy.array): Current weights.
-            l1_penalty (float): L1 penalty value.
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    step_size (float): Step size,
+                    tolerance (float or None): Tolerance (or epsilon),
+                    l1_penalty (float): L1 penalty value,
+                    max_iteration (int): Maximum iteration to compute.
+                }
+
 
         Returns:
             new_weight_i (float): New weight for the feature i.
 
         """
         # compute ro[i] = SUM[ [feature_i]*(output - prediction + weight[i]*[feature_i]) ]
-        ro_i = self.compute_ro_j(feature_matrix, output, weights)[i]
+        ro_i = self.compute_ro_j(feature_matrix, output, step_parameters["weights"])[step_parameters["i"]]
 
         # when i == 0, then it's a intercept -- do not regularize
         # else
         #   w_i = ro_i + delta/2  if ro_i < -delta/2
         #         0               if ro_i between [-delta/2,delta/2]
         #         ro_i - delta/2  if ro_i >  delta/2
-        if i == 0:
+        if step_parameters["i"] == 0:
             new_weight_i = ro_i
-        elif ro_i < -l1_penalty/2.:
-            new_weight_i = ro_i + l1_penalty/2
-        elif ro_i > l1_penalty/2.:
-            new_weight_i = ro_i - l1_penalty/2
+        elif ro_i < -model_parameters["l1_penalty"]/2.:
+            new_weight_i = ro_i + model_parameters["l1_penalty"]/2
+        elif ro_i > model_parameters["l1_penalty"]/2.:
+            new_weight_i = ro_i - model_parameters["l1_penalty"]/2
         else:
             new_weight_i = 0.
 

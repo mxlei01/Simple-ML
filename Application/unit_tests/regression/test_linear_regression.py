@@ -73,8 +73,9 @@ class TestLinearRegression(unittest.TestCase):
 
         # Compute our gradient descent value
         final_weights = self.linear_regression.gradient_descent(feature_matrix, output,
-                                                                initial_weights, step_size,
-                                                                tolerance)
+                                                                {"initial_weights": initial_weights,
+                                                                 "step_size": step_size,
+                                                                 "tolerance": tolerance})
 
         # Assert that the weights is correct
         self.assertEquals(round(-46999.887165546708, 3), round(final_weights[0], 3))
@@ -106,8 +107,9 @@ class TestLinearRegression(unittest.TestCase):
 
         # Compute our gradient descent value
         final_weights = self.linear_regression.gradient_descent(feature_matrix, output,
-                                                                initial_weights, step_size,
-                                                                tolerance)
+                                                                {"initial_weights": initial_weights,
+                                                                 "step_size": step_size,
+                                                                 "tolerance": tolerance})
 
         # We will use sqft_iving, and sqft_living15
         test_features = ['sqft_living', 'sqft_living15']
@@ -116,7 +118,8 @@ class TestLinearRegression(unittest.TestCase):
         test_output = ['price']
 
         # Convert our test pandas frame to numpy
-        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features, test_output, 1)
+        test_feature_matrix, test_output = self.convert_numpy.convert_to_numpy(self.kc_house_test, test_features,
+                                                                               test_output, 1)
 
         # Predict the output of test features
         predicted_output = self.predict_output.regression(test_feature_matrix, final_weights)
@@ -153,8 +156,9 @@ class TestLinearRegression(unittest.TestCase):
 
         # Compute our hill climbing value
         final_weights = self.linear_regression.gradient_ascent(feature_matrix, output,
-                                                               initial_weights, step_size,
-                                                               tolerance)
+                                                               {"initial_weights": initial_weights,
+                                                                "step_size": step_size,
+                                                                "tolerance": tolerance})
 
         # Assert that the weights is correct
         self.assertEquals(round(-47000.142201335177, 3), round(final_weights[0], 3))

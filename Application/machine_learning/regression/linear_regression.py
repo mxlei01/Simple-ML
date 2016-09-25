@@ -12,7 +12,7 @@ class LinearRegression:
     """
 
     @staticmethod
-    def gradient_descent(feature_matrix, output, initial_weights, step_size, tolerance):
+    def gradient_descent(feature_matrix, output, model_parameters):
         """Gradient descent algorithm for linear regression.
 
         Gradient descent algorithm: w^(t+1) <= w^(t) + 2nH^t(y-Hw).
@@ -27,9 +27,12 @@ class LinearRegression:
         Args:
             feature_matrix (numpy.matrix): Features of a dataset.
             output (numpy.array): The output of a dataset.
-            initial_weights (numpy.array): Initial weights that are used.
-            step_size (int): Step size.
-            tolerance (int): Tolerance (or epsilon).
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    initial_weights (numpy.array): Initial weights that are used,
+                    step_size (float): Step size,
+                    tolerance (float or None): Tolerance (or epsilon).
+                }
 
         Returns:
             weights (numpy.array): The final weights after gradient descent.
@@ -39,7 +42,7 @@ class LinearRegression:
         converged = False
 
         # Make sure that the weights is a numpy array
-        weights = np.array(initial_weights)
+        weights = np.array(model_parameters["initial_weights"])
 
         # Loop until converged
         while not converged:
@@ -50,14 +53,14 @@ class LinearRegression:
             gradient = -2*np.dot(np.transpose(feature_matrix), error)
 
             # Compute w^(t+1) <= w^(t) - n(-2H^t(y-Hw))
-            weights -= step_size*gradient
+            weights -= model_parameters["step_size"]*gradient
 
             # If the magnitude of the gradient is less than tolerance, then we have converged
             # The formula for magnitude is sum of squared array, and then square root, but numpy
             # already have a norm function
             # Although we use this nice norm function, but
             # recall that the magnitude/length of a vector [g[0], g[1], g[2]] is sqrt(g[0]^2 + g[1]^2 + g[2]^2)
-            if np.linalg.norm(gradient) < tolerance:
+            if np.linalg.norm(gradient) < model_parameters["tolerance"]:
 
                 # Set converged to true so that we stop our while loop
                 converged = True
@@ -65,7 +68,7 @@ class LinearRegression:
         return weights
 
     @staticmethod
-    def gradient_ascent(feature_matrix, output, initial_weights, step_size, tolerance):
+    def gradient_ascent(feature_matrix, output, model_parameters):
         """Gradient ascent algorithm for linear regression.
 
         Gradient ascent algorithm: w^(t+1) <= w^(t) - 2nH^t(y-Hw).
@@ -80,9 +83,13 @@ class LinearRegression:
         Args:
             feature_matrix (numpy.matrix): Features of a dataset.
             output (numpy.array): The output of a dataset.
-            initial_weights (numpy.array): Initial weights that are used.
-            step_size (int): Step size.
-            tolerance (int): Tolerance (or epsilon).
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    initial_weights (numpy.array): Initial weights that are used,
+                    step_size (float): Step size,
+                    tolerance (float): Tolerance (or epsilon).
+                }
+
 
         Returns:
             weights (numpy.array): The final weights after gradient ascent.
@@ -92,7 +99,7 @@ class LinearRegression:
         converged = False
 
         # Make sure that the weights is a numpy array
-        weights = np.array(initial_weights)
+        weights = np.array(model_parameters["initial_weights"])
 
         # Loop until converged
         while not converged:
@@ -103,12 +110,12 @@ class LinearRegression:
             gradient = -2*np.dot(np.transpose(feature_matrix), error)
 
             # Compute w^(t+1) <= w^(t) + n(-2H^t(y-Hw))
-            weights += step_size*gradient
+            weights += model_parameters["step_size"]*gradient
 
             # If the magnitude of the gradient is greater than tolerance, then we have converged
             # The formula for magnitude is sum of squared array, and then square root, but numpy
             # already have a norm function
-            if np.linalg.norm(gradient) > tolerance:
+            if np.linalg.norm(gradient) > model_parameters["tolerance"]:
 
                 # Set converged to true so that we stop our while loop
                 converged = True

@@ -28,7 +28,7 @@ class TestLassoRegression(unittest.TestCase):
         """
         self.convert_numpy = ConvertNumpy()
         self.normalize_features = NormalizeFeatures()
-        self.lasso_regression = LassoRegression()
+        self.lasso = LassoRegression()
         self.predict_output = PredictOutput()
         self.residual_sum_squares = ResidualSumSquares()
         self.k_fold_cross_validation = KFoldCrossValidation()
@@ -99,7 +99,7 @@ class TestLassoRegression(unittest.TestCase):
         weights = np.array([1., 4., 1.])
 
         # Compute ro_j
-        ro_j = self.lasso_regression.compute_ro_j(normalized_feature_matrix, output, weights)
+        ro_j = self.lasso.compute_ro_j(normalized_feature_matrix, output, weights)
 
         # Assert the output of ro_j
         self.assertTrue(np.allclose(ro_j, np.array([79400300.03492916, 87939470.77299108, 80966698.67596565])))
@@ -111,14 +111,14 @@ class TestLassoRegression(unittest.TestCase):
 
         """
         # Assert that both are equal
-        self.assertEquals(round(self.lasso_regression.lasso_coordinate_descent_step(1,
-                                                                                    np.array([[3./math.sqrt(13),
-                                                                                               1./math.sqrt(10)],
-                                                                                              [2./math.sqrt(13),
-                                                                                               3./math.sqrt(10)]]),
-                                                                                    np.array([1., 1.]),
-                                                                                    np.array([1., 4.]),
-                                                                                    0.1), 8),
+        self.assertEquals(round(self.lasso.lasso_coordinate_descent_step({"i": 1,
+                                                                          "weights": np.array([1., 4.])},
+                                                                         np.array([[3./math.sqrt(13),
+                                                                                    1./math.sqrt(10)],
+                                                                                   [2./math.sqrt(13),
+                                                                                    3./math.sqrt(10)]]),
+                                                                         np.array([1., 1.]),
+                                                                         {"l1_penalty": 0.1}), 8),
                           round(0.425558846691, 8))
 
     def test_04_coordinate_descent(self):
@@ -149,8 +149,10 @@ class TestLassoRegression(unittest.TestCase):
         tolerance = 1.0
 
         # Compute the weights using coordinate descent
-        weights = self.lasso_regression.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
-                                                                          initial_weights, l1_penalty, tolerance)
+        weights = self.lasso.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
+                                                               {"initial_weights": initial_weights,
+                                                                "l1_penalty": l1_penalty,
+                                                                "tolerance": tolerance})
 
         # Assert that these two numpy arrays are the same
         self.assertTrue(np.allclose(weights, np.array([21624998.3663629, 63157246.78545423, 0.]), True))
@@ -194,12 +196,18 @@ class TestLassoRegression(unittest.TestCase):
         normalized_feature_matrix, norms = self.normalize_features.l2_norm(feature_matrix)
 
         # Compute Multiple Weights
-        weights1e7 = self.lasso_regression.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
-                                                                             np.zeros(len(features)+1), 1e7, 1)
-        weights1e8 = self.lasso_regression.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
-                                                                             np.zeros(len(features)+1), 1e8, 1)
-        weights1e4 = self.lasso_regression.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
-                                                                             np.zeros(len(features)+1), 1e4, 5e5)
+        weights1e7 = self.lasso.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
+                                                                  {"initial_weights": np.zeros(len(features)+1),
+                                                                   "l1_penalty": 1e7,
+                                                                   "tolerance": 1})
+        weights1e8 = self.lasso.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
+                                                                  {"initial_weights": np.zeros(len(features)+1),
+                                                                   "l1_penalty": 1e8,
+                                                                   "tolerance": 1})
+        weights1e4 = self.lasso.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
+                                                                  {"initial_weights": np.zeros(len(features)+1),
+                                                                   "l1_penalty": 1e4,
+                                                                   "tolerance": 5e5})
 
         # Compute multiple normalized
         normalized_weights1e4 = weights1e4 / norms
