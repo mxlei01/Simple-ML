@@ -30,7 +30,7 @@ class LogisticRegression:
             feature_matrix (numpy.matrix): Features of a dataset.
             label (numpy.array): The label of a dataset.
             initial_coefficients (numpy.array): Initial weights for the model.
-            step_size (int): Step size.
+            step_size (float): Step size.
             max_iter (int): Amount of Iterations.
 
         Returns:
@@ -86,7 +86,7 @@ class LogisticRegression:
             feature_matrix (numpy.matrix): Features of a dataset.
             label (numpy.array): The label of a dataset.
             initial_coefficients (numpy.array): Initial weights for the model.
-            step_size (int): Step size.
+            step_size (float): Step size.
             batch_size (int): Number of items to sum per iteration.
             max_iter (int): Amount of iterations.
 

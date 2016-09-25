@@ -253,7 +253,86 @@ class TestLogisticRegression(unittest.TestCase):
         self.assertEqual(round(self.confusion_matrix.recall(sentiment, output), 5),
                          round(0.58638, 5))
 
-    def test_03_log_likelihood(self):
+    def test_02_stochastic_gradient_ascent_high_iteration(self):
+        """Test stochastic gradient descent for logistic regression.
+
+        Tests stochastic gradient descent and test it with some known values.
+
+        """
+        # We will use important words for the output
+        features = self.important_words
+
+        # Output will use sentiment
+        output = ['sentiment']
+
+        # Convert our pandas frame to numpy
+        feature_matrix, sentiment = self.convert_numpy.convert_to_numpy(self.train_frame, features, output, 1)
+
+        # Compute the coefficients
+        coefficients = self.logistic_regression.stochastic_gradient_ascent(feature_matrix, sentiment,
+                                                                           initial_coefficients=np.zeros(194),
+                                                                           step_size=5e-1, batch_size=1000,
+                                                                           max_iter=1000)
+
+        # Real coefficients that we need to compare with the computed coefficients
+        real_coef = [-0.06659918,  0.07516305,  0.02337901,  0.91476437,  1.25935729, -0.01093744,
+                     -0.29808423,  0.00724611,  1.14319635,  0.58421811, -0.10388794,  0.25341405,
+                     0.51935047, -0.16643157,  0.1581433,  -0.01678466,  0.11023426, -0.07801531,
+                     -0.11943521, -0.23901842,  0.19961916,  0.26962603,  0.00726172,  1.58116946,
+                     -0.04749877, -0.01222728, -0.12452547,  0.2408741,   0.23996495, -0.27318487,
+                     0.16391931,  0.46141695, -0.00520781, -0.41720674,  1.3914436,   0.59286041,
+                     -0.01877455, -0.1177062,   0.04522629, -0.05050944, -0.1872891,   0.1119123,
+                     0.05552736,  0.018883,   -0.28821684,  0.35454167,  0.09146771, -0.15185966,
+                     0.45980111,  0.13696004, -0.27719711,  0.37826182,  0.51482099, -0.12707594,
+                     -0.08043197,  0.27088589,  0.20836676, -0.22217221,  0.34308818,  0.05011724,
+                     0.01336183, -0.00422257,  0.25914879,  0.18971367,  0.11804381,  0.06478439,
+                     0.13413068, -0.35940054, -0.04225724, -0.23574987, -0.26178573,  0.37077618,
+                     0.266064,    0.0552738,   0.25274691,  0.15248314,  0.9721445,   0.03951392,
+                     -0.59577998, -0.09680726, -0.13168621,  0.42806047,  0.03576358,  1.03088019,
+                     0.52916025, -0.09516351,  0.23544152,  0.31386904,  0.50647271,  0.25383116,
+                     0.1369185,  0.93673001, -0.06280486,  0.1670564,  -0.20573152,  0.2201837,
+                     0.12892914, -0.9711816,  -0.24387714, -0.3566874,  -0.65956699, -0.28473646,
+                     -0.34083222, -0.44708957, -0.29828401, -0.52797307, -1.92693359, -0.33116364,
+                     -0.43025271, -0.21284617, 0.16375567, -0.0299845,  -0.30294927, -1.25019619,
+                     -1.55092776, -0.09266983, -0.08014312, -0.07565967, -0.00950432,  0.00327247,
+                     0.03190358, -0.04247063, -0.28205865, -0.45678176,  0.06141561, -0.2690871,
+                     -0.05979329, -0.0019354,  -0.01279985,  0.05323391, -0.35513613, -0.26639425,
+                     -0.41094467, -0.14117863, -0.90001241, -0.33279773,  0.01621988, -0.08709595,
+                     -0.10450457, -0.12567406, -0.61727551, -0.18663497,  0.17636203,  0.09316913,
+                     -0.06829369,  0.1880183,  -0.5078543,   0.03964466, -0.26089197, -0.07480237,
+                     -0.05556211, -0.1450303,  -0.04780934,  0.08911386, -0.15163772,  0.06213261,
+                     -0.34512242, -0.33522342,  0.06580618, -0.44499204, -0.68623426, -0.12564489,
+                     0.2609755,   0.09998045, -0.25098629, -0.29549973, -0.15944276, -0.47408765,
+                     -0.03058168, -1.42253269, -0.49855378,  0.05835175, -1.17789127, -0.08226967,
+                     -0.56793665, -0.35814271, -0.98559717, -0.16918106, -0.12477773, -0.23457722,
+                     -0.13170106, -0.64351485, -0.01773532, -0.2686544,  0.047442,   -0.34218929,
+                     -0.48340895,  0.37866335, -0.25162177,  0.05277577,  0.01545386, -0.26267815,
+                     -0.09903819, -0.54500151]
+
+        # Loop through each value, the coefficients must be the same
+        for pred_coef, coef in zip(coefficients, real_coef):
+            # Assert that both values are the same
+            self.assertEqual(round(pred_coef, 5), round(coef, 5))
+
+        # Get the output of the logistic regression with threshold 0
+        output = self.predict_output.logistic_regression(feature_matrix, coefficients, 0)
+
+        # Generate a confusion matrix
+        confusion_matrix = self.confusion_matrix.confusion_matrix(sentiment, output)
+
+        # Assert the values are to be expected
+        self.assertEqual(confusion_matrix, {'false_negatives': 5018, 'true_negatives': 18995,
+                                            'true_positives': 18830, 'false_positives': 4937})
+
+        # Assert that the precision is correct
+        self.assertEqual(round(self.confusion_matrix.precision(sentiment, output), 5),
+                         round(0.78958, 5))
+
+        # Assert that the recall is correct
+        self.assertEqual(round(self.confusion_matrix.recall(sentiment, output), 5),
+                         round(0.79228, 5))
+
+    def test_04_log_likelihood(self):
         """Test log likelihood.
 
         Test the log likelihood algorithm, and compare it with some known values.
@@ -270,7 +349,7 @@ class TestLogisticRegression(unittest.TestCase):
         # Assert the value
         self.assertEqual(round(lg, 5), round(-5.33141161544, 5))
 
-    def test_04_average_log_likelihood(self):
+    def test_05_average_log_likelihood(self):
         """Test average log likelihood.
 
         Test the average log likelihood algorithm, and compare it with some known values.

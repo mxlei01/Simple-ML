@@ -23,7 +23,7 @@ class LogLikelihood:
             h(xi): Nth feature.
 
         Args:
-            feature_matrix (numpy.matrix): Feature matrix.
+            feature_matrix (numpy.ndarray): Feature matrix.
             label (numpy.array): Labels of the feature matrix.
             coefficients (numpy.array): Coefficients computed using MLE (with or without L1/L2).
 
@@ -62,7 +62,7 @@ class LogLikelihood:
             (1/N): Averages the log likelihood by rows of feature_matrix.
 
         Args:
-            feature_matrix (numpy.matrix): Feature matrix.
+            feature_matrix (numpy.ndarray): Feature matrix.
             label (numpy.array): Labels of the feature matrix.
             coefficients (numpy.array): Coefficients computed using MLE (with or without L1/L2).
 
