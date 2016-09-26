@@ -34,7 +34,7 @@ class Accuracy:
                                                                       # Total data points
 
         Args:
-            predictions (numpy.matrix): A numpy matrix containing features.
+            predictions (numpy.Series): A numpy matrix containing features.
             label (numpy.array): A numpy array containing labels.
 
         Returns:

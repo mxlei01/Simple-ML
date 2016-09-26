@@ -112,13 +112,14 @@ class TestWeightedLogisticRegression(unittest.TestCase):
 
         # Create 15 weighted logistic regression
         weights, models = self.adaboost.logistic_regression(feature_matrix, sentiment,
-                                                            iterations=15,
+                                                            iterations=5,
                                                             predict_method=self.predict.logistic_regression,
-                                                            model=self.weighted_logistic_regression,
-                                                            model_method="gradient_ascent",
-                                                            model_parameters={"step_size": 1e-7,
-                                                                              "max_iter": 30,
-                                                                              "initial_coefficients": np.zeros(194)})
+                                                            model_dict={"model": self.weighted_logistic_regression,
+                                                                        "model_method": "gradient_ascent",
+                                                                        "model_parameters": {"step_size": 1e-7,
+                                                                                             "max_iter": 5,
+                                                                                             "initial_coefficients":
+                                                                                                 np.zeros(194)}})
 
         # Get the predictions of each dataset in the test data
         predictions = self.predict.adaboost_logistic_regression(self.predict.logistic_regression,
@@ -126,8 +127,8 @@ class TestWeightedLogisticRegression(unittest.TestCase):
 
         # Assert the predictions
         self.assertEqual(list(predictions)[0:20],
-                         [1, -1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, 1])
+                         [1, -1, 1, -1, 1, 1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, -1, 1])
 
         # Accuracy has to match 0.77612999999999999
         self.assertEqual(round(self.accuracy.general(predictions, sentiment), 5),
-                         round(0.77612999999999999, 5))
+                         round(0.74146000000000001, 5))

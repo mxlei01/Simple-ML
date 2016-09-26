@@ -127,7 +127,7 @@ class AdaBoost:
         return weights_list, models_list
 
     @staticmethod
-    def logistic_regression(feature_matrix, label, iterations, predict_method, model, model_method, model_parameters):
+    def logistic_regression(feature_matrix, label, iterations, predict_method, model_dict):
         """Logistic regression ensemble learning algorithm for Adaboost.
 
         Uses a logistic regression model, applies the adaboost algorithm and generates T number of models through the
@@ -138,9 +138,13 @@ class AdaBoost:
             label (numpy.array): The label of a dataset.
             iterations (int): Number of iterations.
             predict_method (func): Function to predict output.
-            model (obj): A model that contains a predict function to predict the output based on some input features.
-            model_method (function): Model's function to generate a model.
-            model_parameters (dict): Model parameters for the model, such as step size.
+            model_dict (dict): A dictionary that stores data about weighted model,
+                {
+                    model (obj): A model that contains a predict function to predict the output based on
+                        some input features,
+                    model_method (function): Model's function to generate a model,
+                    model_parameters (dict): Model parameters for the model, such as step size,
+                }
 
         Returns:
             A list of tuples (weights, model):
@@ -164,9 +168,11 @@ class AdaBoost:
         # Loop through each iteration, and generate one model per generation
         for _ in range(iterations):
             # Use the model to generate a model, the output will be coefficients
-            generated_model = getattr(model, model_method)(**{**{"feature_matrix": feature_matrix, "label": label,
-                                                                 "weights_list": alpha},
-                                                              **model_parameters})
+            generated_model = getattr(model_dict["model"],
+                                      model_dict["model_method"])(**{**{"feature_matrix": feature_matrix,
+                                                                        "label": label,
+                                                                        "weights_list": alpha},
+                                                                     **model_dict["model_parameters"]})
 
             # Insert the new model to the models list
             models_list.append(generated_model)

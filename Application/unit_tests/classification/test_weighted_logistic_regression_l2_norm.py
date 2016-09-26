@@ -30,7 +30,7 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
         self.predict = PredictOutput()
         self.adaboost = AdaBoost()
         self.accuracy = Accuracy()
-        self.weighted_logistic_regression_l2_norm = WeightedLogisticRegressionL2Norm()
+        self.weighted_logistic_regression_l2 = WeightedLogisticRegressionL2Norm()
 
         # Load the important words
         self.important_words = json.load(open('./unit_tests/test_data/classification/amazon/important_words.json', 'r'))
@@ -74,11 +74,11 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
         weights_list = np.array([1]*len(self.review_frame))
 
         # Compute the coefficients
-        coefficients = self.weighted_logistic_regression_l2_norm.gradient_ascent(feature_matrix, sentiment,
-                                                                                 initial_coefficients=np.zeros(194),
-                                                                                 weights_list=weights_list,
-                                                                                 step_size=1e-7, l2_penalty=10,
-                                                                                 max_iter=30)
+        coefficients = self.weighted_logistic_regression_l2.gradient_ascent(feature_matrix, sentiment,
+                                                                            initial_coefficients=np.zeros(194),
+                                                                            weights_list=weights_list,
+                                                                            step_size=1e-7, l2_penalty=10,
+                                                                            max_iter=30)
 
         # Assert the coefficients
         self.assertEqual([round(i, 5) for i in coefficients[0:20]],
@@ -111,16 +111,17 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
         # Convert our pandas frame to numpy
         feature_matrix, sentiment = self.convert_numpy.convert_to_numpy(self.review_frame, features, output, 1)
 
-        # Create 15 weighted logistic regression l2 norms
+        # Create 15 weighted logistic regression
         weights, models = self.adaboost.logistic_regression(feature_matrix, sentiment,
-                                                            iterations=15,
+                                                            iterations=5,
                                                             predict_method=self.predict.logistic_regression,
-                                                            model=self.weighted_logistic_regression_l2_norm,
-                                                            model_method="gradient_ascent",
-                                                            model_parameters={"step_size": 1e-7,
-                                                                              "max_iter": 30,
-                                                                              "l2_penalty": 10,
-                                                                              "initial_coefficients": np.zeros(194)})
+                                                            model_dict={"model": self.weighted_logistic_regression_l2,
+                                                                        "model_method": "gradient_ascent",
+                                                                        "model_parameters": {"step_size": 1e-7,
+                                                                                             "max_iter": 5,
+                                                                                             "l2_penalty": 10,
+                                                                                             "initial_coefficients":
+                                                                                                 np.zeros(194)}})
 
         # Get the predictions of each dataset in the test data
         predictions = self.predict.adaboost_logistic_regression(self.predict.logistic_regression,
@@ -132,4 +133,4 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
 
         # Accuracy has to match 0.74356999999999995
         self.assertEqual(round(self.accuracy.general(predictions, sentiment), 5),
-                         round(0.74356999999999995, 5))
+                         round(0.74146000000000001, 5))

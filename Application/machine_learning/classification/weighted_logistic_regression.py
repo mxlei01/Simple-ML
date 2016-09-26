@@ -33,7 +33,7 @@ class WeightedLogisticRegression:
             label (numpy.array): The label of a dataset.
             initial_coefficients (numpy.array): Initial weights for the model.
             weights_list (numpy.array): List of weights
-            step_size (int): Step size.
+            step_size (float): Step size.
             max_iter (int): Amount of iterations.
 
         Returns:
