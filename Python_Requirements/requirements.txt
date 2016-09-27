@@ -3,4 +3,5 @@ numpy
 scipy
 scikit-learn
 pandas
+nose
 coveralls
