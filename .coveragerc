@@ -2,6 +2,7 @@
 omit = 
 	/usr/local/lib/*
     /usr/lib/*
+    /Application/usr/lib/*
 
 source =
 	.

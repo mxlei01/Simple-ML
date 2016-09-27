@@ -10,6 +10,7 @@ from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class TestLinearRegression(unittest.TestCase):
+    
     """Test for LinearRegression.
 
     Uses housing data to test LinearRegression.
