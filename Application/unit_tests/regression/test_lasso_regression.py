@@ -18,7 +18,12 @@ class TestLassoRegression(unittest.TestCase):
 
     Uses housing data to test LassoRegression.
 
+    Statics:
+        _multiprocess_can_split_ (bool): Flag for nose tests to run tests in parallel.
+
     """
+
+    _multiprocess_can_split_ = True
 
     def setUp(self):
         """Constructor for TestLassoRegression.

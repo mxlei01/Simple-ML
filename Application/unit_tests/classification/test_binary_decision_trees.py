@@ -25,7 +25,12 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         train_data (pandas.DataFrame): Lending Club training Data.
         test_data (pandas.DataFrame): Lending Club testing data.
 
+    Statics:
+        _multiprocess_can_split_ (bool): Flag for nose tests to run tests in parallel.
+
     """
+
+    _multiprocess_can_split_ = True
 
     def setUp(self):
         """Constructor for TestBinaryDecisionTrees.

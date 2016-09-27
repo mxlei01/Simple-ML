@@ -9,6 +9,7 @@ Attributes:
 
 """
 
+import testtools
 from unittest import TestLoader, TextTestRunner, TestSuite
 from unit_tests.classification.test_logistic_regression import TestLogisticRegression
 from unit_tests.classification.test_logistic_regression_l2_norm import TestLogisticRegressionL2Norm
@@ -27,15 +28,15 @@ if __name__ == "__main__":
 
     suite = TestSuite((
         loader.loadTestsFromTestCase(TestLinearRegression),
-        loader.loadTestsFromTestCase(TestRidgeRegression),
-        loader.loadTestsFromTestCase(TestLassoRegression),
-        loader.loadTestsFromTestCase(TestLogisticRegression),
-        loader.loadTestsFromTestCase(TestKNearestNeighborRegression),
-        loader.loadTestsFromTestCase(TestLogisticRegressionL2Norm),
-        loader.loadTestsFromTestCase(TestBinaryDecisionTrees),
-        loader.loadTestsFromTestCase(TestWeightedBinaryDecisionTrees),
-        loader.loadTestsFromTestCase(TestWeightedLogisticRegression),
-        loader.loadTestsFromTestCase(TestWeightedLogisticRegressionL2Norm),
+        #loader.loadTestsFromTestCase(TestRidgeRegression),
+        #loader.loadTestsFromTestCase(TestLassoRegression),
+        #loader.loadTestsFromTestCase(TestLogisticRegression),
+        #loader.loadTestsFromTestCase(TestKNearestNeighborRegression),
+        #loader.loadTestsFromTestCase(TestLogisticRegressionL2Norm),
+        #loader.loadTestsFromTestCase(TestBinaryDecisionTrees),
+        #loader.loadTestsFromTestCase(TestWeightedBinaryDecisionTrees),
+        #loader.loadTestsFromTestCase(TestWeightedLogisticRegression),
+        #loader.loadTestsFromTestCase(TestWeightedLogisticRegressionL2Norm),
     ))
 
     runner = TextTestRunner()

@@ -18,7 +18,12 @@ class TestWeightedLogisticRegression(unittest.TestCase):
 
     Uses Amazon data to test WeightedLogisticRegression class.
 
+    Statics:
+        _multiprocess_can_split_ (bool): Flag for nose tests to run tests in parallel.
+
     """
+
+    _multiprocess_can_split_ = True
 
     def setUp(self):
         """Constructor for TestWeightedLogisticRegression.
@@ -112,12 +117,12 @@ class TestWeightedLogisticRegression(unittest.TestCase):
 
         # Create 15 weighted logistic regression
         weights, models = self.adaboost.logistic_regression(feature_matrix, sentiment,
-                                                            iterations=5,
+                                                            iterations=15,
                                                             predict_method=self.predict.logistic_regression,
                                                             model_dict={"model": self.weighted_logistic_regression,
                                                                         "model_method": "gradient_ascent",
                                                                         "model_parameters": {"step_size": 1e-7,
-                                                                                             "max_iter": 5,
+                                                                                             "max_iter": 30,
                                                                                              "initial_coefficients":
                                                                                                  np.zeros(194)}})
 
@@ -127,8 +132,8 @@ class TestWeightedLogisticRegression(unittest.TestCase):
 
         # Assert the predictions
         self.assertEqual(list(predictions)[0:20],
-                         [1, -1, 1, -1, 1, 1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, -1, 1])
+                         [1, -1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, 1])
 
         # Accuracy has to match 0.77612999999999999
         self.assertEqual(round(self.accuracy.general(predictions, sentiment), 5),
-                         round(0.74146000000000001, 5))
+                         round(0.77612999999999999, 5))

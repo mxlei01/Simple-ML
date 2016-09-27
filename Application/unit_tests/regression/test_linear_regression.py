@@ -10,12 +10,16 @@ from performance_assessment.residual_sum_squares import ResidualSumSquares
 
 
 class TestLinearRegression(unittest.TestCase):
-
     """Test for LinearRegression.
 
     Uses housing data to test LinearRegression.
 
+    Statics:
+        _multiprocess_can_split_ (bool): Flag for nose tests to run tests in parallel.
+
     """
+
+    _multiprocess_can_split_ = True
 
     def setUp(self):
         """Constructor for TestLinearRegression.

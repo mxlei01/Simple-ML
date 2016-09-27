@@ -18,7 +18,12 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
 
     Uses Amazon data to test WeightedLogisticRegression class.
 
+    Statics:
+        _multiprocess_can_split_ (bool): Flag for nose tests to run tests in parallel.
+
     """
+
+    _multiprocess_can_split_ = True
 
     def setUp(self):
         """Constructor for TestWeightedLogisticRegressionL2Norm.
@@ -113,12 +118,12 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
 
         # Create 15 weighted logistic regression
         weights, models = self.adaboost.logistic_regression(feature_matrix, sentiment,
-                                                            iterations=5,
+                                                            iterations=15,
                                                             predict_method=self.predict.logistic_regression,
                                                             model_dict={"model": self.weighted_logistic_regression_l2,
                                                                         "model_method": "gradient_ascent",
                                                                         "model_parameters": {"step_size": 1e-7,
-                                                                                             "max_iter": 5,
+                                                                                             "max_iter": 30,
                                                                                              "l2_penalty": 10,
                                                                                              "initial_coefficients":
                                                                                                  np.zeros(194)}})
@@ -133,4 +138,4 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
 
         # Accuracy has to match 0.74356999999999995
         self.assertEqual(round(self.accuracy.general(predictions, sentiment), 5),
-                         round(0.74146000000000001, 5))
+                         round(0.74356999999999995, 5))
