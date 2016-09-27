@@ -1,6 +1,7 @@
 [run]
 omit = 
 	/usr/local/lib/*
+    /usr/lib/*
 
 source =
 	.
