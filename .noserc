@@ -1,0 +1,3 @@
+[nosetests]
+process-timeout=600000
+processes=32
