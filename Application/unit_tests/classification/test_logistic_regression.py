@@ -191,8 +191,10 @@ class TestLogisticRegression(unittest.TestCase):
 
         # Compute the coefficients
         coefficients = self.logistic_regression.stochastic_gradient_ascent(feature_matrix, sentiment,
-                                                                           initial_coefficients=np.zeros(194),
-                                                                           step_size=5e-1, batch_size=1, max_iter=10)
+                                                                           {"initial_coefficients": np.zeros(194),
+                                                                            "step_size": 5e-1,
+                                                                            "batch_size": 1,
+                                                                            "max_iter": 10})
 
         # Real coefficients that we need to compare with the computed coefficients
         real_coef = [0.26845909, 0.05510662, -0.78232359, 0.24929641, 0.1213813,
@@ -275,9 +277,10 @@ class TestLogisticRegression(unittest.TestCase):
 
         # Compute the coefficients
         coefficients = self.logistic_regression.stochastic_gradient_ascent(feature_matrix, sentiment,
-                                                                           initial_coefficients=np.zeros(194),
-                                                                           step_size=5e-1, batch_size=1000,
-                                                                           max_iter=1000)
+                                                                           {"initial_coefficients": np.zeros(194),
+                                                                            "step_size": 5e-1,
+                                                                            "batch_size": 1000,
+                                                                            "max_iter": 1000})
 
         # Real coefficients that we need to compare with the computed coefficients
         real_coef = [-0.06659918,  0.07516305,  0.02337901,  0.91476437,  1.25935729, -0.01093744,

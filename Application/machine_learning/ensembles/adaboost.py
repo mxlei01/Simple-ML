@@ -169,10 +169,10 @@ class AdaBoost:
         for _ in range(iterations):
             # Use the model to generate a model, the output will be coefficients
             generated_model = getattr(model_dict["model"],
-                                      model_dict["model_method"])(**{**{"feature_matrix": feature_matrix,
-                                                                        "label": label,
-                                                                        "weights_list": alpha},
-                                                                     **model_dict["model_parameters"]})
+                                      model_dict["model_method"])(**{"feature_matrix": feature_matrix,
+                                                                     "label": label},
+                                                                  model_parameters={**model_dict["model_parameters"],
+                                                                                    **{"weights_list": alpha}})
 
             # Insert the new model to the models list
             models_list.append(generated_model)

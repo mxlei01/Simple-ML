@@ -15,7 +15,7 @@ class WeightedLogisticRegression:
     """
 
     @staticmethod
-    def gradient_ascent(feature_matrix, label, initial_coefficients, weights_list, step_size, max_iter):
+    def gradient_ascent(feature_matrix, label, model_parameters):
         """Weighted Gradient ascent algorithm for Logistic Regression.
 
         The gradient ascent algorithm: w^(t+1) <= w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w)).
@@ -31,20 +31,23 @@ class WeightedLogisticRegression:
         Args:
             feature_matrix (numpy.matrix): Features of a dataset.
             label (numpy.array): The label of a dataset.
-            initial_coefficients (numpy.array): Initial weights for the model.
-            weights_list (numpy.array): List of weights
-            step_size (float): Step size.
-            max_iter (int): Amount of iterations.
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    initial_coefficients (numpy.array): Initial weights for the model,
+                    weights_list (numpy.array): List of weights,
+                    step_size (float): Step size,
+                    max_iter (int): Amount of iterations.
+                }
 
         Returns:
             coefficients (numpy.array): The final weights after gradient ascent finishes.
 
         """
         # Make sure we are using numpy array
-        coefficients = np.array(initial_coefficients)
+        coefficients = np.array(model_parameters["initial_coefficients"])
 
         # Compute the weights up to max_iter
-        for _ in range(max_iter):
+        for _ in range(model_parameters["max_iter"]):
             # we would need to compute the prediction, which is based on the link function
             #           1
             # -------------------   = P(y=1|x_i,w)
@@ -66,6 +69,7 @@ class WeightedLogisticRegression:
             # We do a transpose of feature matrix to convert rows into the column data, since the
             # the sigma function works on all the values for a specific column, and we will multiply each
             # row will error, then multiply by weights, which gives us Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-            coefficients = coefficients+step_size*np.dot(weights_list*np.transpose(feature_matrix), errors)
+            coefficients = coefficients + model_parameters["step_size"] * np.dot(
+                model_parameters["weights_list"] * np.transpose(feature_matrix), errors)
 
         return coefficients

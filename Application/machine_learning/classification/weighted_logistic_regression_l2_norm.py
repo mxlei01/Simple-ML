@@ -16,7 +16,7 @@ class WeightedLogisticRegressionL2Norm:
     """
 
     @staticmethod
-    def gradient_ascent(feature_matrix, label, initial_coefficients, weights_list, step_size, max_iter, l2_penalty):
+    def gradient_ascent(feature_matrix, label, model_parameters):
         """Weighted Gradient ascent algorithm with L2 Norm for Logistic Regression.
 
         The gradient ascent algorithm: w^(t+1) <= w^(t) + n(Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))-2*λ*w(t)).
@@ -33,21 +33,24 @@ class WeightedLogisticRegressionL2Norm:
         Args:
             feature_matrix (numpy.matrix): Features of a dataset.
             label (numpy.array): The label of a dataset.
-            initial_coefficients (numpy.array): Initial weights for the model.
-            weights_list (numpy.array): List of weights
-            step_size (float): Step size.
-            max_iter (int): Amount of iterations.
-            l2_penalty (float): L2 penalty value.
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    initial_coefficients (numpy.array): Initial weights for the model,
+                    weights_list (numpy.array): List of weight,
+                    step_size (float): Step size,
+                    max_iter (int): Amount of iterations,
+                    l2_penalty (float): L2 penalty value.
+                }
 
         Returns:
             coefficients (numpy.array): The final weights after gradient ascent finishes.
 
         """
         # Make sure we are using numpy array
-        coefficients = np.array(initial_coefficients)
+        coefficients = np.array(model_parameters["initial_coefficients"])
 
         # Compute the coefficients up to max_iter
-        for _ in range(max_iter):
+        for _ in range(model_parameters["max_iter"]):
             #           1
             # -------------------   = P(y=1|x_i,w)
             # 1 + exp(-w^t*h(x_i))
@@ -65,15 +68,17 @@ class WeightedLogisticRegressionL2Norm:
 
             # Need to compute the intercept, because it does not have L2 normalization
             # This is based on MLE: w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-            intercept = coefficients[0]+step_size*np.dot(np.transpose(feature_matrix[:, 0]), errors)
+            intercept = coefficients[0] + model_parameters["step_size"] * np.dot(
+                np.transpose(feature_matrix[:, 0]), errors)
 
             # Compute the coefficients by using w^(t) + n*Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))-2*lambda*coefficients
             # in matrix form
             # We do a transpose of feature matrix to convert rows into the column data, since the
             # the sigma function works on all the values for a specific column, and we will multiply each
             # row will error, then multiply by weights, which gives us Σ^N_i=1α(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-            coefficients = coefficients + step_size * (np.dot(weights_list*np.transpose(feature_matrix),
-                                                              errors) - 2 * l2_penalty * coefficients)
+            coefficients = coefficients + model_parameters["step_size"] * (np.dot(
+                model_parameters["weights_list"] * np.transpose(feature_matrix),
+                errors) - 2 * model_parameters["l2_penalty"] * coefficients)
 
             # The first coefficient should not be affected by L2 normalization
             coefficients[0] = intercept
