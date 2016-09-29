@@ -33,7 +33,7 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
         """
         self.convert_numpy = ConvertNumpy()
         self.predict = PredictOutput()
-        self.adaboost = AdaBoost()
+        self.ada = AdaBoost()
         self.accuracy = Accuracy()
         self.weighted_logistic_regression_l2 = WeightedLogisticRegressionL2Norm()
 
@@ -117,16 +117,16 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
         feature_matrix, sentiment = self.convert_numpy.convert_to_numpy(self.review_frame, features, output, 1)
 
         # Create 15 weighted logistic regression
-        weights, models = self.adaboost.logistic_regression(feature_matrix, sentiment,
-                                                            iterations=15,
-                                                            predict_method=self.predict.logistic_regression,
-                                                            model_dict={"model": self.weighted_logistic_regression_l2,
-                                                                        "model_method": "gradient_ascent",
-                                                                        "model_parameters": {"step_size": 1e-7,
-                                                                                             "max_iter": 30,
-                                                                                             "l2_penalty": 10,
-                                                                                             "initial_coefficients":
-                                                                                                 np.zeros(194)}})
+        weights, models = self.ada.logistic_regression(feature_matrix, sentiment,
+                                                       iterations=15,
+                                                       model_dict={"predict_method": self.predict.logistic_regression,
+                                                                   "model": self.weighted_logistic_regression_l2,
+                                                                   "model_method": "gradient_ascent",
+                                                                   "model_parameters": {"step_size": 1e-7,
+                                                                                        "max_iter": 30,
+                                                                                        "l2_penalty": 10,
+                                                                                        "initial_coefficients":
+                                                                                            np.zeros(194)}})
 
         # Get the predictions of each dataset in the test data
         predictions = self.predict.adaboost_logistic_regression(self.predict.logistic_regression,

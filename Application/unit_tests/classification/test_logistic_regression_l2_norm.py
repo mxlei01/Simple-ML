@@ -73,8 +73,9 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
 
         # Compute the coefficients
         coefficients = self.logistic_regression_l2_norm.gradient_ascent(feature_matrix_train, label_train,
-                                                                        initial_coefficients=np.zeros(194),
-                                                                        step_size=5e-6, l2_penalty=0, max_iter=501)
+                                                                        {"initial_coefficients": np.zeros(194),
+                                                                         "step_size": 5e-6, "l2_penalty": 0,
+                                                                         "max_iter": 501})
 
         # Get the accuracy
         train_accuracy = self.accuracy.logistic_regression(feature_matrix_train, label_train, coefficients)
@@ -106,8 +107,9 @@ class TestLogisticRegressionL2Norm(unittest.TestCase):
 
         # Compute the coefficients
         coefficients = self.logistic_regression_l2_norm.gradient_ascent(feature_matrix_train, label_train,
-                                                                        initial_coefficients=np.zeros(194),
-                                                                        step_size=5e-6, l2_penalty=10, max_iter=501)
+                                                                        {"initial_coefficients": np.zeros(194),
+                                                                         "step_size": 5e-6, "l2_penalty": 10,
+                                                                         "max_iter": 501})
 
         # Get the accuracy
         train_accuracy = self.accuracy.logistic_regression(feature_matrix_train, label_train, coefficients)

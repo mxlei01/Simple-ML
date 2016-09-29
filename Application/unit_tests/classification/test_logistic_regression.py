@@ -80,8 +80,8 @@ class TestLogisticRegression(unittest.TestCase):
 
         # Compute the coefficients
         coefficients = self.logistic_regression.gradient_ascent(feature_matrix, sentiment,
-                                                                initial_coefficients=np.zeros(194),
-                                                                step_size=1e-7, max_iter=301)
+                                                                {"initial_coefficients": np.zeros(194),
+                                                                 "step_size": 1e-7, "max_iter": 301})
 
         # Real coefficients that we need to compare with the computed coefficients
         real_coef = [5.16220157e-03,   1.55656966e-02,  -8.50204675e-03,

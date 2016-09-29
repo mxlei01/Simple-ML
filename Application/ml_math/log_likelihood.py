@@ -101,7 +101,7 @@ class LogLikelihood:
             lambda: L2_penalty.
 
         Args:
-            feature_matrix (numpy.matrix): Feature matrix.
+            feature_matrix (numpy.ndarray): Feature matrix.
             label (numpy.array): Labels of the feature matrix.
             coefficients (numpy.array): Coefficients computed using MLE (with or without L1/L2).
             l2_penalty (float): L2 penalty value.

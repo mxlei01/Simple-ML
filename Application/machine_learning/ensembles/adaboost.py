@@ -31,7 +31,7 @@ class AdaBoost:
     """
 
     @staticmethod
-    def decision_tree(data, features, target, iterations, predict_method, model, model_method, model_parameters):
+    def decision_tree(data, features, target, iterations, model_dict):
         """Decision Tree ensemble learning algorithm for Adaboost.
 
         Uses a decision tree model, applies the adaboost algorithm and generates T number of models through the
@@ -42,10 +42,14 @@ class AdaBoost:
             features (list of str): List of features that we want to train.
             target (str): The target (output) that we want to train.
             iterations (int): Number of iterations.
-            predict_method  (func): Function to predict output.
-            model (obj): A model that contains a predict function to predict the output based on some input features.
-            model_method (function): Model's function to generate a model.
-            model_parameters (dict): Model parameters for the model, such as depth to train for a decision tree.
+            model_dict (dict): A dictionary that stores data about weighted model,
+                {
+                    predict_method  (func): Function to predict output.
+                    model (obj): A model that contains a predict function to predict the output based on some input
+                        features.
+                    model_method (function): Model's function to generate a model.
+                    model_parameters (dict): Model parameters for the model, such as depth to train for a decision tree.
+                }
 
         Returns:
             A list of tuples (weights, model):
@@ -72,15 +76,19 @@ class AdaBoost:
         # Loop through each iteration, and generate one model per generation
         for _ in range(iterations):
             # Use the model to generate a model, the output will be a decision tree
-            generated_model = getattr(model, model_method)(**{**{"data": data, "features": features, "target": target,
-                                                                 "data_weights": alpha},
-                                                              **model_parameters})
+            generated_model = getattr(model_dict["model"], model_dict["model_method"])(**
+                                                                                       {**{"data": data,
+                                                                                           "features": features,
+                                                                                           "target": target,
+                                                                                           "data_weights": alpha},
+                                                                                        **model_dict["model_parameters"]
+                                                                                        })
 
             # Insert the new model to the models list
             models_list.append(generated_model)
 
             # Make predictions
-            predictions = data.apply(lambda x, gm=generated_model: predict_method(gm, x), axis=1)
+            predictions = data.apply(lambda x, gm=generated_model: model_dict["predict_method"](gm, x), axis=1)
 
             # Creating an array of boolean values indicating if each data was correctly classified
             correct = predictions == target_values
@@ -127,7 +135,7 @@ class AdaBoost:
         return weights_list, models_list
 
     @staticmethod
-    def logistic_regression(feature_matrix, label, iterations, predict_method, model_dict):
+    def logistic_regression(feature_matrix, label, iterations, model_dict):
         """Logistic regression ensemble learning algorithm for Adaboost.
 
         Uses a logistic regression model, applies the adaboost algorithm and generates T number of models through the
@@ -137,9 +145,9 @@ class AdaBoost:
             feature_matrix (numpy.matrix): Features of a dataset.
             label (numpy.array): The label of a dataset.
             iterations (int): Number of iterations.
-            predict_method (func): Function to predict output.
             model_dict (dict): A dictionary that stores data about weighted model,
                 {
+                    predict_method (func): Function to predict output,
                     model (obj): A model that contains a predict function to predict the output based on
                         some input features,
                     model_method (function): Model's function to generate a model,
@@ -178,7 +186,7 @@ class AdaBoost:
             models_list.append(generated_model)
 
             # Make predictions
-            predictions = predict_method(feature_matrix, generated_model)
+            predictions = model_dict["predict_method"](feature_matrix, generated_model)
 
             # Creating an array of boolean values indicating if each data was correctly classified
             correct = predictions == label
