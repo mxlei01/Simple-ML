@@ -72,8 +72,9 @@ class LogisticRegressionL2Norm:
             # We do a transpose of feature matrix to convert rows into the column data, since the
             # the sigma function works on all the values for a specific column, and we will multiply each
             # row will error, which gives us Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
-            coefficients = coefficients + model_parameters["step_size"] * (np.dot(np.transpose(feature_matrix),
-                                                              errors)-2 * model_parameters["l2_penalty"] * coefficients)
+            coefficients = coefficients + model_parameters["step_size"] * (np.dot(
+                np.transpose(feature_matrix),
+                errors)-2 * model_parameters["l2_penalty"] * coefficients)
 
             # The first coefficient should not be affected by L2 normalization
             coefficients[0] = intercept
