@@ -77,8 +77,11 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
 
         # Create a decision tree
         decision_tree = self.weighted_binary_decision_trees.greedy_recursive(self.train_data, self.features,
-                                                                             self.target, data_weights,
-                                                                             current_depth=0, max_depth=2)
+                                                                             self.target,
+                                                                             {"data_weights": data_weights,
+                                                                              "current_depth": 0,
+                                                                              "max_depth": 2,
+                                                                              "minimum_error": 1e-15})
 
         # Compute the accuracy of the decision tree
         accuracy = self.error.binary_tree(decision_tree, self.train_data, self.target)
@@ -97,8 +100,11 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
 
         # Create a decision tree
         decision_tree = self.weighted_binary_decision_trees.greedy_recursive(self.train_data, ['grade.A', 'grade.B'],
-                                                                             self.target, data_weights,
-                                                                             current_depth=0, max_depth=2000)
+                                                                             self.target,
+                                                                             {"data_weights": data_weights,
+                                                                              "current_depth": 0,
+                                                                              "max_depth": 2000,
+                                                                              "minimum_error": 1e-15})
 
         # Compute the accuracy of the decision tree
         accuracy = self.error.binary_tree(decision_tree, self.train_data, self.target)
@@ -121,8 +127,11 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
                                                                                                'grade.E', 'grade.F',
                                                                                                'grade.G',
                                                                                                'term. 36 months'],
-                                                                             self.target, data_weights,
-                                                                             current_depth=0, max_depth=20000)
+                                                                             self.target,
+                                                                             {"data_weights": data_weights,
+                                                                              "current_depth": 0,
+                                                                              "max_depth": 20000,
+                                                                              "minimum_error": 1e-15})
 
         # Compute the accuracy of the decision tree
         accuracy = self.error.binary_tree(decision_tree, self.train_data, self.target)
@@ -142,7 +151,9 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
                                                       model_dict={"predict_method": self.predict.binary_tree,
                                                                   "model": self.weighted_binary_decision_trees,
                                                                   "model_method": "greedy_recursive",
-                                                                  "model_parameters": {"max_depth": 1}})
+                                                                  "model_parameters": {"max_depth": 1,
+                                                                                       "minimum_error": 1e-15,
+                                                                                       "current_depth": 0}})
 
         # The weights have to equal to [0.15802933659263743, 0.1768236329364191]
         self.assertEqual([round(i, 5) for i in weights_list],
@@ -160,7 +171,10 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
                                                                 model_dict={"predict_method": self.predict.binary_tree,
                                                                             "model": self.weighted_binary_decision_trees,
                                                                             "model_method": "greedy_recursive",
-                                                                            "model_parameters": {"max_depth": 1}})
+                                                                            "model_parameters": {"max_depth": 1,
+                                                                                                 "minimum_error": 1e-15,
+                                                                                                 "current_depth": 0
+                                                                                                 }})
 
         # Get the predictions of each dataset in the test data
         predictions = self.predict.adaboost_binary_decision_tree(self.predict.binary_tree, models_list, weights_list,

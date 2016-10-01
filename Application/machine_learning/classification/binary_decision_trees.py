@@ -106,8 +106,8 @@ class BinaryDecisionTrees:
 
         # Create the right tree by doing a recursion
         right_tree = self.greedy_recursive(right_split, remaining_features, target,
-                                          {"current_depth": model_parameters["current_depth"] + 1,
-                                           "max_depth": model_parameters["max_depth"]})
+                                           {"current_depth": model_parameters["current_depth"] + 1,
+                                            "max_depth": model_parameters["max_depth"]})
 
         # Create a leaf node where this is not a leaf, and with no prediction
         return self.create_node(splitting_feature=splitting_feature, left=left_tree, right=right_tree, is_leaf=False,

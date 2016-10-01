@@ -14,8 +14,7 @@ class WeightedBinaryDecisionTrees:
 
     """
 
-    def greedy_recursive(self, data, features, target, data_weights, current_depth=0, max_depth=10,
-                         minimum_error=1e-15):
+    def greedy_recursive(self, data, features, target, model_parameters):
         """Greedy recursive approach to build a weighted binary decision tree.
 
         Uses recursion to create a tree, and uses greedy method, which is to get construct
@@ -32,11 +31,14 @@ class WeightedBinaryDecisionTrees:
         Args:
             data (pandas.DataFrame): One hot encoded features with target.
             features (list of str): List of features that we will decide to split on.
-            data_weights (pandas.Series): Weights for corresponding label
             target (str): The feature that we want to predict.
-            current_depth (int): The current depth of the recursion.
-            max_depth (int): The maximum depth that the tree will be created.
-            minimum_error (float): The minimum error to count as no error.
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    data_weights (pandas.Series): Weights for corresponding label,
+                    current_depth (int): The current depth of the recursion,
+                    max_depth (int): The maximum depth that the tree will be created,
+                    minimum_error (float): The minimum error to count as no error.
+                }
 
         Returns:
             A decision tree root, where an intermediate stump has the following dict:
@@ -71,19 +73,20 @@ class WeightedBinaryDecisionTrees:
         target_values = data[target]
 
         # 1. No weighted error after selecting majority class
-        if self.intermediate_node_weighted_mistakes(target_values, data_weights)[0] <= minimum_error:
-            return self.create_leaf(target_values, data_weights)
+        if self.intermediate_node_weighted_mistakes(target_values, model_parameters["data_weights"])[0] \
+                <= model_parameters["minimum_error"]:
+            return self.create_leaf(target_values, model_parameters["data_weights"])
 
         # 2. No remaining features to split
         if len(remaining_features) == 0:
-            return self.create_leaf(target_values, data_weights)
+            return self.create_leaf(target_values, model_parameters["data_weights"])
 
         # 3. Max depth is encountered
-        if current_depth >= max_depth:
-            return self.create_leaf(target_values, data_weights)
+        if model_parameters["current_depth"] >= model_parameters["max_depth"]:
+            return self.create_leaf(target_values, model_parameters["data_weights"])
 
         # Find the best splitting feature
-        splitting_feature = self.best_feature(data, remaining_features, target, data_weights)
+        splitting_feature = self.best_feature(data, remaining_features, target, model_parameters["data_weights"])
         remaining_features.remove(splitting_feature)
 
         # Split on the best feature that we found
@@ -91,25 +94,31 @@ class WeightedBinaryDecisionTrees:
         right_split = data[data[splitting_feature] == 1]
 
         # Split on the weights
-        left_data_weights = data_weights[data[splitting_feature] == 0]
-        right_data_weights = data_weights[data[splitting_feature] == 1]
+        left_data_weights = model_parameters["data_weights"][data[splitting_feature] == 0]
+        right_data_weights = model_parameters["data_weights"][data[splitting_feature] == 1]
 
         # 4. If the left split is equal to the amount of data
         # This is done since if the feature split has exactly the same data, then there's nothing we need to do
         if len(left_split) == len(data):
-            return self.create_leaf(left_split[target], data_weights)
+            return self.create_leaf(left_split[target], model_parameters["data_weights"])
 
         # 5. If the right split is equal to the amount of data
         if len(right_split) == len(data):
-            return self.create_leaf(right_split[target], data_weights)
+            return self.create_leaf(right_split[target], model_parameters["data_weights"])
 
         # Create the left tree by doing a recursion
-        left_tree = self.greedy_recursive(left_split, remaining_features, target, left_data_weights,
-                                          current_depth + 1, max_depth)
+        left_tree = self.greedy_recursive(left_split, remaining_features, target,
+                                          {"data_weights": left_data_weights,
+                                           "current_depth": model_parameters["current_depth"] + 1,
+                                           "max_depth": model_parameters["max_depth"],
+                                           "minimum_error": model_parameters["minimum_error"]})
 
         # Create the right tree by doing a recursion
-        right_tree = self.greedy_recursive(right_split, remaining_features, target, right_data_weights,
-                                           current_depth + 1, max_depth)
+        right_tree = self.greedy_recursive(right_split, remaining_features, target,
+                                           {"data_weights": right_data_weights,
+                                            "current_depth": model_parameters["current_depth"] + 1,
+                                            "max_depth": model_parameters["max_depth"],
+                                            "minimum_error": model_parameters["minimum_error"]})
 
         # Create a leaf node where this is not a leaf, and with no prediction
         return self.create_node(splitting_feature=splitting_feature, left=left_tree, right=right_tree, is_leaf=False,

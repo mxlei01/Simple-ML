@@ -76,13 +76,12 @@ class AdaBoost:
         # Loop through each iteration, and generate one model per generation
         for _ in range(iterations):
             # Use the model to generate a model, the output will be a decision tree
-            generated_model = getattr(model_dict["model"], model_dict["model_method"])(**
-                                                                                       {**{"data": data,
-                                                                                           "features": features,
-                                                                                           "target": target,
-                                                                                           "data_weights": alpha},
-                                                                                        **model_dict["model_parameters"]
-                                                                                        })
+            generated_model = getattr(model_dict["model"],
+                                      model_dict["model_method"])(**{"data": data,
+                                                                     "features": features,
+                                                                     "target": target},
+                                                                  model_parameters={**model_dict["model_parameters"],
+                                                                                    **{"data_weights": alpha}})
 
             # Insert the new model to the models list
             models_list.append(generated_model)
