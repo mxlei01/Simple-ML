@@ -14,7 +14,7 @@ class BinaryDecisionTrees:
 
     """
 
-    def greedy_recursive(self, data, features, target, current_depth=0, max_depth=10):
+    def greedy_recursive(self, data, features, target, model_parameters):
         """Greedy recursive approach to build a binary decision tree.
 
         Uses recursion to create a tree, and uses greedy method, which is to get construct nodes that has the lowest
@@ -32,8 +32,11 @@ class BinaryDecisionTrees:
             data (pandas.DataFrame): One hot encoded features with target.
             features (list of str): List of features that we will decide to split on.
             target (str): The feature that we want to predict.
-            current_depth (int): The current depth of the recursion.
-            max_depth (int): The maximum depth that the tree will be created.
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    current_depth (int): The current depth of the recursion,
+                    max_depth (int): The maximum depth that the tree will be created.
+                }
 
         Returns:
             A decision tree root, where an intermediate stump has the following dict:
@@ -76,7 +79,7 @@ class BinaryDecisionTrees:
             return self.create_leaf(target_values)
 
         # 3. Max depth is encountered
-        if current_depth >= max_depth:
+        if model_parameters["current_depth"] >= model_parameters["max_depth"]:
             return self.create_leaf(target_values)
 
         # Find the best splitting feature
@@ -97,16 +100,20 @@ class BinaryDecisionTrees:
             return self.create_leaf(right_split[target])
 
         # Create the left tree by doing a recursion
-        left_tree = self.greedy_recursive(left_split, remaining_features, target, current_depth + 1, max_depth)
+        left_tree = self.greedy_recursive(left_split, remaining_features, target,
+                                          {"current_depth": model_parameters["current_depth"] + 1,
+                                           "max_depth": model_parameters["max_depth"]})
+
         # Create the right tree by doing a recursion
-        right_tree = self.greedy_recursive(right_split, remaining_features, target, current_depth + 1, max_depth)
+        right_tree = self.greedy_recursive(right_split, remaining_features, target,
+                                          {"current_depth": model_parameters["current_depth"] + 1,
+                                           "max_depth": model_parameters["max_depth"]})
 
         # Create a leaf node where this is not a leaf, and with no prediction
         return self.create_node(splitting_feature=splitting_feature, left=left_tree, right=right_tree, is_leaf=False,
                                 prediction=None)
 
-    def greedy_recursive_early_stop(self, data, features, target, current_depth=0, max_depth=10,
-                                    min_node_size=1, min_error_reduction=0.0):
+    def greedy_recursive_early_stop(self, data, features, target, model_parameters):
         """Greedy recursive approach to build a binary decision tree with early stopping.
 
         Uses recursion to create a tree, and uses greedy method, which is to get construct nodes that has the lowest
@@ -129,10 +136,13 @@ class BinaryDecisionTrees:
             data (pandas.DataFrame): One hot encoded features with target.
             features (list of str): List of features that we will decide to split on.
             target (str): The feature that we want to predict.
-            current_depth (int): The current depth of the recursion.
-            max_depth (int): The maximum depth that the tree will be created.
-            min_node_size (int): The minimum amount of samples per node.
-            min_error_reduction (float): Minimum error reduction per split.
+            model_parameters (dict): A dictionary of model parameters,
+                {
+                    current_depth (int): The current depth of the recursion,
+                    max_depth (int): The maximum depth that the tree will be created,
+                    min_node_size (int): The minimum amount of samples per node,
+                    min_error_reduction (float): Minimum error reduction per split.
+                }
 
         Returns:
             A decision tree root, where an intermediate stump has the following dict:
@@ -175,11 +185,11 @@ class BinaryDecisionTrees:
             return self.create_leaf(target_values)
 
         # 1. Stop at maximum depth
-        if current_depth >= max_depth:
+        if model_parameters["current_depth"] >= model_parameters["max_depth"]:
             return self.create_leaf(target_values)
 
         # 2. Stop if the node has less than minimum node size
-        if self.reached_minimum_node_size(data, min_node_size):
+        if self.reached_minimum_node_size(data, model_parameters["min_node_size"]):
             return self.create_leaf(target_values)
 
         # Find the best splitting feature
@@ -200,7 +210,7 @@ class BinaryDecisionTrees:
 
         # If the error before splitting and after splitting is less than specified amount (min_error_reduction)
         # Then we would stop and create a leaf
-        if self.error_reduction(error_before_split, error_after_split) <= min_error_reduction:
+        if self.error_reduction(error_before_split, error_after_split) <= model_parameters["min_error_reduction"]:
             return self.create_leaf(target_values)
 
         # Remove the splitting feature from the remaining features
@@ -217,10 +227,17 @@ class BinaryDecisionTrees:
 
         # Create the left tree by doing a recursion
         left_tree = self.greedy_recursive_early_stop(left_split, remaining_features, target,
-                                                     current_depth + 1, max_depth, min_node_size, min_error_reduction)
+                                                     {"current_depth": model_parameters["current_depth"] + 1,
+                                                      "max_depth": model_parameters["max_depth"],
+                                                      "min_node_size": model_parameters["min_node_size"],
+                                                      "min_error_reduction": model_parameters["min_error_reduction"]})
+
         # Create the right tree by doing a recursion
         right_tree = self.greedy_recursive_early_stop(right_split, remaining_features, target,
-                                                      current_depth + 1, max_depth, min_node_size, min_error_reduction)
+                                                      {"current_depth": model_parameters["current_depth"] + 1,
+                                                       "max_depth": model_parameters["max_depth"],
+                                                       "min_node_size": model_parameters["min_node_size"],
+                                                       "min_error_reduction": model_parameters["min_error_reduction"]})
 
         # Create a leaf node where this is not a leaf, and with no prediction
         return self.create_node(splitting_feature=splitting_feature, left=left_tree, right=right_tree, is_leaf=False,

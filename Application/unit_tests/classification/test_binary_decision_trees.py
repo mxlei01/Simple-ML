@@ -83,7 +83,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         """
         # Create a decision tree
         decision_tree = self.binary_decision_trees.greedy_recursive(self.train_data, self.features, self.target,
-                                                                    current_depth=0, max_depth=6)
+                                                                    {"current_depth": 0, "max_depth": 6})
 
         # Get the classification result of the first row
         classification = self.predict_output.binary_tree(decision_tree, self.test_data.iloc[0])
@@ -105,7 +105,8 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         """
         # Create a decision tree
         decision_tree = self.binary_decision_trees.greedy_recursive(self.train_data, ['grade.A', 'grade.B'],
-                                                                    self.target, current_depth=0, max_depth=1000)
+                                                                    self.target, {"current_depth": 0,
+                                                                                  "max_depth": 1000})
 
         # Get the classification result of the first row
         classification = self.predict_output.binary_tree(decision_tree, self.test_data.iloc[0])
@@ -127,7 +128,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         """
         # Create a decision tree
         decision_tree = self.binary_decision_trees.greedy_recursive(self.train_data, self.features, self.target,
-                                                                    current_depth=0, max_depth=10000)
+                                                                    {"current_depth": 0, "max_depth": 10000})
 
         # Get the classification result of the first row
         classification = self.predict_output.binary_tree(decision_tree, self.test_data.iloc[0])
@@ -149,8 +150,9 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         """
         # Create a model with max_depth=6, min_node_size=100, min_error_reduction=0
         model_1 = self.binary_decision_trees.greedy_recursive_early_stop(self.train_data, self.features, self.target,
-                                                                         max_depth=6, min_node_size=100,
-                                                                         min_error_reduction=0.0)
+                                                                         {"current_depth": 0, "max_depth": 6,
+                                                                          "min_node_size": 100,
+                                                                          "min_error_reduction": 0.0})
 
         # Get the classification result of the first row
         classification = self.predict_output.binary_tree(model_1, self.test_data.iloc[0])
@@ -166,8 +168,9 @@ class TestBinaryDecisionTrees(unittest.TestCase):
 
         # Create a model with max_depth=6, min_node_size=0, min_error_reduction=-1
         model_2 = self.binary_decision_trees.greedy_recursive_early_stop(self.train_data, self.features, self.target,
-                                                                         max_depth=6, min_node_size=0,
-                                                                         min_error_reduction=-1)
+                                                                         {"current_depth": 0, "max_depth": 6,
+                                                                          "min_node_size": 0,
+                                                                          "min_error_reduction": -1})
 
         # Get the classification result of the first row
         classification = self.predict_output.binary_tree(model_2, self.test_data.iloc[0])
@@ -189,8 +192,10 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         """
         # Create a model with max_depth=5000, min_node_size=0, min_error_reduction=0
         model_1 = self.binary_decision_trees.greedy_recursive_early_stop(self.train_data, ['grade.A', 'grade.B'],
-                                                                         self.target, max_depth=5000, min_node_size=0,
-                                                                         min_error_reduction=0.0)
+                                                                         self.target,
+                                                                         {"current_depth": 0, "max_depth": 5000,
+                                                                          "min_node_size": 0,
+                                                                          "min_error_reduction": 0.0})
 
         # Get the classification result of the first row
         classification = self.predict_output.binary_tree(model_1, self.test_data.iloc[0])
@@ -216,8 +221,10 @@ class TestBinaryDecisionTrees(unittest.TestCase):
                                                                                            'grade.E', 'grade.F',
                                                                                            'grade.G',
                                                                                            'term. 36 months'],
-                                                                         self.target, max_depth=5000, min_node_size=0,
-                                                                         min_error_reduction=-50000)
+                                                                         self.target,
+                                                                         {"current_depth": 0, "max_depth": 5000,
+                                                                          "min_node_size": 0,
+                                                                          "min_error_reduction": -50000})
 
         # Get the classification result of the first row
         classification = self.predict_output.binary_tree(model_1, self.test_data.iloc[0])
