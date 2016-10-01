@@ -34,7 +34,7 @@ class AdaBoost:
     def decision_tree(data, features, target, iterations, model_dict):
         """Decision Tree ensemble learning algorithm for Adaboost.
 
-        Uses a decision tree model, applies the adaboost algorithm and generates T number of models through the
+        Uses a decision tree model, applies the Adaboost algorithm and generates T number of models through the
         iterations parameter.
 
         Args:
@@ -89,16 +89,13 @@ class AdaBoost:
             # Make predictions
             predictions = data.apply(lambda x, gm=generated_model: model_dict["predict_method"](gm, x), axis=1)
 
-            # Creating an array of boolean values indicating if each data was correctly classified
-            correct = predictions == target_values
-            wrong = predictions != target_values
-
             # Compute the weighted_error(f_t(x))
             # Weighted Error =    total weight of mistakes
             #                  -------------------------------
             #                  total weight of all data points
             # Best Possible Error: 0, Worst: 1.0, Random Classifier: 0.5
-            weighted_error = sum(alpha[wrong])/sum(alpha)
+            # alpha[(predictions != target_values)] = alpha[indexes of alpha which predictions are wrong]
+            weighted_error = sum(alpha[(predictions != target_values)])/sum(alpha)
 
             # Compute w_t = w_t=1*ln(1-weighted_error(f_t))
             #                   -    ---------------------
@@ -121,7 +118,10 @@ class AdaBoost:
             #   If w_t is high (2.3), then we multiply α by e^(2.3)=9.98, which means we will increase the importance
             #   of α for that specific row of data.
             #   If w_t is low (0), then we will multiply α by e^(0)=1, then we will keep the importance the same.
-            exponential_weight = correct.apply(lambda is_correct, w=weight: math.exp(-w) if is_correct else math.exp(w))
+            # Note that (predictions == target_values) is the indexes of alpha which are correct.
+            exponential_weight = (predictions == target_values).apply(
+                lambda is_correct, w=weight: math.exp(-w) if is_correct else math.exp(w)
+            )
 
             # Scale alpha by multiplying by exponential_weight
             alpha = alpha*exponential_weight
