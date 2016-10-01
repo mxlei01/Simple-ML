@@ -199,18 +199,17 @@ class BinaryDecisionTrees:
         left_split = data[data[splitting_feature] == 0]
         right_split = data[data[splitting_feature] == 1]
 
-        # 3. Stop if the error does not reduce
-        # Compute the error before we split, and then divided by the amount of data left
-        error_before_split = float(self.intermediate_node_mistakes(target_values))/float(len(data))
-
         # Compute the left and right mistake, and then divide by the amount of data left
         left_mistakes = self.intermediate_node_mistakes(left_split[target])
         right_mistakes = self.intermediate_node_mistakes(right_split[target])
         error_after_split = float((left_mistakes + right_mistakes)) / float(len(data))
 
+        # 3. Stop if the error does not reduce
+        # Compute the error before we split, and then divided by the amount of data left
         # If the error before splitting and after splitting is less than specified amount (min_error_reduction)
         # Then we would stop and create a leaf
-        if self.error_reduction(error_before_split, error_after_split) <= model_parameters["min_error_reduction"]:
+        if self.error_reduction(float(self.intermediate_node_mistakes(target_values))/float(len(data)),
+                                error_after_split) <= model_parameters["min_error_reduction"]:
             return self.create_leaf(target_values)
 
         # Remove the splitting feature from the remaining features

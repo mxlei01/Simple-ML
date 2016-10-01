@@ -189,14 +189,11 @@ class WeightedBinaryDecisionTrees:
             right_split = data[data[feature] == 1]
 
             # Apply the same filtering to data_weights to create left_data_weights, right_data_weights
-            left_data_weights = data_weights[data[feature] == 0]
-            right_data_weights = data_weights[data[feature] == 1]
-
             # Calculate the weight of mistakes for left and right sides
             left_weighted_mistakes, _ = self.intermediate_node_weighted_mistakes(left_split[target],
-                                                                                 left_data_weights)
+                                                                                 data_weights[data[feature] == 0])
             right_weighted_mistakes, _ = self.intermediate_node_weighted_mistakes(right_split[target],
-                                                                                  right_data_weights)
+                                                                                  data_weights[data[feature] == 1])
 
             # Compute the weighted error of this split.
             # error = # of left mistakes + # of right mistakes
