@@ -7,3 +7,12 @@
 # Simple-ML
 
 A simple machine learning library written in Python
+
+# To run unit tests
+
+nosetests -c ../.noserc --with-coverage --cover-inclusive --cover-tests --cover-package=. --process-timeout 600000 --processes 32 unit_tests
+
+# To Run a single unit test
+
+nosetests -c ../.noserc -s --with-coverage --cover-inclusive --cover-tests --cover-package=. --process-timeout 600000 --processes 32 unit_tests.clustering.nearest_neighbor
+
