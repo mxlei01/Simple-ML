@@ -16,21 +16,11 @@ notifications:
     secure: FhEX0zlSASN05ReDMozHStKs6BJfPTujgbZ+gu5TZiuum7DpwU68tucymuEdgahcmHeOKLSs8PLat02XOsBvzwhXd5usU7iSz9H2pfyC6FbGkrM3SBrtWJPw0c/OiE462nMeLqZKQ20uMSwMt1NXm5AEW9js+0ouH+wAh/zqHhc8/LaEfABPr80nb6Bb0Ql6B4UAhJnCVMHDn2EyWwTSYlOyJLzlBEyKfUdXZnVXqlHXtr9sqfEJtEnASc+1EGeQfGrUTtgCHSSvemckQyptCvYwOJdVOyMNWf4dx16/KHSf5Wk4Ww6DzcUD+nWltxAwf+RP8yK8gV3mvlLh2zeaKkBMpQu0aGbYf3Di5h6M6oQtxFgCrx6TZhKg0kWBzbGvBA9Wn09cYeVrw1Sd5BYwE5oef+5o0zjQKme+DhOatQI6flS3lQDVe4lOlY5WLtEb7s5vxzncX5airl01I4C+4M4pJlY2gTcr9orP+1AAguadXBLQMukgGQPCedp4J9ey2aNnOeF3lVaZ3NyFmIxt+yypyHMozKK0U/KUHCK5cGI9Kefr4V1oJfhTr5auxyi5lj32g/jD0QOT9Jg0Yrhl8YugSK0jiOWr6Uqv43E1/7Cw1JkCxl84rGRTQknN8SnqBh+hj6UDk4bPN2KzGMKYCkPUhCBBqolNHfQRXXkXepM=
 
 before_install:
-- apt-get -y update 
-- apt-get -y upgrade 
-- apt-get -y install apt-utils 
-- apt-get -y update 
-- apt-get -y upgrade
-- apt-get -y install python3-pip
-- apt-get -y install build-essential
-- apt-get -y install python3-dev
-- apt-get -y install libpq-dev
-- apt-get -y install libblas-dev liblapack-dev
-- apt-get -y install gfortran
-- apt-get -y install git
-- apt-get -y install python-software-properties
-- apt-get -y install software-properties-common
-- apt-get -y install wget
+- docker build --file="Docker/Dockerfiles/Dockerfile" -t mxlei01/simple-ml .
 
 script:
--  /Application/ && chmod -R -x * && nosetests -c ../.noserc --with-coverage --cover-inclusive --cover-tests --cover-package=. unit_tests && COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN TRAVIS_BRANCH=$TRAVIS_BRANCH BRANCH=$TRAVIS_BRANCH coveralls --rcfile=../.coveragerc
+- docker run -it mxlei01/simple-ml /bin/bash /application/Build_Scripts/Run_Docker_Build.sh $COVERALLS_REPO_TOKEN $TRAVIS_BRANCH $TRAVIS_BRANCH
+
+after_success:
+- docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- docker push mxlei01/simple-ml
