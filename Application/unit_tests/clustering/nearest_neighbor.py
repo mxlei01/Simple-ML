@@ -34,12 +34,12 @@ class TestNearestNeighbor(unittest.TestCase):
         self.tf_idf = pd.read_csv('./unit_tests/test_data/clustering/wiki/people_wiki_tf_idf.csv.bz2')
 
         # Create our word count column on the wiki
-        self.wiki["word_count"] = self.wiki["text"].apply(lambda x: self.text_analytics.word_count(x))
+        self.wiki["word_count"] = self.wiki["text"].apply(self.text_analytics.word_count)
 
         # Create our tf idf column on the wiki
         # self.wiki["tf_idf"] = self.wiki["text"].apply(lambda x: self.text_analytics.tf_idf(self.wiki["text"], x))
         self.wiki["tf_idf"] = self.tf_idf["tf_idf"]
-        self.wiki["tf_idf"] = self.wiki["tf_idf"].apply(lambda x: json.loads(x))
+        self.wiki["tf_idf"] = self.wiki["tf_idf"].apply(json.loads)
 
     def test_01_euclidean_distance(self):
         """Test euclidean distance with word count.
@@ -66,7 +66,6 @@ class TestNearestNeighbor(unittest.TestCase):
         Test tf_idf and compare it to known values.
 
         """
-
         # Create corpus
         corpus = pd.Series(["the quick brown fox jumps over lazy dog", "a quick brown dog outpaces a quick fox"])
 

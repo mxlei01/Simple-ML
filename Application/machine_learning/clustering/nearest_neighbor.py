@@ -38,7 +38,7 @@ class NearestNeighbor:
         # Loop through each row in the data frame
         for _, row_target in data.iterrows():
             # Loop through each row in the data frame
-            for __, row_compare in data.iterrows():
+            for dummy_, row_compare in data.iterrows():
                 # Create a default dictionary and set the query_label as the value in the label column
                 comparison = defaultdict()
                 comparison["query_label"] = row_target[label]
