@@ -54,4 +54,4 @@ class Error:
         mistakes = data.apply(lambda x: x[target] != x["prediction"], axis=1).sum()
 
         # Return mistakes/total examples
-        return float(mistakes)/float(len(data))
+        return float(mistakes) / float(len(data))

@@ -109,4 +109,4 @@ class NearestNeighbor:
         # Compute cosine distance,       x^T*y
         #                          1 - ------------
         #                               ||x||*||y|
-        return 1-(x_y/(x_norm*y_norm))
+        return 1-(x_y / (x_norm*y_norm))

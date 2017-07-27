@@ -100,4 +100,4 @@ class Accuracy:
         mistakes = data.apply(lambda x: x[target] != x["prediction"], axis=1).sum()
 
         # One minus the mistakes divided by the length of the data
-        return 1-(float(mistakes)/float(len(data)))
+        return 1-(float(mistakes) / float(len(data)))

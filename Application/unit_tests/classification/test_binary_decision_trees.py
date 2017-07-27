@@ -210,7 +210,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(round(accuracy, 5), round(0.38432, 5))
 
     def test_05_greedy_recursive_early_stop_high_depth(self):
-        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
+        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class.
 
         We will use early stopping for greedy recursive, and measure performance.
 

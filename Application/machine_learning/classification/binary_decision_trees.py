@@ -208,7 +208,7 @@ class BinaryDecisionTrees:
         # Compute the error before we split, and then divided by the amount of data left
         # If the error before splitting and after splitting is less than specified amount (min_error_reduction)
         # Then we would stop and create a leaf
-        if self.error_reduction(float(self.intermediate_node_mistakes(target_values))/float(len(data)),
+        if self.error_reduction(float(self.intermediate_node_mistakes(target_values)) / float(len(data)),
                                 error_after_split) <= model_parameters["min_error_reduction"]:
             return self.create_leaf(target_values)
 
@@ -314,7 +314,7 @@ class BinaryDecisionTrees:
             # error = # of left mistakes + # of right mistakes
             #         ----------------------------------------
             #                     total examples
-            error = float(left_mistakes + right_mistakes)/num_data
+            error = float(left_mistakes + right_mistakes) / num_data
 
             # If this is the best error we have found so far,
             # then store the feature as best_feature and the error as best_error

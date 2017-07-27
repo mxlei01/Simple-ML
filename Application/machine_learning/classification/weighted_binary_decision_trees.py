@@ -199,7 +199,7 @@ class WeightedBinaryDecisionTrees:
             # error = # of left mistakes + # of right mistakes
             #         ----------------------------------------
             #                     total examples
-            error = float(left_weighted_mistakes + right_weighted_mistakes)/num_data
+            error = float(left_weighted_mistakes + right_weighted_mistakes) / num_data
 
             # If this is the best error we have found so far,
             # then store the feature as best_feature and the error as best_error

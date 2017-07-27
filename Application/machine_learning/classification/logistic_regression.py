@@ -53,7 +53,7 @@ class LogisticRegression:
                                                       1, feature_matrix, coefficients)
 
             # Compute P(y_i = +1 | x_i, w) using the link function
-            predictions = [1/(1+math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
+            predictions = [1 / (1+math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
 
             # Compute indicator value for (y_i = +1)
             indicator = (label == +1)
@@ -126,7 +126,7 @@ class LogisticRegression:
                                                       coefficients)
 
             # Compute P(y_i = +1 | x_i, w) using the link function
-            predictions = [1/(1+math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
+            predictions = [1 / (1+math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
 
             # Compute indicator value for (y_i = +1), and we would slice it with [i:i+batch_size] to give us rows
             # between i and i+batch_size
@@ -145,7 +145,7 @@ class LogisticRegression:
             # n*Σ^N_b=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w)) * norm constant
             coefficients = coefficients + model_parameters["step_size"] * np.dot(
                 np.transpose(feature_matrix[i:i + model_parameters["batch_size"], :]),
-                errors) * (1./model_parameters["batch_size"])
+                errors) * (1. / model_parameters["batch_size"])
 
             # i is the current index of row of feature_matrix, increment it so that we can see the next batch
             i += model_parameters["batch_size"]

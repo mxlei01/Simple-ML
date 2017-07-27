@@ -122,10 +122,10 @@ class LassoRegression:
         #         ro_i - delta/2  if ro_i >  delta/2
         if step_parameters["i"] == 0:
             new_weight_i = ro_i
-        elif ro_i < -model_parameters["l1_penalty"]/2.:
-            new_weight_i = ro_i + model_parameters["l1_penalty"]/2
-        elif ro_i > model_parameters["l1_penalty"]/2.:
-            new_weight_i = ro_i - model_parameters["l1_penalty"]/2
+        elif ro_i < -model_parameters["l1_penalty"] / 2.:
+            new_weight_i = ro_i + model_parameters["l1_penalty"] / 2
+        elif ro_i > model_parameters["l1_penalty"] / 2.:
+            new_weight_i = ro_i - model_parameters["l1_penalty"] / 2
         else:
             new_weight_i = 0.
 

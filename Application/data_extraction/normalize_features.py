@@ -38,4 +38,4 @@ class NormalizeFeatures:
 
         # Compute the norm of each column by column/2-norm of column
         # [X[:,0]/norm(X[:,0]), X[:,1]/norm(X[:,1]), X[:,2]/norm(X[:,2])]
-        return features_matrix/norms, norms
+        return features_matrix / norms, norms

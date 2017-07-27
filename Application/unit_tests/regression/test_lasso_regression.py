@@ -83,7 +83,7 @@ class TestLassoRegression(unittest.TestCase):
         self.assertTrue(np.array_equal(np.array([5., 10., 15.]), norms), True)
 
     def test_02_compute_ro(self):
-        """Test compute ro
+        """Test compute ro.
 
         Test compute one round of ro.
 
@@ -118,10 +118,10 @@ class TestLassoRegression(unittest.TestCase):
         # Assert that both are equal
         self.assertEquals(round(self.lasso.lasso_coordinate_descent_step({"i": 1,
                                                                           "weights": np.array([1., 4.])},
-                                                                         np.array([[3./math.sqrt(13),
-                                                                                    1./math.sqrt(10)],
-                                                                                   [2./math.sqrt(13),
-                                                                                    3./math.sqrt(10)]]),
+                                                                         np.array([[3. / math.sqrt(13),
+                                                                                    1. / math.sqrt(10)],
+                                                                                   [2. / math.sqrt(13),
+                                                                                    3. / math.sqrt(10)]]),
                                                                          np.array([1., 1.]),
                                                                          {"l1_penalty": 0.1}), 8),
                           round(0.425558846691, 8))

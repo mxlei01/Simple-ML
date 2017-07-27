@@ -84,7 +84,7 @@ class LogLikelihood:
         logexp[mask] = -scores[mask]
 
         # Sum over all all the values of indicator*score - logexp
-        lp = np.sum((indicator-1)*scores - logexp)/len(feature_matrix)
+        lp = np.sum((indicator-1)*scores - logexp) / len(feature_matrix)
 
         return lp
 

@@ -84,7 +84,7 @@ class TextAnalytics:
                 #         # docs
                 # log -----------------
                 #     # docs using word
-                idf[word] = math.log(float(len(corpus))/float(word_appearance))
+                idf[word] = math.log(float(len(corpus)) / float(word_appearance))
 
                 # Update our cache
                 self.idf[word] = idf[word]

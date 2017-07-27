@@ -54,7 +54,7 @@ class LogisticRegressionL2Norm:
                                                       1, feature_matrix, coefficients)
 
             # Compute P(y_i = +1 | x_i, w) using the link function
-            predictions = [1/(1+math.exp(-coefficient_dot_feature)) for coefficient_dot_feature in dot_product_results]
+            predictions = [1 / (1+math.exp(-coefficient_dot_feature)) for coefficient_dot_feature in dot_product_results]
 
             # Compute indicator value for (y_i = +1)
             indicator = (label == +1)

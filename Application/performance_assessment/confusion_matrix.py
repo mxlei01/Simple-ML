@@ -76,8 +76,8 @@ class ConfusionMatrix:
         confusion_matrix = self.confusion_matrix(output, predicted_output)
 
         # Compute and return precision
-        return float(confusion_matrix["true_positives"])/float(confusion_matrix["true_positives"] +
-                                                               confusion_matrix["false_negatives"])
+        return float(confusion_matrix["true_positives"]) / float(confusion_matrix["true_positives"] +
+                                                                 confusion_matrix["false_negatives"])
 
     def recall(self, output, predicted_output):
         """Computes recall.

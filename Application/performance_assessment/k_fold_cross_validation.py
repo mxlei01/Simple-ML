@@ -77,7 +77,7 @@ class KFoldCrossValidation:
                                                                                               predicted_output)
 
         # Return the validation_error_sum divided by fold
-        return validation_error_sum/k
+        return validation_error_sum / k
 
     @staticmethod
     def create_validation_training_set(data, k, iteration):

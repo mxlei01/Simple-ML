@@ -95,7 +95,7 @@ class AdaBoost:
             #                  total weight of all data points
             # Best Possible Error: 0, Worst: 1.0, Random Classifier: 0.5
             # alpha[(predictions != target_values)] = alpha[indexes of alpha which predictions are wrong]
-            weighted_error = sum(alpha[(predictions != target_values)])/sum(alpha)
+            weighted_error = sum(alpha[(predictions != target_values)]) / sum(alpha)
 
             # Compute w_t = w_t=1*ln(1-weighted_error(f_t))
             #                   -    ---------------------
@@ -103,7 +103,7 @@ class AdaBoost:
             # If f_t(x) classifier was a good classifier, then the weighted error will be low, which
             # results in a higher w_t for that classifier. If the classifier was a bad classifier, then the result
             # would be a classifier with lower w_t
-            weight = 0.5 * math.log((1-weighted_error)/weighted_error)
+            weight = 0.5 * math.log((1-weighted_error) / weighted_error)
 
             # Add the new weight to our weights list
             weights_list.append(weight)
@@ -129,7 +129,7 @@ class AdaBoost:
             # Normalize the weights α_i =        α_i
             #                            ---------------------
             #                            sum(α_j, for all α's)
-            alpha = alpha/sum(alpha)
+            alpha = alpha / sum(alpha)
 
         return weights_list, models_list
 
