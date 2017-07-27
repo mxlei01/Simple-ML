@@ -9,9 +9,9 @@ python-targets:
     - 3
 pep8:
     full: true
+pylint:
+    run: true
     disable:
       - too-many-return-statements
       - too-many-instance-variables
       - too-few-public-methods
-pylint:
-    run: true

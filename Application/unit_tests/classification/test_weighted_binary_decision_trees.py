@@ -166,18 +166,18 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
 
         """
         # Create ten weighted binary decision trees
-        weights_list, models_list = self.adaboost.decision_tree(self.train_data, self.features, self.target,
-                                                                iterations=10,
-                                                                model_dict={"predict_method": self.predict.binary_tree,
-                                                                            "model": self.weighted_binary_decision_trees,
-                                                                            "model_method": "greedy_recursive",
-                                                                            "model_parameters": {"max_depth": 1,
-                                                                                                 "minimum_error": 1e-15,
-                                                                                                 "current_depth": 0
-                                                                                                 }})
+        weights_list, model_list = self.adaboost.decision_tree(self.train_data, self.features, self.target,
+                                                               iterations=10,
+                                                               model_dict={"predict_method": self.predict.binary_tree,
+                                                                           "model": self.weighted_binary_decision_trees,
+                                                                           "model_method": "greedy_recursive",
+                                                                           "model_parameters": {"max_depth": 1,
+                                                                                                "minimum_error": 1e-15,
+                                                                                                "current_depth": 0
+                                                                                                }})
 
         # Get the predictions of each dataset in the test data
-        predictions = self.predict.adaboost_binary_decision_tree(self.predict.binary_tree, models_list, weights_list,
+        predictions = self.predict.adaboost_binary_decision_tree(self.predict.binary_tree, model_list, weights_list,
                                                                  self.test_data)
 
         # Assert the predictions
