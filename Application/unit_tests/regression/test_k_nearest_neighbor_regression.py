@@ -25,7 +25,7 @@ class TestKNearestNeighborRegression(unittest.TestCase):
     _multiprocess_can_split_ = True
 
     def setUp(self):
-        """Constructor for TestKNearestNeighborRegression.
+        """Set up for TestKNearestNeighborRegression.
 
         Loads housing data, and creates training and testing data.
 

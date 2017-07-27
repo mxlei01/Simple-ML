@@ -15,7 +15,7 @@ class Error:
     """
 
     def __init__(self):
-        """Sets up PredictOutput class.
+        """Set up PredictOutput class.
 
         Constructor for Error, sets up output prediction class.
 

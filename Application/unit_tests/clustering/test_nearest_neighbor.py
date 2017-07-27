@@ -21,7 +21,7 @@ class TestNearestNeighbor(unittest.TestCase):
     _multiprocess_can_split_ = True
 
     def setUp(self):
-        """Constructor for TestNearestNeighbor.
+        """Set up for TestNearestNeighbor.
 
         Loads Wikipedia data, and creates training and testing data.
 

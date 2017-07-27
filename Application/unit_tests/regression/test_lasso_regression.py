@@ -26,7 +26,7 @@ class TestLassoRegression(unittest.TestCase):
     _multiprocess_can_split_ = True
 
     def setUp(self):
-        """Constructor for TestLassoRegression.
+        """Set up for TestLassoRegression.
 
         Loads housing data, and creates training and testing data.
 

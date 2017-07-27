@@ -16,7 +16,7 @@ class TextAnalytics:
     """
 
     def __init__(self):
-        """Constructor for TextAnalytics.
+        """Set up TextAnalytics.
 
         Stores previous idf values for quicker lookup, no need to compute again.
 

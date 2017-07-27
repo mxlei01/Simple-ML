@@ -23,7 +23,7 @@ class TestLinearRegression(unittest.TestCase):
     _multiprocess_can_split_ = True
 
     def setUp(self):
-        """Constructor for TestLinearRegression.
+        """Set up for TestLinearRegression.
 
         Loads housing data, and creates training and testing data.
 

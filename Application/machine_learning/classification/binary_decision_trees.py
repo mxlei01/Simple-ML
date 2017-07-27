@@ -392,9 +392,9 @@ class BinaryDecisionTrees:
 
     @staticmethod
     def reached_minimum_node_size(data, min_node_size):
-        """Decides if we reached minimum node size.
+        """Decide if we reached minimum node size.
 
-        Computes whether the number of data points left is less than the minimum node size. Returns true if the
+        Compute whether the number of data points left is less than the minimum node size. Returns true if the
         number of data points is less than or equal to the minimum node size, otherwise false.
 
         Args:
