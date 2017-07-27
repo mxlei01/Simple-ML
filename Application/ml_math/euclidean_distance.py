@@ -27,7 +27,7 @@ class EuclideanDistance:
 
         """
         # For both arrays, subtract and square element wise, and take the sum, then do a square root
-        return np.sqrt(np.sum((vector_one-vector_two) ** 2))
+        return np.sqrt(np.sum((vector_one - vector_two) ** 2))
 
     @staticmethod
     def euclidean_distance_cmp_one_value(feature_matrix_training, feature_vector_query):
@@ -46,4 +46,4 @@ class EuclideanDistance:
         # For each array inside feature_matrix_training, we subtract and square
         # from feature_vector_query, and add together, which forms a matrix with multiple rows that only
         # has one value. Then we take the square root for each row (axis=1)
-        return np.sqrt(np.sum((feature_matrix_training-feature_vector_query) ** 2, axis=1))
+        return np.sqrt(np.sum((feature_matrix_training - feature_vector_query) ** 2, axis=1))

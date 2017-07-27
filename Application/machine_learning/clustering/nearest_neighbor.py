@@ -73,7 +73,7 @@ class NearestNeighbor:
         compare = defaultdict(float, compare)
 
         # Compare the euclidean distance
-        return math.sqrt(sum([(target[word]-compare[word])**2 for word in set(target).union(set(compare))]))
+        return math.sqrt(sum([(target[word]-compare[word]) ** 2 for word in set(target).union(set(compare))]))
 
     @staticmethod
     def cosine_similarity(target, compare):

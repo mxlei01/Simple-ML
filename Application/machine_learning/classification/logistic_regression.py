@@ -53,7 +53,7 @@ class LogisticRegression:
                                                       1, feature_matrix, coefficients)
 
             # Compute P(y_i = +1 | x_i, w) using the link function
-            predictions = [1 / (1+math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
+            predictions = [1 / (1 + math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
 
             # Compute indicator value for (y_i = +1)
             indicator = (label == +1)
@@ -122,7 +122,7 @@ class LogisticRegression:
             # -------------------   = P(y=1|x_i,w)
             # 1 + exp(-w^t*h(x_i))
             dot_product_results = np.apply_along_axis(lambda feature, coef: np.dot(np.transpose(coef), feature),
-                                                      1, feature_matrix[i:i+model_parameters["batch_size"], :],
+                                                      1, feature_matrix[i : i+model_parameters["batch_size"], :],
                                                       coefficients)
 
             # Compute P(y_i = +1 | x_i, w) using the link function
