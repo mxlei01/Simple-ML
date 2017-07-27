@@ -19,7 +19,7 @@ class KFoldCrossValidation:
     """
 
     def __init__(self):
-        """Constructor for KFoldCrossValidation.
+        """Set up KFoldCrossValidation class with multiple classes.
 
         Constructor for KFoldCrossValidation, used to setup numpy conversion, output prediction, and residual sum
         of squares.
@@ -30,7 +30,7 @@ class KFoldCrossValidation:
         self.residual_sum_squares = ResidualSumSquares()
 
     def k_fold_cross_validation(self, k, model, model_parameters, data_parameters):
-        """Performs K Fold Cross Validation.
+        """Perform K Fold Cross Validation.
 
         Takes in our data, and splits the data to smaller subsets, and these smaller subsets are used as validation
         sets, and everything else not included in the validation set is used as training sets. The model will be

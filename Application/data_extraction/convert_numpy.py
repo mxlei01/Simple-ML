@@ -14,9 +14,9 @@ class ConvertNumpy:
 
     @staticmethod
     def convert_to_numpy(pandas_frame, features, output, constant=None):
-        """Converts pandas frame to numpy matrix and array.
+        """Convert pandas frame to numpy matrix and array.
 
-        Converts a pandas frame to one numpy matrix, and one numpy array. The numpy matrix are the features, and the
+        Convert a pandas frame to one numpy matrix, and one numpy array. The numpy matrix are the features, and the
         array will be the feature's corresponding output. This will first add a constant if there's
         any to the pandas frame. Then extract the features that we want from the pandas_frame using the features
         array, and get an output from the output array.

@@ -26,7 +26,7 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
     _multiprocess_can_split_ = True
 
     def setUp(self):
-        """Constructor for TestWeightedLogisticRegressionL2Norm.
+        """Set up for TestWeightedLogisticRegressionL2Norm.
 
         Loads Amazon data, and creates training and testing data.
 

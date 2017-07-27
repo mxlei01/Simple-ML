@@ -15,9 +15,9 @@ class NearestNeighbor:
     """
 
     def nearest_neighbors(self, data, label, feature, distance):
-        """Computes nearest neighbors.
+        """Compute nearest neighbors.
 
-        Computes the nearest neighbors by using the label on data, which tells us the column of the data frame for
+        Compute the nearest neighbors by using the label on data, which tells us the column of the data frame for
         querying, and the feature would be the name of the data frame that uses bag of words or tf-idf, uses the
         distance metric it would compute all of the distance compared to the query point.
 
@@ -56,7 +56,7 @@ class NearestNeighbor:
 
     @staticmethod
     def euclidean(target, compare):
-        """Computes the euclidean distance between target and compare.
+        """Compute the euclidean distance between target and compare.
 
         The euclidean distance is computed as: √(a_i-a_j)^2+(b_i-b_j)^2
 
@@ -73,11 +73,11 @@ class NearestNeighbor:
         compare = defaultdict(float, compare)
 
         # Compare the euclidean distance
-        return math.sqrt(sum([(target[word]-compare[word]) ** 2 for word in set(target).union(set(compare))]))
+        return math.sqrt(sum([(target[word] - compare[word]) ** 2 for word in set(target).union(set(compare))]))
 
     @staticmethod
     def cosine_similarity(target, compare):
-        """Computes the cosine similarity between target and compare.
+        """Compute the cosine similarity between target and compare.
 
         The cosine similarity is computed as:        x^T*y
                                               1 - ------------

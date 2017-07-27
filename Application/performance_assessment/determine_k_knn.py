@@ -16,15 +16,15 @@ class DetermineKKnn:
     """
 
     def __init__(self):
-        """Constructor for DetermineKKnn to setup RSS class.
+        """Set up ResidualSumSquares class.
 
-        Constructor to setup RSS Class.
+        Constructor to setup ResidualSumSquares Class.
 
         """
         self.residual_sum_squares = ResidualSumSquares()
 
     def determine_k_knn(self, knn_model, start_k, end_k, train_valid_data):
-        """Determines the best K value for knn algorithms.
+        """Determine the best K value for knn algorithms.
 
         The best K value is computed by computing the lowest RSS value between K values start_k and end_k.
 

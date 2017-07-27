@@ -17,7 +17,7 @@ class LassoRegression:
     """
 
     def __init__(self):
-        """Constructor for LassoRegression to setup PredictOutput.
+        """Set up PredictOutput class.
 
         Constructor for the LassoRegression class, mainly used to setup PredictOutput.
 
@@ -86,9 +86,9 @@ class LassoRegression:
         return weights
 
     def lasso_coordinate_descent_step(self, step_parameters, feature_matrix, output, model_parameters):
-        """Computes the Lasso coordinate descent step.
+        """Compute the Lasso coordinate descent step.
 
-        Computes the Lasso coordinate descent step, which is essentially computing a new ro_i, and based on the
+        Compute the Lasso coordinate descent step, which is essentially computing a new ro_i, and based on the
         index and ro_i, compute new w_i weight.
 
         Args:
@@ -133,9 +133,9 @@ class LassoRegression:
         return new_weight_i
 
     def compute_ro_j(self, feature_matrix, real_output, weights):
-        """Computes ro_j.
+        """Compute ro_j.
 
-        Computes ro_j using ro_j = Sigma(N, i=1, h_j(x_i)(y_i-y^_i(w_-j).
+        Compute ro_j using ro_j = Sigma(N, i=1, h_j(x_i)(y_i-y^_i(w_-j).
 
         Args:
             feature_matrix (numpy.ndarray): Feature matrix.

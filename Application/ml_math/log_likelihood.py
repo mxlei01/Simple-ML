@@ -13,7 +13,7 @@ class LogLikelihood:
 
     @staticmethod
     def log_likelihood(feature_matrix, label, coefficients):
-        """Computes log likelihood.
+        """Compute log likelihood.
 
         Used to compute the log likelihood, which is based on:
             ℓℓ(w)=∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−w^Th(xi))))
@@ -51,7 +51,7 @@ class LogLikelihood:
 
     @staticmethod
     def average_log_likelihood(feature_matrix, label, coefficients):
-        """Computes average log likelihood.
+        """Compute average log likelihood.
 
         Used to compute the log likelihood, which is based on:
             ℓℓa(w)=(1/N)*∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−w^Th(xi))))
@@ -90,7 +90,7 @@ class LogLikelihood:
 
     @staticmethod
     def log_likelihood_l2_norm(feature_matrix, label, coefficients, l2_penalty):
-        """Computes log likelihood with l2 norm.
+        """Compute log likelihood with l2 norm.
 
         Used to compute the log likelihood with l2 norm, which is based on:
             ℓℓ(w)=∑^N_i=1((1[yi=+1]−1)wTh(xi)−ln(1+exp(−w^Th(xi))))-lambda||w||^2_2
@@ -114,10 +114,10 @@ class LogLikelihood:
         indicator = (label == +1)
 
         # Get the score, which is w^t*h(xi)
-        scores = np.dot(feature_matrix, coefficients)
+        score = np.dot(feature_matrix, coefficients)
 
         # Sum over all of the values of indicator*score - logexp and minus the l2 penalty and summing all the
         # coefficient while squared
-        lp = np.sum((indicator - 1) * scores - np.log(1. + np.exp(-scores))) - l2_penalty * np.sum(coefficients[1:] ** 2)
+        lp = np.sum((indicator - 1) * score - np.log(1. + np.exp(-score))) - l2_penalty * np.sum(coefficients[1:] ** 2)
 
         return lp

@@ -244,7 +244,7 @@ class BinaryDecisionTrees:
 
     @staticmethod
     def intermediate_node_mistakes(data_labels):
-        """Computes and returns number of errors of a majority class.
+        """Compute and returns number of errors of a majority class.
 
         Determine which labels are greater, -1 or 1. If 1 is greater, then return the number of -1 as number of
         mistakes, vice versa, since we will use this function to determine the majority class error. If 1 is greater,
@@ -271,9 +271,9 @@ class BinaryDecisionTrees:
         return total_negative_one if total_one > total_negative_one else total_one
 
     def best_feature(self, data, features, target):
-        """Determines the best feature to split.
+        """Determine the best feature to split.
 
-        Determines the best splitting label, which we will pick the feature that offers the lowest classification error.
+        Determine the best splitting label, which we will pick the feature that offers the lowest classification error.
         Classification error =   # mistakes
                               ----------------
                               # total examples
@@ -325,9 +325,9 @@ class BinaryDecisionTrees:
         return best_feature
 
     def create_leaf(self, data_labels):
-        """Creates a leaf node for decision tree algorithm.
+        """Create a leaf node for decision tree algorithm.
 
-        Creates a leaf node with prediction.
+        Create a leaf node with prediction.
 
         Args:
             data_labels (numpy.array): Array of labels (1 or -1).
@@ -358,9 +358,9 @@ class BinaryDecisionTrees:
 
     @staticmethod
     def create_node(splitting_feature, left, right, is_leaf, prediction):
-        """Creates a leaf node with passed parameters.
+        """Create a leaf node with passed parameters.
 
-        Creates a leaf nodes from arguments passed in. This can be used for both decision tree stumps and leaves.
+        Create a leaf nodes from arguments passed in. This can be used for both decision tree stumps and leaves.
 
         Args:
             splitting_feature (str or NoneType): The feature that is split in this node, can be None if this is a leaf.

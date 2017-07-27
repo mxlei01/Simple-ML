@@ -13,9 +13,9 @@ class EuclideanDistance:
 
     @staticmethod
     def euclidean_distance(vector_one, vector_two):
-        """Computes Euclidean Distance.
+        """Compute Euclidean Distance.
 
-        Computes euclidean distances for two vectors.
+        Compute euclidean distances for two vectors.
         Euclidean distance: sqrt((q1-p1)^2+(q2-p2)^2+(q3-p3)^2).
 
         Args:
@@ -31,9 +31,9 @@ class EuclideanDistance:
 
     @staticmethod
     def euclidean_distance_cmp_one_value(feature_matrix_training, feature_vector_query):
-        """Computes euclidean distance against a matrix.
+        """Compute euclidean distance against a matrix.
 
-        Computes euclidean distances from the feature vector (query) to a matrix
+        Compute euclidean distances from the feature vector (query) to a matrix
 
         Args:
             feature_matrix_training (numpy.matrix): The training set (or comparison we are going to make to).

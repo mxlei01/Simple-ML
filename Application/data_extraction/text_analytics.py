@@ -25,9 +25,9 @@ class TextAnalytics:
 
     @staticmethod
     def word_count(text):
-        """Computes the word count.
+        """Compute the word count.
 
-        Computes the word count vector by counting the number of occurrences for a word.
+        Compute the word count vector by counting the number of occurrences for a word.
 
         Args:
             text (str): Text that needs to be converted to numeric vector. Assumes that the input is already cleaned.
@@ -48,9 +48,9 @@ class TextAnalytics:
         return count
 
     def tf_idf(self, corpus, document):
-        """Computes tf_idf.
+        """Compute tf_idf.
 
-        Computes the tf_idf, where tf is the term frequency of each word in a document, and idf is the inverse of
+        Compute the tf_idf, where tf is the term frequency of each word in a document, and idf is the inverse of
         document frequency, hence          # docs
                                   log -----------------
                                       # docs using word

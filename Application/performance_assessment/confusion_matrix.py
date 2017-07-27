@@ -14,9 +14,9 @@ class ConfusionMatrix:
 
     @staticmethod
     def confusion_matrix(output, predicted_output):
-        """Computes confusion matrix.
+        """Compute confusion matrix.
 
-        Produces a confusion matrix.
+        Produce a confusion matrix.
         Where,
             True Label: +1, Predicted Label: +1 = True Positive
             True Label: +1, Predicted Label: -1 = False Negative
@@ -57,9 +57,9 @@ class ConfusionMatrix:
                 "false_positives": false_positives, "true_negatives": true_negatives}
 
     def precision(self, output, predicted_output):
-        """Computes precision.
+        """Compute precision.
 
-        Computes the precision of the output and predicted_output.
+        Compute the precision of the output and predicted_output.
         Precision =         # True positives
                    ------------------------------------
                    # True positives + # False negatives
@@ -80,9 +80,9 @@ class ConfusionMatrix:
                                                                  confusion_matrix["false_negatives"])
 
     def recall(self, output, predicted_output):
-        """Computes recall.
+        """Compute recall.
 
-        Computes the recall of the output and predicted output.
+        Compute the recall of the output and predicted output.
         Recall =        # True positives
                ------------------------------------
                # True positives + # False positives

@@ -13,9 +13,9 @@ class ResidualSumSquares:
 
     @staticmethod
     def residual_sum_squares_regression(output, predicted_output):
-        """Computes residual sum of squares.
+        """Compute residual sum of squares.
 
-        Computes for residual sum of squares for regression.
+        Compute for residual sum of squares for regression.
 
         RSS = (y-Hw)^t * (y-Hw)
         Where,

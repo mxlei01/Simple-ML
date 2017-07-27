@@ -16,7 +16,7 @@ class Accuracy:
     """
 
     def __init__(self):
-        """Constructor for Accuracy class to setup predict output.
+        """Set up PredictOutput class.
 
         Constructor for Accuracy class to setup predict output class.
 
@@ -25,7 +25,7 @@ class Accuracy:
 
     @staticmethod
     def general(predictions, label):
-        """Computes general form of accuracy for classification.
+        """Compute general form of accuracy for classification.
 
         Needs to have predictions and labels before using this function.
 
@@ -48,7 +48,7 @@ class Accuracy:
         return num_correct / len(label)
 
     def logistic_regression(self, feature_matrix, label, coefficients):
-        """Computes accuracy for logistic regression.
+        """Compute accuracy for logistic regression.
 
         Can take in feature matrix and coefficients from logistic regression, and compute accuracy.
 
@@ -76,7 +76,7 @@ class Accuracy:
 
     @staticmethod
     def decision_tree(data, predictions, target):
-        """Computes accuracy for logistic regression.
+        """Compute accuracy for logistic regression.
 
         Can take in data and predictions along with target from a decision tree to compute accuracy.
 

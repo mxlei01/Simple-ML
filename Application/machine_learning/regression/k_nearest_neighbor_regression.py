@@ -17,7 +17,7 @@ class KNearestNeighborRegression:
     """
 
     def __init__(self):
-        """Constructor for KNearestNeighborRegression to setup EuclideanDistance.
+        """Set up EuclideanDistance class.
 
         Constructor for the KNN class, mainly used to setup EuclideanDistance.
 
@@ -25,9 +25,9 @@ class KNearestNeighborRegression:
         self.euclidean_distance = EuclideanDistance()
 
     def k_nearest_neighbor_regression(self, k, feature_matrix_training, feature_vector_query):
-        """Computes K Nearest neighbor Regression.
+        """Compute K Nearest neighbor Regression.
 
-        Computes KNN by computing euclidean distance for each query point, and returning the closest points.
+        Compute KNN by computing euclidean distance for each query point, and returning the closest points.
 
         Args:
             k (int): Amount of neighbors.
@@ -68,9 +68,9 @@ class KNearestNeighborRegression:
 
     def predict_k_nearest_neighbor_all_regression(self, k, feature_matrix_training, output_train,
                                                   feature_matrix_query_set):
-        """Predicts KNN output for each query set.
+        """Predict KNN output for each query set.
 
-        Predicts the output of multiple k_nearest_neighbor_regression by using the predict_k_nearest_neighbor_regression
+        Predict the output of multiple k_nearest_neighbor_regression by using the predict_k_nearest_neighbor_regression
         function. Each row of the feature_matrix_query_set is computed for mean.
 
         Args:

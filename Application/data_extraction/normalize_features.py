@@ -14,7 +14,7 @@ class NormalizeFeatures:
 
     @staticmethod
     def l2_norm(features_matrix):
-        """Normalizes a numpy matrix with l2 norm.
+        """Normalize a numpy matrix with l2 norm.
 
         Normalize each column of a numpy matrix with l2 norm: http://mathworld.wolfram.com/L2-Norm.html
         also called Euclidean Norm: sqrt(x^2+y^2+z^2).

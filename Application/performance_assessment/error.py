@@ -15,7 +15,7 @@ class Error:
     """
 
     def __init__(self):
-        """Constructor for Error.
+        """Sets up PredictOutput class.
 
         Constructor for Error, sets up output prediction class.
 
@@ -23,9 +23,9 @@ class Error:
         self.predict_output = PredictOutput()
 
     def binary_tree(self, tree, data, target):
-        """Computes classification error for binary tree.
+        """Compute classification error for binary tree.
 
-        Computes classification error for binary tree classification.
+        Compute classification error for binary tree classification.
         Classification error =    # Mistakes
                               ----------------
                               # Total examples

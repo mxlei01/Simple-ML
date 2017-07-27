@@ -126,7 +126,7 @@ class WeightedBinaryDecisionTrees:
 
     @staticmethod
     def intermediate_node_weighted_mistakes(data_labels, data_weights):
-        """Computes and returns number of errors of lowest weighted error.
+        """Compute and returns number of errors of lowest weighted error.
 
         Determine which labels (+1 or -1) have the lowest weighted errors. We will return 1 is +1 has the
         lowest weighted error.
@@ -154,9 +154,9 @@ class WeightedBinaryDecisionTrees:
             else (weighted_mistakes_positive, 1)
 
     def best_feature(self, data, features, target, data_weights):
-        """Determines the best feature to split.
+        """Determine the best feature to split.
 
-        Determines the best splitting label, which we will pick the feature that offers the lowest weighted error.
+        Determine the best splitting label, which we will pick the feature that offers the lowest weighted error.
         Weighted error = sum weighted error
                         ------------------
                          # total examples
@@ -211,9 +211,9 @@ class WeightedBinaryDecisionTrees:
         return best_feature
 
     def create_leaf(self, data_labels, data_weights):
-        """Creates a leaf node for decision tree algorithm.
+        """Create a leaf node for decision tree algorithm.
 
-        Creates a leaf node with prediction.
+        Create a leaf node with prediction.
 
         Args:
             data_labels (numpy.array): Array of labels (1 or -1).
@@ -238,9 +238,9 @@ class WeightedBinaryDecisionTrees:
 
     @staticmethod
     def create_node(splitting_feature, left, right, is_leaf, prediction):
-        """Creates a leaf node with passed parameters.
+        """Create a leaf node with passed parameters.
 
-        Creates a leaf nodes from arguments passed in. This can be used for both decision tree stumps and leaves.
+        Create a leaf nodes from arguments passed in. This can be used for both decision tree stumps and leaves.
 
         Args:
             splitting_feature (str or NoneType): The feature that is split in this node, can be None if this is a leaf.

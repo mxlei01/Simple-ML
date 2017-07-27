@@ -26,7 +26,7 @@ class TestLogisticRegression(unittest.TestCase):
     _multiprocess_can_split_ = True
 
     def setUp(self):
-        """Constructor for TestLogisticRegression.
+        """Set up for TestLogisticRegression.
 
         Loads Amazon data, and creates training and testing data.
 

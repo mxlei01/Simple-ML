@@ -33,7 +33,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
     _multiprocess_can_split_ = True
 
     def setUp(self):
-        """Constructor for TestBinaryDecisionTrees.
+        """Set up for TestBinaryDecisionTrees.
 
         We will clean up the loans_data by doing one hot encoding our features list, however, in the end we will
         use some pre-built data for training and testing, but it uses the same method for one hot encoding.
