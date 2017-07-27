@@ -202,15 +202,15 @@ class TestLassoRegression(unittest.TestCase):
 
         # Compute Multiple Weights
         weights1e7 = self.lasso.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
-                                                                  {"initial_weights": np.zeros(len(features)+1),
+                                                                  {"initial_weights": np.zeros(len(features) + 1),
                                                                    "l1_penalty": 1e7,
                                                                    "tolerance": 1})
         weights1e8 = self.lasso.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
-                                                                  {"initial_weights": np.zeros(len(features)+1),
+                                                                  {"initial_weights": np.zeros(len(features) + 1),
                                                                    "l1_penalty": 1e8,
                                                                    "tolerance": 1})
         weights1e4 = self.lasso.lasso_cyclical_coordinate_descent(normalized_feature_matrix, output,
-                                                                  {"initial_weights": np.zeros(len(features)+1),
+                                                                  {"initial_weights": np.zeros(len(features) + 1),
                                                                    "l1_penalty": 1e4,
                                                                    "tolerance": 5e5})
 
