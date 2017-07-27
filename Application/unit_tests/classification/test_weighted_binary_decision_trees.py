@@ -67,7 +67,7 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         self.test_data = pd.read_csv('./unit_tests/test_data/classification/lending_club/lending_club_test.csv')
 
     def test_01_greedy_recursive(self):
-        """Tests greedy recursive function for BinaryDecisionTrees class
+        """Tests greedy recursive function for BinaryDecisionTrees class.
 
         We will use the training data to build a decision tree, and measure the accuracy with some known good values.
 
@@ -90,7 +90,7 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(round(accuracy, 5), round(0.48124865678057166, 5))
 
     def test_02_greedy_recursive_high_depth_low_features(self):
-        """Tests greedy recursive function for BinaryDecisionTrees class
+        """Tests greedy recursive function for BinaryDecisionTrees class.
 
         We will use the training data to build a decision tree, and measure the accuracy with some known good values.
 
@@ -113,7 +113,7 @@ class TestWeightedBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(round(accuracy, 5), round(0.54148, 5))
 
     def test_03_greedy_recursive_high_depth_low_features(self):
-        """Tests greedy recursive function for BinaryDecisionTrees class
+        """Tests greedy recursive function for BinaryDecisionTrees class.
 
         We will use the training data to build a decision tree, and measure the accuracy with some known good values.
 

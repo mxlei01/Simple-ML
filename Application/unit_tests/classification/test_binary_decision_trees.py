@@ -76,7 +76,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.test_data = pd.read_csv('./unit_tests/test_data/classification/lending_club/lending_club_test.csv')
 
     def test_01_greedy_recursive(self):
-        """Tests greedy recursive function for BinaryDecisionTrees class
+        """Tests greedy recursive function for BinaryDecisionTrees class.
 
         We will use the training data to build a decision tree, and measure the accuracy with some known good values.
 
@@ -98,7 +98,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
 
     def test_02_greedy_recursive_high_depth_low_feature(self):
-        """Tests greedy recursive function for BinaryDecisionTrees class
+        """Tests greedy recursive function for BinaryDecisionTrees class.
 
         We will use the training data to build a decision tree, and use high depth.
 
@@ -121,7 +121,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(round(accuracy, 5), round(0.38432, 5))
 
     def test_04_greedy_recursive_high_depth(self):
-        """Tests greedy recursive function for BinaryDecisionTrees class
+        """Tests greedy recursive function for BinaryDecisionTrees class.
 
         We will use the training data to build a decision tree, and use high depth.
 
@@ -143,7 +143,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(round(accuracy, 5), round(0.37732, 5))
 
     def test_03_greedy_recursive_early_stop(self):
-        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
+        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class.
 
         We will use early stopping for greedy recursive, and measure performance.
 
@@ -185,7 +185,7 @@ class TestBinaryDecisionTrees(unittest.TestCase):
         self.assertEqual(round(accuracy, 5), round(0.3837785437311504, 5))
 
     def test_04_greedy_recursive_early_stop_high_depth(self):
-        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class
+        """Tests for greedy recursive with early stopping for BinaryDecisionTrees class.
 
         We will use early stopping for greedy recursive, and measure performance.
 
