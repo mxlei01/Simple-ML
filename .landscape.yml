@@ -3,7 +3,7 @@ test-warnings: yes
 strictness: medium
 autodetect: yes
 requirements:
-    - Python_Requirements/requirements.txt
+    - requirements.txt
 python-targets:
     - 3
 pep8:

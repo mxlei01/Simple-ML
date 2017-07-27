@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:17.04
 
 #===========================Start Update Ubuntu================================
 RUN apt-get -y update 
@@ -28,14 +28,16 @@ COPY .git /application
 #=====Create a folder, and copy our application into the application folder====
 
 #=====Installing Python 3.5====================================================
-RUN add-apt-repository ppa:fkrull/deadsnakes
 RUN apt-get -y update
-RUN apt-get -y install python3.5
-RUN wget https://bootstrap.pypa.io/get-pip.py && python3.5 get-pip.py
-RUN apt-get -y install python3.5-dev
+RUN apt-get -y install python3.6
+RUN wget https://bootstrap.pypa.io/get-pip.py && python3.6 get-pip.py
+RUN apt-get -y install python3.6-dev
+RUN apt-get -y install g++
+RUN apt-get -y install libfreetype6-dev
+RUN apt-get -y install python3.6-dev
 #=====Installing Python 3.5====================================================
 
 #===========================Installing Python Requirements=====================
-COPY Python_Requirements /application/Python_Requirements
-RUN pip3.5 install -r /application/Python_Requirements/requirements.txt
+COPY requirements.txt /application/requirements.txt
+RUN pip3 install -r /application/requirements.txt
 #===========================Installing Python Requirements=====================
