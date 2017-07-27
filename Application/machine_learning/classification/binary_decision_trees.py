@@ -409,9 +409,9 @@ class BinaryDecisionTrees:
 
     @staticmethod
     def error_reduction(error_before_split, error_after_split):
-        """Computes error reduction.
+        """Compute error reduction.
 
-        Computes the error reduction, which is error before the split minus the error after the split.
+        Compute the error reduction, which is error before the split minus the error after the split.
 
         Args:
             error_before_split (float): Error before split.
