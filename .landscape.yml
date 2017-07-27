@@ -1,6 +1,6 @@
 doc-warnings: yes
 test-warnings: yes
-strictness: medium
+strictness: veryhigh
 autodetect: yes
 requirements:
     - requirements.txt
