@@ -50,10 +50,10 @@ class LinearRegression:
             error = output - np.dot(feature_matrix, weights)
 
             # Compute -2H^t(y-Hw)
-            gradient = -2*np.dot(np.transpose(feature_matrix), error)
+            gradient = -2 * np.dot(np.transpose(feature_matrix), error)
 
             # Compute w^(t+1) <= w^(t) - n(-2H^t(y-Hw))
-            weights -= model_parameters["step_size"]*gradient
+            weights -= model_parameters["step_size"] * gradient
 
             # If the magnitude of the gradient is less than tolerance, then we have converged
             # The formula for magnitude is sum of squared array, and then square root, but numpy
@@ -107,10 +107,10 @@ class LinearRegression:
             error = output - np.dot(feature_matrix, weights)
 
             # Compute -2H^t(y-Hw)
-            gradient = -2*np.dot(np.transpose(feature_matrix), error)
+            gradient = -2 * np.dot(np.transpose(feature_matrix), error)
 
             # Compute w^(t+1) <= w^(t) + n(-2H^t(y-Hw))
-            weights += model_parameters["step_size"]*gradient
+            weights += model_parameters["step_size"] * gradient
 
             # If the magnitude of the gradient is greater than tolerance, then we have converged
             # The formula for magnitude is sum of squared array, and then square root, but numpy

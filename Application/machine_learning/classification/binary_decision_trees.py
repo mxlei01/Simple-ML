@@ -421,4 +421,4 @@ class BinaryDecisionTrees:
             float: Error reduced if split.
 
         """
-        return error_before_split-error_after_split
+        return error_before_split - error_after_split

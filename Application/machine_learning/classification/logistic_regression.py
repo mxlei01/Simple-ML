@@ -126,11 +126,11 @@ class LogisticRegression:
                                                       coefficients)
 
             # Compute P(y_i = +1 | x_i, w) using the link function
-            predictions = [1 / (1+math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
+            predictions = [1 / (1 + math.exp(-weight_dot_feature)) for weight_dot_feature in dot_product_results]
 
             # Compute indicator value for (y_i = +1), and we would slice it with [i:i+batch_size] to give us rows
             # between i and i+batch_size
-            indicator = (label[i:i+model_parameters["batch_size"]] == +1)
+            indicator = (label[i:i + model_parameters["batch_size"]] == +1)
 
             # Compute the errors as indicator - predictions, (1[y=+1]-P(y=1|x_i,w)
             errors = indicator - predictions

@@ -62,7 +62,7 @@ class AdaBoost:
 
         """
         # Each row of data (training data), has an alpha
-        alpha = pd.Series(data=[1]*len(data))
+        alpha = pd.Series(data=[1] * len(data))
 
         # Initialize a list of weights
         weights_list = []
@@ -103,7 +103,7 @@ class AdaBoost:
             # If f_t(x) classifier was a good classifier, then the weighted error will be low, which
             # results in a higher w_t for that classifier. If the classifier was a bad classifier, then the result
             # would be a classifier with lower w_t
-            weight = 0.5 * math.log((1-weighted_error) / weighted_error)
+            weight = 0.5 * math.log((1 - weighted_error) / weighted_error)
 
             # Add the new weight to our weights list
             weights_list.append(weight)
@@ -124,7 +124,7 @@ class AdaBoost:
             )
 
             # Scale alpha by multiplying by exponential_weight
-            alpha = alpha*exponential_weight
+            alpha = alpha * exponential_weight
 
             # Normalize the weights α_i =        α_i
             #                            ---------------------
@@ -164,7 +164,7 @@ class AdaBoost:
 
         """
         # Each row of data (training data), has an alpha
-        alpha = np.array([1]*len(feature_matrix))
+        alpha = np.array([1] * len(feature_matrix))
 
         # Initialize a list of weights
         weights_list = []

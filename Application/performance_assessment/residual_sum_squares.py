@@ -30,4 +30,4 @@ class ResidualSumSquares:
             float: Residual sum of squares.
 
         """
-        return np.dot(output-predicted_output, output-predicted_output)
+        return np.dot(output - predicted_output, output - predicted_output)

@@ -45,7 +45,7 @@ class LogLikelihood:
         logexp[mask] = -scores[mask]
 
         # Sum over all all the values of indicator*score - logexp
-        lp = np.sum((indicator-1)*scores - logexp)
+        lp = np.sum((indicator - 1) * scores - logexp)
 
         return lp
 
@@ -84,7 +84,7 @@ class LogLikelihood:
         logexp[mask] = -scores[mask]
 
         # Sum over all all the values of indicator*score - logexp
-        lp = np.sum((indicator-1)*scores - logexp) / len(feature_matrix)
+        lp = np.sum((indicator-1) * scores - logexp) / len(feature_matrix)
 
         return lp
 
@@ -118,6 +118,6 @@ class LogLikelihood:
 
         # Sum over all of the values of indicator*score - logexp and minus the l2 penalty and summing all the
         # coefficient while squared
-        lp = np.sum((indicator-1)*scores - np.log(1.+np.exp(-scores))) - l2_penalty*np.sum(coefficients[1:]**2)
+        lp = np.sum((indicator-1) * scores - np.log(1. + np.exp(-scores))) - l2_penalty * np.sum(coefficients[1:] ** 2)
 
         return lp

@@ -54,11 +54,11 @@ class WeightedLogisticRegressionL2Norm:
             #           1
             # -------------------   = P(y=1|x_i,w)
             # 1 + exp(-w^t*h(x_i))
-            dot_product_results = np.apply_along_axis(lambda feature, coef: np.dot(np.transpose(coef), feature),
+            dot_products = np.apply_along_axis(lambda feature, coef: np.dot(np.transpose(coef), feature),
                                                       1, feature_matrix, coefficients)
 
             # Compute P(y_i = +1 | x_i, w) using the link function
-            predictions = [1 / (1+math.exp(-coefficient_dot_feature)) for coefficient_dot_feature in dot_product_results]
+            predictions = [1 / (1 + math.exp(-coefficient_dot_feature)) for coefficient_dot_feature in dot_products]
 
             # Compute indicator value for (y_i = +1)
             indicator = (label == +1)

@@ -78,7 +78,7 @@ class LassoRegression:
                                                                 model_parameters)
 
                 # Returns true if any weight changes greater than tolerance
-                change.append(abs(old_weights_i-weights[i]) > model_parameters["tolerance"])
+                change.append(abs(old_weights_i - weights[i]) > model_parameters["tolerance"])
 
             # Returns true if all the changes are less than tolerance
             low_change = not any(change)
@@ -160,9 +160,9 @@ class LassoRegression:
                                                         np.delete(weights, j))
 
             # residual = output - prediction
-            residual = real_output-prediction
+            residual = real_output - prediction
 
             # ro[j] = Sigma(N, i=1, feature_i) * residual
-            ro[j] = np.sum([feature_matrix[:, j]*residual])
+            ro[j] = np.sum([feature_matrix[:, j] * residual])
 
         return ro

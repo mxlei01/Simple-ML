@@ -50,11 +50,11 @@ class LogisticRegressionL2Norm:
             #           1
             # -------------------   = P(y=1|x_i,w)
             # 1 + exp(-w^t*h(x_i))
-            dot_product_results = np.apply_along_axis(lambda feature, coef: np.dot(np.transpose(coef), feature),
+            dot_products = np.apply_along_axis(lambda feature, coef: np.dot(np.transpose(coef), feature),
                                                       1, feature_matrix, coefficients)
 
             # Compute P(y_i = +1 | x_i, w) using the link function
-            predictions = [1 / (1+math.exp(-coefficient_dot_feature)) for coefficient_dot_feature in dot_product_results]
+            predictions = [1 / (1 + math.exp(-coefficient_dot_feature)) for coefficient_dot_feature in dot_products]
 
             # Compute indicator value for (y_i = +1)
             indicator = (label == +1)
@@ -74,7 +74,7 @@ class LogisticRegressionL2Norm:
             # row will error, which gives us Σ^N_i=1(h_j(X_i))(1[y=+1]-P(y=1|x_i,w))
             coefficients = coefficients + model_parameters["step_size"] * (np.dot(
                 np.transpose(feature_matrix),
-                errors)-2 * model_parameters["l2_penalty"] * coefficients)
+                errors) - 2 * model_parameters["l2_penalty"] * coefficients)
 
             # The first coefficient should not be affected by L2 normalization
             coefficients[0] = intercept

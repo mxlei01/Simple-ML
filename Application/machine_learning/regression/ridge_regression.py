@@ -56,20 +56,20 @@ class RidgeRegression:
             error = output - np.dot(feature_matrix, weights)
 
             # Compute -2H^t(y-Hw)
-            gradient = -2*np.dot(np.transpose(feature_matrix), error)
+            gradient = -2 * np.dot(np.transpose(feature_matrix), error)
 
             # Remember the intercept's gradient
             intercept = gradient[0]
 
             # Compute gradient(-2H^t(y-Hw))+l2_penalty*2*weights
-            gradient += model_parameters["l2_penalty"]*2*weights
+            gradient += model_parameters["l2_penalty"] * 2 * weights
 
             # We will remove the first gradient's l2_penalty, and only set weights, since the first weight is an
             # intercept
             gradient[0] = intercept
 
             # Compute w^(t+1) <= w^(t) - n((-2H^t(y-Hw))+l2_penalty*2*weights)
-            weights -= model_parameters["step_size"]*gradient
+            weights -= model_parameters["step_size"] * gradient
 
             # Determine if we have a tolerance value
             if model_parameters["tolerance"] is not None:
@@ -130,20 +130,20 @@ class RidgeRegression:
             error = output - np.dot(feature_matrix, weights)
 
             # Compute -2H^t(y-Hw)
-            gradient = -2*np.dot(np.transpose(feature_matrix), error)
+            gradient = -2 * np.dot(np.transpose(feature_matrix), error)
 
             # Remember the intercept's gradient
             intercept = gradient[0]
 
             # Compute gradient(-2H^t(y-Hw))+l2_penalty*2*weights
-            gradient += model_parameters["l2_penalty"]*2*weights
+            gradient += model_parameters["l2_penalty"] * 2 * weights
 
             # We will remove the first gradient's l2_penalty, and only set weights, since the first weight is an
             # intercept
             gradient[0] = intercept
 
             # Compute w^(t+1) <= w^(t) + n((-2H^t(y-Hw))+l2_penalty*2*weights)
-            weights += model_parameters["step_size"]*gradient
+            weights += model_parameters["step_size"] * gradient
 
             # Determine if we have a tolerance value
             if model_parameters["tolerance"] is not None:

@@ -76,7 +76,7 @@ class TestWeightedLogisticRegressionL2Norm(unittest.TestCase):
         feature_matrix, sentiment = self.convert_numpy.convert_to_numpy(self.review_frame, features, output, 1)
 
         # Create weight list for training data
-        weights_list = np.array([1]*len(self.review_frame))
+        weights_list = np.array([1] * len(self.review_frame))
 
         # Compute the coefficients
         coefficients = self.weighted_logistic_regression_l2.gradient_ascent(feature_matrix, sentiment,

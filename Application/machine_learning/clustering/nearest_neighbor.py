@@ -101,12 +101,12 @@ class NearestNeighbor:
         x_y = sum([(target[word] * compare[word]) for word in set(target).union(set(compare))])
 
         # Compute x norm, ||x||
-        x_norm = math.sqrt(sum([target[word]**2 for word in target]))
+        x_norm = math.sqrt(sum([target[word] ** 2 for word in target]))
 
         # Compute y norm, ||y||
-        y_norm = math.sqrt(sum([compare[word]**2 for word in compare]))
+        y_norm = math.sqrt(sum([compare[word] ** 2 for word in compare]))
 
         # Compute cosine distance,       x^T*y
         #                          1 - ------------
         #                               ||x||*||y|
-        return 1-(x_y / (x_norm*y_norm))
+        return 1 - (x_y / (x_norm * y_norm))
