@@ -20,7 +20,7 @@ RUN apt-get -y install wget
 
 #=====Create a folder, and copy our application into the application folder====
 RUN mkdir /application
-COPY Application /application/Application
+COPY simpleml /application/simpleml
 COPY Docker/Build_Scripts /application/Build_Scripts
 COPY .coveragerc /application/
 COPY .noserc /application/

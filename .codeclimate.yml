@@ -16,4 +16,4 @@ engines:
     enabled: true
 ratings:
   paths:
-    - Application/**
+    - simpleml/**

@@ -4,7 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/mxlei01/simpleml/badges/gpa.svg)](https://codeclimate.com/github/mxlei01/simpleml)
 [![Join the chat at https://gitter.im/mxlei01/simpleml](https://badges.gitter.im/mxlei01/simpleml.svg)](https://gitter.im/mxlei01/simpleml?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-# Simple-ML
+# simpleml
 
 A simple machine learning library written in Python
 
