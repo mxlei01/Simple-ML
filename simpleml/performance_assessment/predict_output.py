@@ -75,15 +75,14 @@ class PredictOutput:
         # If the node is the leaf, then we can return the prediction
         if tree['is_leaf']:
             return tree['prediction']
-        else:
-            # Get the data point according to the splitting feature on the tree
-            split_feature_value = data_point[tree['splitting_feature']]
 
-            # If value is equal to 0, then go the left, otherwise right
-            if split_feature_value == 0:
-                return self.binary_tree(tree['left'], data_point)
-            else:
-                return self.binary_tree(tree['right'], data_point)
+        # Get the data point according to the splitting feature on the tree
+        split_feature_value = data_point[tree['splitting_feature']]
+
+        # If value is equal to 0, then go the left, otherwise right
+        if split_feature_value == 0:
+            return self.binary_tree(tree['left'], data_point)
+        return self.binary_tree(tree['right'], data_point)
 
     @staticmethod
     def adaboost_binary_decision_tree(prediction_method, models, weights, data):

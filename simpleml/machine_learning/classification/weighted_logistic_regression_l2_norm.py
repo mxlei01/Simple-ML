@@ -1,7 +1,7 @@
 """Implements WeightedLogisticRegressionL2Norm."""
 
-import numpy as np
 import math
+import numpy as np
 
 
 class WeightedLogisticRegressionL2Norm:

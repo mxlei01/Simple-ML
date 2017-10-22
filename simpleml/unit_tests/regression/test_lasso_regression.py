@@ -116,15 +116,15 @@ class TestLassoRegression(unittest.TestCase):
 
         """
         # Assert that both are equal
-        self.assertEquals(round(self.lasso.lasso_coordinate_descent_step({"i": 1,
-                                                                          "weights": np.array([1., 4.])},
-                                                                         np.array([[3. / math.sqrt(13),
-                                                                                    1. / math.sqrt(10)],
-                                                                                   [2. / math.sqrt(13),
-                                                                                    3. / math.sqrt(10)]]),
-                                                                         np.array([1., 1.]),
-                                                                         {"l1_penalty": 0.1}), 8),
-                          round(0.425558846691, 8))
+        self.assertEqual(round(self.lasso.lasso_coordinate_descent_step({"i": 1,
+                                                                         "weights": np.array([1., 4.])},
+                                                                        np.array([[3. / math.sqrt(13),
+                                                                                   1. / math.sqrt(10)],
+                                                                                  [2. / math.sqrt(13),
+                                                                                   3. / math.sqrt(10)]]),
+                                                                        np.array([1., 1.]),
+                                                                        {"l1_penalty": 0.1}), 8),
+                         round(0.425558846691, 8))
 
     def test_04_coordinate_descent(self):
         """Test coordinate descent.
@@ -166,9 +166,9 @@ class TestLassoRegression(unittest.TestCase):
         predicted_output = self.predict_output.regression(normalized_feature_matrix, weights)
 
         # Assert that the RSS is what we wanted
-        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(output,
-                                                                                          predicted_output), -10),
-                          round(1.63049248148e+15, -10))
+        self.assertEqual(round(self.residual_sum_squares.residual_sum_squares_regression(output,
+                                                                                         predicted_output), -10),
+                         round(1.63049248148e+15, -10))
 
     def test_05_coordinate_descent_with_normalization(self):
         """Test coordinate descent with normalization.
@@ -244,22 +244,22 @@ class TestLassoRegression(unittest.TestCase):
         predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e4)
 
         # Assert that the RSS is what we wanted
-        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
-                                                                                          predicted_output), -12),
-                          round(2.2778100476e+14, -12))
+        self.assertEqual(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
+                                                                                         predicted_output), -12),
+                         round(2.2778100476e+14, -12))
 
         # Predict the output
         predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e7)
 
         # Assert that the RSS is what we wanted
-        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
-                                                                                          predicted_output), -12),
-                          round(2.75962079909e+14, -12))
+        self.assertEqual(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
+                                                                                         predicted_output), -12),
+                         round(2.75962079909e+14, -12))
 
         # Predict the output
         predicted_output = self.predict_output.regression(test_feature_matrix, normalized_weights1e8)
 
         # Assert that the RSS is what we wanted
-        self.assertEquals(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
-                                                                                          predicted_output), -12),
-                          round(5.37049248148e+14, -12))
+        self.assertEqual(round(self.residual_sum_squares.residual_sum_squares_regression(test_output,
+                                                                                         predicted_output), -12),
+                         round(5.37049248148e+14, -12))

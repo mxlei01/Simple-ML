@@ -1,8 +1,8 @@
 """Implements Nearest Neighbor Clustering."""
 
-import pandas as pd
 import math
 from collections import defaultdict
+import pandas as pd
 
 
 class NearestNeighbor:

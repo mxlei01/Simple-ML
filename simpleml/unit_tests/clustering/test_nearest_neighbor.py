@@ -1,8 +1,8 @@
 """Implements NearestNeighbor Unittest."""
 
 import unittest
-import pandas as pd
 import json
+import pandas as pd
 from data_extraction import text_analytics
 from machine_learning.clustering import nearest_neighbor
 

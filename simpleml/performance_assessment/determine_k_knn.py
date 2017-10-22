@@ -40,6 +40,7 @@ class DetermineKKnn:
                     output_train  (numpy.array): Outputs for training data,
                     output_valid  (numpy.array): Outputs for validation data.
                 }
+
         Returns:
             A tuple of lowest_k and lowest_k_index:
                 (

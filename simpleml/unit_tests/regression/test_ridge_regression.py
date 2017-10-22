@@ -116,11 +116,11 @@ class TestRidgeRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
-        self.assertEquals(round(-0.16311351478746433, 5), round(final_weights[0], 5))
-        self.assertEquals(round(263.02436896538489, 3), round(final_weights[1], 3))
+        self.assertEqual(round(-0.16311351478746433, 5), round(final_weights[0], 5))
+        self.assertEqual(round(263.02436896538489, 3), round(final_weights[1], 3))
 
         # Assert that rss is correct
-        self.assertEquals(round(275723632153607.72, -5), round(rss, -5))
+        self.assertEqual(round(275723632153607.72, -5), round(rss, -5))
 
     def test_02_gradient_descent_high_penalty(self):
         """Tests gradient descent.
@@ -178,11 +178,11 @@ class TestRidgeRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
-        self.assertEquals(round(9.7673000000000005, 5), round(final_weights[0], 5))
-        self.assertEquals(round(124.572, 3), round(final_weights[1], 3))
+        self.assertEqual(round(9.7673000000000005, 5), round(final_weights[0], 5))
+        self.assertEqual(round(124.572, 3), round(final_weights[1], 3))
 
         # Assert that rss is correct
-        self.assertEquals(round(694642101500000.0, -5), round(rss, -5))
+        self.assertEqual(round(694642101500000.0, -5), round(rss, -5))
 
     def test_03_gradient_descent_multiple_high_penalty(self):
         """Tests gradient descent.
@@ -239,18 +239,18 @@ class TestRidgeRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
-        self.assertEquals(round(6.7429699999999997, 5), round(final_weights[0], 5))
-        self.assertEquals(round(91.489000000000004, 3), round(final_weights[1], 3))
-        self.assertEquals(round(78.437490333967176, 3), round(final_weights[2], 3))
+        self.assertEqual(round(6.7429699999999997, 5), round(final_weights[0], 5))
+        self.assertEqual(round(91.489000000000004, 3), round(final_weights[1], 3))
+        self.assertEqual(round(78.437490333967176, 3), round(final_weights[2], 3))
 
         # Assert that rss is correct
-        self.assertEquals(round(500404800500842.0, -5), round(rss, -5))
+        self.assertEqual(round(500404800500842.0, -5), round(rss, -5))
 
         # Look at the first predicted output
-        self.assertEquals(round(270453.53000000003, 3), round(predicted_output[0], 3))
+        self.assertEqual(round(270453.53000000003, 3), round(predicted_output[0], 3))
 
         # The first output should be 310000 in the test set
-        self.assertEquals(310000.0, test_output[0])
+        self.assertEqual(310000.0, test_output[0])
 
     def test_04_gradient_descent_k_fold(self):
         """Tests gradient descent with K fold cross validation.
@@ -305,10 +305,10 @@ class TestRidgeRegression(unittest.TestCase):
         lowest = sorted(cross_validation_results, key=lambda x: x[1])[0]
 
         # Assert True that 10000000 is the l2_penalty that gives the lowest cross validation error
-        self.assertEquals(10000000.0, lowest[0])
+        self.assertEqual(10000000.0, lowest[0])
 
         # Assert True that is the lowest l2_penalty
-        self.assertEquals(round(120916225809145.0, 0), round(lowest[1], 0))
+        self.assertEqual(round(120916225809145.0, 0), round(lowest[1], 0))
 
     def test_05_gradient_ascent(self):
         """Tests gradient ascent.
@@ -349,8 +349,8 @@ class TestRidgeRegression(unittest.TestCase):
                                                                "max_iteration": max_iterations})
 
         # Assert that the weights is correct
-        self.assertEquals(round(-7.7535764461428101e+70, -68), round(final_weights[0], -68))
-        self.assertEquals(round(-1.9293745396177612e+74, -70), round(final_weights[1], -70))
+        self.assertEqual(round(-7.7535764461428101e+70, -68), round(final_weights[0], -68))
+        self.assertEqual(round(-1.9293745396177612e+74, -70), round(final_weights[1], -70))
 
     def test_07_gradient_ascent_high_tolerance(self):
         """Tests gradient ascent.
@@ -391,8 +391,8 @@ class TestRidgeRegression(unittest.TestCase):
                                                                "max_iteration": max_iterations})
 
         # Assert that the weights is correct
-        self.assertEquals(0, round(final_weights[0], -68))
-        self.assertEquals(0, round(final_weights[1], -70))
+        self.assertEqual(0, round(final_weights[0], -68))
+        self.assertEqual(0, round(final_weights[1], -70))
 
     def test_08_gradient_descent_no_penalty_high_tolerance(self):
         """Tests gradient descent algorithm.
@@ -449,8 +449,8 @@ class TestRidgeRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that the weights is correct
-        self.assertEquals(round(0.093859999999999999, 5), round(final_weights[0], 5))
-        self.assertEquals(round(262.98200000000003, 3), round(final_weights[1], 3))
+        self.assertEqual(round(0.093859999999999999, 5), round(final_weights[0], 5))
+        self.assertEqual(round(262.98200000000003, 3), round(final_weights[1], 3))
 
         # Assert that rss is correct
-        self.assertEquals(round(275724298300000.0, -5), round(rss, -5))
+        self.assertEqual(round(275724298300000.0, -5), round(rss, -5))

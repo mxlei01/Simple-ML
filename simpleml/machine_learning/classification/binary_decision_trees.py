@@ -75,7 +75,7 @@ class BinaryDecisionTrees:
             return self.create_leaf(target_values)
 
         # 2. No remaining features to split
-        if len(remaining_features) == 0:
+        if not remaining_features:
             return self.create_leaf(target_values)
 
         # 3. Max depth is encountered
@@ -181,7 +181,7 @@ class BinaryDecisionTrees:
             return self.create_leaf(target_values)
 
         # 2. No remaining features to split
-        if len(remaining_features) == 0:
+        if not remaining_features:
             return self.create_leaf(target_values)
 
         # 1. Stop at maximum depth
@@ -258,7 +258,7 @@ class BinaryDecisionTrees:
 
         """
         # Corner case: If labels_in_node is empty, return 0
-        if len(data_labels) == 0:
+        if data_labels.empty:
             return 0
 
         # Count the number of 1's

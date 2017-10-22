@@ -69,7 +69,7 @@ class LassoRegression:
             change = []
 
             # Need to incorporate all the new changes to the weights
-            for i in range(len(weights)):
+            for i, _ in enumerate(weights):
                 # Remember the old weights
                 old_weights_i = weights[i]
 

@@ -78,7 +78,7 @@ class WeightedBinaryDecisionTrees:
             return self.create_leaf(target_values, model_parameters["data_weights"])
 
         # 2. No remaining features to split
-        if len(remaining_features) == 0:
+        if not remaining_features:
             return self.create_leaf(target_values, model_parameters["data_weights"])
 
         # 3. Max depth is encountered
@@ -141,6 +141,7 @@ class WeightedBinaryDecisionTrees:
                     float: Lowest weighted error.
                     int: Corresponding label for lowest weighted error.
                 )
+
         """
         # Sum of the weight where the label data are == 1, which means the weight of mistakes if we chose -1
         weighted_mistakes_negative = sum(data_weights[data_labels == 1])

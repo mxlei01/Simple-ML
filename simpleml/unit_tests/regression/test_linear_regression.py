@@ -83,8 +83,8 @@ class TestLinearRegression(unittest.TestCase):
                                                                  "tolerance": tolerance})
 
         # Assert that the weights is correct
-        self.assertEquals(round(-46999.887165546708, 3), round(final_weights[0], 3))
-        self.assertEquals(round(281.91211917520917, 3), round(final_weights[1], 3))
+        self.assertEqual(round(-46999.887165546708, 3), round(final_weights[0], 3))
+        self.assertEqual(round(281.91211917520917, 3), round(final_weights[1], 3))
 
     def test_02_gradient_descent_multiple(self):
         """Tests gradient descent on multiple features.
@@ -133,7 +133,7 @@ class TestLinearRegression(unittest.TestCase):
         rss = self.residual_sum_squares.residual_sum_squares_regression(test_output, predicted_output)
 
         # Assert that rss is correct
-        self.assertEquals(round(270263443629803.41, -3), round(rss, -3))
+        self.assertEqual(round(270263443629803.41, -3), round(rss, -3))
 
     def test_03_gradient_ascent(self):
         """Test gradient ascent.
@@ -166,5 +166,5 @@ class TestLinearRegression(unittest.TestCase):
                                                                 "tolerance": tolerance})
 
         # Assert that the weights is correct
-        self.assertEquals(round(-47000.142201335177, 3), round(final_weights[0], 3))
-        self.assertEquals(round(-352.86068692252599, 3), round(final_weights[1], 3))
+        self.assertEqual(round(-47000.142201335177, 3), round(final_weights[0], 3))
+        self.assertEqual(round(-352.86068692252599, 3), round(final_weights[1], 3))
