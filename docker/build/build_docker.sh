@@ -1,6 +1,6 @@
 # CD into the application folder and run a constant message script so that we don't get kicked off
 # the job
-cd /application/simpleml/ && (../build_scripts/constant_messaging.sh &)
+cd /application/simpleml/ && (../build/constant_messaging.sh &)
 
 # Run tests, and send results to coveralls.io
 # COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN TRAVIS_BRANCH=$TRAVIS_BRANCH BRANCH=$TRAVIS_BRANCH coveralls
