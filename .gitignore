@@ -1,2 +1,3 @@
 generate_coverage.sh
 .coverage
+.ipynb_checkpoints
