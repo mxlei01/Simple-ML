@@ -1,3 +1,4 @@
 generate_coverage.sh
+start_notebook.sh
 .coverage
 .ipynb_checkpoints
