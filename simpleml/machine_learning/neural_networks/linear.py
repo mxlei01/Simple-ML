@@ -1,6 +1,7 @@
 """Implements linear transform."""
-from .node import Node
+
 import numpy as np
+from .node import Node
 
 
 class Linear(Node):
@@ -19,7 +20,7 @@ class Linear(Node):
         Node.__init__(self, inputs=[x, w, b])
 
     def forward(self):
-        """Performs linear transform.
+        """Perform linear transform.
 
         Linear Transform: ∑(x_i*w_i)+b, where i is the number of x (inputs), and w (weights).
 

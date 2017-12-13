@@ -29,7 +29,7 @@ class Input(Node):
         """
         self.gradients = {self: 0}
 
-        # If self is a weight or bias node, then we need to add up all the gradients that belongs to "self" from the 
+        # If self is a weight or bias node, then we need to add up all the gradients that belongs to "self" from the
         # the list of self's output.
         # For example: w ==> l_1 => s_1
         #              | ==> l_2 => s_2
@@ -41,19 +41,19 @@ class Input(Node):
         #       dw
         # If we only consider l_1 at the moment, then we can expand l_1:
         # dc   dc  ds  dnet  where dnet is the linear combination that occurs in the sigmoid function (input*weights).
-        # -- = -- ---- ---- 
-        # dw   ds dnet  dw 
+        # -- = -- ---- ----
+        # dw   ds dnet  dw
         #                                  |-net-|
         #                   1           e^(w_1*x_1)
         #    = -(y - --------------)(-----------------)(x_1)
-        #            1+e^-(w_1*x_1)  (1+e^(w_1*x_1))^2 
-        #            |------s-----|                    
+        #            1+e^-(w_1*x_1)  (1+e^(w_1*x_1))^2
+        #            |------s-----|
         #               dc                 ds          dnet
         #               --                ----         ----
         #               ds                dnet          dw
-        # Hence when the derivate of n.gradients[self] would be the value of dc
-        #                                                                    --
-        #                                                                    dw
-        # If we have more than one linear connection, then we would need to sum them up, such as dl_1 + dl_2
+        # Hence when the derivative of n.gradients[self] would be the value of dc
+        #                                                                      --
+        #                                                                      dw
+        # If we have more than one linear connection, then we would need to sum them up, for example dl_1 + dl_2
         for n in self.outputs:
             self.gradients[self] += n.gradients[self]

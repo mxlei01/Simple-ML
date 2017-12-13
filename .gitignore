@@ -1,4 +1,7 @@
 generate_coverage.sh
+generate_code_quality.sh
 start_notebook.sh
 .coverage
 .ipynb_checkpoints
+__pycache__
+.pyc
