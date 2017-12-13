@@ -24,7 +24,6 @@ class Linear(Node):
 
         Linear Transform: ∑(x_i*w_i)+b, where i is the number of x (inputs), and w (weights).
 
-
         """
         # Gather x, w, and b from the input list
         x = self.inputs[0].value
@@ -35,19 +34,52 @@ class Linear(Node):
         self.value = np.dot(x, w) + b
 
     def backward(self):
-        """
-        Calculates the gradient based on the output values.
+        """Compute the gradient through backward propagation.
+
+        Examples used in comments uses the following dimensions:
+        x: 2x13
+        w: 13x10
+        b: 10
+        output = 2x10
+
+        Network: Linear => Sigmoid
+
         """
         # Initialize a partial for each of the inbound_nodes.
-        self.gradients = {n: np.zeros_like(n.value) for n in self.inbound_nodes}
-        # Cycle through the outputs. The gradient will change depending
-        # on each output, so the gradients are summed over all outputs.
-        for n in self.outbound_nodes:
-            # Get the partial of the cost with respect to this node.
+        # For each inputs: x, w, b, we need to find their respective gradient values.
+        self.gradients = {n: np.zeros_like(n.value) for n in self.inputs}
+
+        # The gradients are summed over all the outputs. If a linear node connects to multiple activation functions,
+        # then each of the activation function would have it's loss respective to the this node. We can get each
+        # loss, and compute the loss associated with each input function.
+        for n in self.outputs:
+            # Partial of the cost with respective to this node from the output node. This is the cumulative derivative
+            # until (not including this node)'s cost. For example, according to our network, this is:
+            # dc  ds
+            # -- ---- = 2x10 matrix
+            # ds dnet
+            # Our next task is to multiply this matrix with either w or x to get the cost with respect to x or w.
             grad_cost = n.gradients[self]
-            # Set the partial of the loss with respect to this node's inputs.
-            self.gradients[self.inbound_nodes[0]] += np.dot(grad_cost, self.inbound_nodes[1].value.T)
-            # Set the partial of the loss with respect to this node's weights.
-            self.gradients[self.inbound_nodes[1]] += np.dot(self.inbound_nodes[0].value.T, grad_cost)
-            # Set the partial of the loss with respect to this node's bias.
-            self.gradients[self.inbound_nodes[2]] += np.sum(grad_cost, axis=0, keepdims=False)
+
+            # inputs[0]=x, partial of the loss respective to this node's input.
+            # Derivative:  dl    d
+            #              -- = --∑w_i*x_i+b=w_i
+            #              dx   dx
+            # self.outputs[1].value.T = w.T = 10x13
+            #        dc  ds
+            # np.dot(-- ----(grad_cost), w.T) = 2x13, this 2x13 produces the cost for the inputs of 2x13
+            #        ds dnet
+            # Cost with respective to X for the network:
+            # dc   dc  ds  dnet
+            # -- = -- ---- ----, where s is the sigmoid function
+            # dx   ds dnet  dx
+            # 2x13 (gradients for x) = 2x10 (grad_cost) * 10x13 (w.T), if the inputs are from training data, then
+            # we will do nothing with the gradients, however, if the gradients are another layer of activation with
+            # weights, then we can pass the cost downwards.
+            self.gradients[self.inputs[0]] += np.dot(grad_cost, self.outputs[1].value.T)
+
+            # inputs[1]=w, partial of the loss respective to this node's output
+            self.gradients[self.inputs[1]] += np.dot(self.outputs[0].value.T, grad_cost)
+
+            # inputs[2]=b, partial of the loss respective to this node's bias
+            self.gradients[self.inputs[2]] += np.sum(grad_cost, axis=0, keepdims=False)
