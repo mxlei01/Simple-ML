@@ -83,5 +83,5 @@ class Sigmoid(Node):
             #               ds_1                dnet_1         dw_1
             # Note: x_1 will be done in the linear node
             # 2x10 (gradients for w) = 2x10 (x.T) .(dot product) 2x10 (grad_cost), each value in self.inputs[0], loss,
-            # are multiplied with the grad_cost position wise.
+            # are multiplied with the grad_cost element wise.
             self.gradients[self.inputs[0]] += sigmoid * (1 - sigmoid) * grad_cost
