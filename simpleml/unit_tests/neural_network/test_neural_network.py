@@ -7,6 +7,7 @@ from machine_learning.neural_networks.input import Input
 from machine_learning.neural_networks.linear import Linear
 from machine_learning.neural_networks.mse import Mse
 from machine_learning.neural_networks.sigmoid import Sigmoid
+from machine_learning.neural_networks.node import Node
 from machine_learning.neural_networks.compute import topological_sort, update_network
 
 
@@ -82,3 +83,10 @@ class TestNeuralNetwork(unittest.TestCase):
 
         # Make sure the bias values are the same, not required to test other weight
         self.assertEqual(np.round(self.b2.value[0], 5), np.round(5.68319026, 5))
+
+    def test_02_node(self):
+        """Test that node should have errors with used without inheritance."""
+        node = Node(inputs=[])
+
+        self.assertRaises(NotImplementedError, node.forward)
+        self.assertRaises(NotImplementedError, node.backward)
