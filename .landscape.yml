@@ -18,6 +18,7 @@ pylint:
       - invalid-name
       - too-many-ancestors
       - unnecessary-lambda
+      - too-many-arguments
 pep257:
     run: true
     disable:

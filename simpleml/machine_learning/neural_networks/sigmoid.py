@@ -45,7 +45,6 @@ class Sigmoid(Node):
         Network: Linear => Sigmoid
 
         """
-
         # Initialize a partial for each of the inbound_nodes.
         # For x we need to find their respective gradient values.
         self.gradients = {n: np.zeros_like(n.value) for n in self.inputs}

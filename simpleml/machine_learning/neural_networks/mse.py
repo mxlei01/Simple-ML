@@ -9,7 +9,7 @@ class Linear(Node):
     """MSE class for MSE loss function."""
 
     def __init__(self, y, y_hat):
-        """Construct the MSE class. Sets the y (predicted value), y_real (real values) to the input list
+        """Construct the MSE class. Sets the y (predicted value), y_real (real values) to the input list.
 
         Args:
             y (np.ndarray): Inputs to the node.
@@ -73,7 +73,7 @@ class Linear(Node):
         #                ----                ------        ------
         #                ds_1                dnet_1         dx_1
         # 2x1 (gradients for y) = 2/M*(y(2x1)-y_hat(2x1)) These are the gradients passed down to y
-        self.gradients[self.inputs[0]] = (2 / self.inputs[0].value.shape[0]) * (y-y_hat)
+        self.gradients[self.inputs[0]] = (2 / self.inputs[0].value.shape[0]) * (y - y_hat)
 
         # inputs[0]=y, partial with respect to the output y
         # Derivative:  dc   d   2
@@ -96,4 +96,4 @@ class Linear(Node):
         #                  ----                ------        ------
         #                  ds_1                dnet_1         dx_1
         # 2x1 (gradients for y) = -2/M*(y(2x1)-y_hat(2x1)) These are the gradients passed down to y hat
-        self.gradients[self.inputs[1]] = (-2 / self.inputs[0].value.shape[0]) * (y-y_hat)
+        self.gradients[self.inputs[1]] = (-2 / self.inputs[0].value.shape[0]) * (y - y_hat)
