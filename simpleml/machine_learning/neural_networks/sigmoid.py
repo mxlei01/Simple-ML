@@ -12,7 +12,7 @@ class Sigmoid(Node):
         """Construct the sigmoid class. Sets the x (input) value to the inputs list.
 
         Args:
-            x (np.ndarray): Inputs to the node.
+            x (Node): Inputs to the node.
 
         """
         Node.__init__(self, inputs=[x])

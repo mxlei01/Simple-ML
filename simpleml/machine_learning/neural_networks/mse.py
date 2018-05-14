@@ -4,7 +4,7 @@ import numpy as np
 from .node import Node
 
 
-class Linear(Node):
+class Mse(Node):
 
     """MSE class for MSE loss function."""
 
@@ -12,8 +12,8 @@ class Linear(Node):
         """Construct the MSE class. Sets the y (predicted value), y_real (real values) to the input list.
 
         Args:
-            y (np.ndarray): Inputs to the node.
-            y_hat (np.ndarray): Real outputs.
+            y (Node): Inputs to the node.
+            y_hat (Node): Real outputs.
 
         """
         Node.__init__(self, inputs=[y, y_hat])

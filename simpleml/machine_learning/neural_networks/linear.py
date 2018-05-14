@@ -12,9 +12,9 @@ class Linear(Node):
         """Construct the Linear class. Sets the x (input), w (weight), and b (bias), value to the inputs list.
 
         Args:
-            x (np.ndarray): Inputs to the node.
-            w (np.ndarray): Weights to the node.
-            b (np.array): Biases to the Node.
+            x (Node): Inputs to the node.
+            w (Node): Weights to the node.
+            b (Node): Biases to the Node.
 
         """
         Node.__init__(self, inputs=[x, w, b])
@@ -85,7 +85,7 @@ class Linear(Node):
             # 2x13 (gradients for x) = 2x10 (grad_cost) * 10x13 (w.T), if the inputs are from training data, then
             # we will do nothing with the gradients, however, if the gradients are another layer of activation with
             # weights, then we can pass the cost downwards.
-            self.gradients[self.inputs[0]] += np.dot(grad_cost, self.outputs[1].value.T)
+            self.gradients[self.inputs[0]] += np.dot(grad_cost, self.inputs[1].value.T)
 
             # inputs[1]=w, partial of the loss respective to this node's output
             # Derivative: dl   d
@@ -110,7 +110,7 @@ class Linear(Node):
             #               ds_1                dnet_1         dx_1
             # 13x10 (gradients for w) = 13x2 (x.T) * 2*10 (grad_cost), this is the gradient values for w, and we can
             # use the gradient values to update w.
-            self.gradients[self.inputs[1]] += np.dot(self.outputs[0].value.T, grad_cost)
+            self.gradients[self.inputs[1]] += np.dot(self.inputs[0].value.T, grad_cost)
 
             # inputs[2]=b, partial of the loss respective to this node's bias
             # Derivative: dl   d

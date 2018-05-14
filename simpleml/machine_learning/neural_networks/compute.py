@@ -22,7 +22,7 @@ def topological_sort(feed_dict):
         n = nodes.pop(0)
         if n not in graph:
             graph[n] = {'in': set(), 'out': set()}
-        for m in n.outbound_nodes:
+        for m in n.outputs:
             if m not in graph:
                 graph[m] = {'in': set(), 'out': set()}
             graph[n]['out'].add(m)
@@ -38,7 +38,7 @@ def topological_sort(feed_dict):
             n.value = feed_dict[n]
 
         sorted_nodes.append(n)
-        for m in n.outbound_nodes:
+        for m in n.outputs:
             graph[n]['out'].remove(m)
             graph[m]['in'].remove(n)
             if not graph[m]['in']:
@@ -92,9 +92,9 @@ def update_network(graph, x, y, x_, y_, trainables, epochs, steps_per_epoch, bat
     """
     for i in range(epochs):
         loss = 0
-        for _ in range(steps_per_epoch):
+        for j in range(steps_per_epoch):
             # Sample a batch of data
-            x_batch, y_batch = resample(x_, y_, n_samples=batch_size)
+            x_batch, y_batch = resample(x_, y_, n_samples=batch_size, random_state=j)
 
             # Reset the node input
             x.value = x_batch

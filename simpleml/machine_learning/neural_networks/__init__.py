@@ -1,1 +1,1 @@
-"""initialization for classification package."""
+"""initialization for neural network package."""
